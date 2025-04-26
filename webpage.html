@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tushin Mallick – Cyber‑Security Researcher</title>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
+
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              base: { 50: '#fcfcfa', 900: '#0e1520' },
+              accent: '#4c93ff',
+            },
+            fontFamily: {
+              sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+              serif: ['Playfair Display', 'ui-serif'],
+            },
+            keyframes: {
+              fadeIn: { '0%': { opacity: 0 }, '100%': { opacity: 1 } },
+            },
+            animation: {
+              fade: 'fadeIn 0.8s ease-out both',
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      .hero-bg {
+        background-image: radial-gradient(circle at 20% 20%, rgba(76, 147, 255, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(76, 147, 255, 0.12) 0%, transparent 50%), linear-gradient(135deg, #0e1520 0%, #151e2b 100%);
+        background-size: cover;
+      }
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 0.875rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #cbd5e1;
+      }
+      .timeline-entry {
+        position: relative;
+        padding-left: 2.25rem;
+      }
+      .timeline-entry::before {
+        content: '';
+        position: absolute;
+        left: -0.4375rem;
+        top: 0.375rem;
+        width: 0.75rem;
+        height: 0.75rem;
+        border-radius: 9999px;
+        background: #4c93ff;
+      }
+    </style>
+  </head>
+  <body class="bg-base-50 text-base-900 antialiased selection:bg-accent selection:text-base-50">
+    <!-- NAV -->
+    <nav class="fixed inset-x-0 top-0 z-50 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50 shadow-sm animate-fade">
+      <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-3">
+        <ul class="flex flex-wrap gap-8 text-xs font-medium uppercase tracking-wider">
+          <li><a class="nav-link" href="#about">About</a></li>
+          <!-- <li><a class="nav-link" href="#research">Research</a></li> -->
+          <li><a class="nav-link" href="#cv">CV</a></li>
+          <li><a class="nav-link" href="#publications">Papers</a></li>
+          <!-- <li><a class="nav-link" href="#talks">Talks</a></li> -->
+          <li><a class="nav-link" href="#news">News</a></li> <!-- <-- Added -->
+          <li><a class="nav-link" href="#contact">Contact</a></li>
+        </ul>
+        <!-- Social Icons -->
+        <div class="hidden sm:flex items-center gap-6 text-lg text-base-900">
+          <a href="https://github.com/T-449" aria-label="GitHub" class="transition hover:text-accent" target="_blank" rel="noopener">
+            <!-- GitHub SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5 fill-current"><path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.94.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.74 1.27 3.4.98.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.68 0-1.25.45-2.27 1.2-3.07-.12-.3-.52-1.51.11-3.15 0 0 .97-.31 3.19 1.17a11.1 11.1 0 0 1 2.91-.39c1 0 2 .13 2.92.39 2.22-1.48 3.18-1.17 3.18-1.17.63 1.64.23 2.85.11 3.15.75.8 1.19 1.82 1.19 3.07 0 4.41-2.71 5.38-5.29 5.66.42.36.79 1.07.79 2.16 0 1.56-.01 2.82-.01 3.2 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/></svg>
+          </a>
+          <a href="https://www.linkedin.com/in/tushin-mallick-0233311a0" aria-label="LinkedIn" class="transition hover:text-accent" target="_blank" rel="noopener">
+            <!-- LinkedIn SVG -->
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5 fill-current"><path d="M4.98 3.5C4.98 2.12 6.1 1 7.48 1s2.5 1.12 2.5 2.5S8.86 6 7.48 6 4.98 4.88 4.98 3.5zM5 8h5v16H5V8zm7 0h4.78v2.22h.07c.66-1.25 2.28-2.57 4.69-2.57C22.4 7.65 24 9.25 24 13.06V24h-5v-9.38c0-2.24-.04-5.12-3.12-5.12-3.12 0-3.6 2.43-3.6 4.95V24h-5V8z"/></svg>
+          </a>
+
+          <a href="https://scholar.google.com/citations?user=r3AzDT8AAAAJ&hl=en" aria-label="Google Scholar" class="transition hover:text-accent" target="_blank" rel="noopener">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5 fill-current">
+              <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </nav>
+    <!-- HERO -->
+    <header class="hero-bg relative flex min-h-screen flex-col items-center justify-center px-6 text-center text-base-50">
+      <img src="images/profile_2.jpeg" alt="Profile photo" class="mb-6 h-48 w-48 rounded-full border-4 border-accent/60 object-cover shadow-lg md:h-56 md:w-56 animate-fade [animation-delay:0.1s]" />
+      <h1 class="mb-3 font-serif text-4xl font-semibold md:text-5xl lg:text-6xl animate-fade">Tushin&nbsp;Mallick</h1>
+      <p class="mx-auto mb-8 max-w-lg text-base md:text-lg animate-fade [animation-delay:0.1s]">PhD Candidate · Cyber&nbsp;Security · Northeastern&nbsp;University</p>
+      <a href="#publications" class="rounded-full border border-accent/70 bg-accent/10 px-8 py-2 text-xs font-semibold tracking-wide text-accent transition hover:bg-accent hover:text-base-50 animate-fade [animation-delay:0.2s]">Explore&nbsp;My&nbsp;Work</a>
+    </header>
+
+
+    
+    <!-- QUOTE -->
+    <section class="py-12 text-center animate-fade">
+      <div class="mx-auto max-w-3xl px-6">
+        <blockquote class="italic text-lg text-base-700">
+          "As is a tale, so is life: not how long it is, but how good it is, is what matters."
+        </blockquote>
+        <cite class="mt-2 block text-sm text-base-500">— Seneca</cite>
+      </div>
+    </section>
+
+
+    <!-- ABOUT -->
+    <section id="about" class="py-24 animate-fade">
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-8 text-center font-serif text-3xl font-semibold">About&nbsp;Me</h2>
+        
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          I'm a PhD student in Computer Science at Northeastern University, Boston, working at the intersection of security and machine learning. My research explores how ML fits into the broader pipeline of secure systems — from reasoning about behavior to enabling stronger defenses.
+        </p>
+        
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          I’m advised by <a href="https://cnitarot.github.io/" target="_blank" rel="noopener" class="text-accent hover:underline">Dr. Cristina Nita-Rotaru</a> and conduct my research in the NDS2 Lab. Before this, I completed my undergraduate studies at Bangladesh University of Engineering and Technology (BUET) in Dhaka, where I worked under the supervision of <a href="https://mshohrabhossain.buet.ac.bd/" target="_blank" rel="noopener" class="text-accent hover:underline">Dr. Shohrab Hossain</a> and cultivated my early interest in systems and security research.
+        </p>
+        
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          Outside of research, I enjoy <span class="inline-flex items-center gap-1"><span>running</span> 🏃‍♂️</span>, <span class="inline-flex items-center gap-1"><span>watching sunsets</span> 🌇</span>, and <span class="inline-flex items-center gap-1"><span>playing soccer</span> ⚽️</span>. I'm also a passionate supporter of Real Madrid 
+          <img src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="Real Madrid Logo" class="inline h-6 w-6 ml-1 align-middle" />.
+        </p>
+        
+      </div>
+    </section>
+    
+    
+    
+
+    <!-- NEWS -->
+    <section id="news" class="py-24 animate-fade">
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">News&nbsp;&amp;&nbsp;Updates</h2>
+        <ul class="space-y-8">
+          <!-- Example News Posts -->
+          <li class="border-b pb-6">
+            <p class="text-sm text-base-600">May 5, 2025</p>
+            <p class="mt-1 text-base leading-relaxed">
+              Thrilled to announce that I’ll be joining <strong class="text-accent">Cisco</strong> this summer as a <em>Research Intern</em>.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- RESEARCH
+    <section id="research" class="bg-base-100 py-24 animate-fade">
+      <div class="mx-auto max-w-6xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Featured&nbsp;Projects</h2>
+        <div class="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+          <article class="overflow-hidden rounded-2xl bg-white shadow transition group hover:shadow-md">
+            <div class="h-40 overflow-hidden"><img src="https://images.unsplash.com/photo-1527443154391-507e9dc6c5cc?auto=format&fit=crop&w=900&q=60" alt="Project" class="h-full w-full object-cover transition group-hover:scale-105" /></div>
+            <div class="p-5">
+              <h3 class="mb-2 text-lg font-semibold">Fingerprinting&nbsp;PQ&nbsp;TLS</h3>
+              <p class="mb-3 text-sm leading-relaxed text-base-700">Side‑channel analysis of post‑quantum key‑exchange in TLS&nbsp;1.3 implementations.</p>
+              <a href="#" class="text-sm font-semibold text-accent hover:underline">Read&nbsp;More</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section> -->
+
+<!-- CV -->
+<section id="cv" class="py-24 animate-fade">
+  <div class="mx-auto max-w-5xl px-6">
+    <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Curriculum&nbsp;Vitae</h2>
+    <div class="grid gap-14 md:grid-cols-2">
+      
+      <!-- Education -->
+      <div>
+        <h3 class="mb-6 font-serif text-2xl font-semibold text-accent">Education</h3>
+        <div class="relative timeline space-y-8">
+          <div class="timeline-entry">
+            <h4 class="font-semibold">PhD in Computer&nbsp;Science <span class="text-base-600">— Northeastern&nbsp;University</span></h4>
+            <p class="text-sm italic text-base-600">Boston, MA · Sept 2023&nbsp;–&nbsp;Present</p>
+            <p class="mt-1 text-sm leading-relaxed">Advisor: Dr.&nbsp;Cristina&nbsp;Nita‑Rotaru</p>
+          </div>
+          <div class="timeline-entry">
+            <h4 class="font-semibold">B.Sc. in Computer&nbsp;Science&nbsp;&amp;&nbsp;Engineering <span class="text-base-600">— BUET</span></h4>
+            <p class="text-sm italic text-base-600">Dhaka, Bangladesh · Feb 2017&nbsp;–&nbsp;May 2022</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Experience -->
+      <div>
+        <h3 class="mb-6 font-serif text-2xl font-semibold text-accent">Experience</h3>
+        <div class="relative timeline space-y-8">
+          <div class="timeline-entry">
+            <h4 class="font-semibold">Research Intern — Cisco</h4>
+            <p class="text-sm italic text-base-600">May 2025&nbsp;–&nbsp;July 2025</p>
+          </div>
+          <div class="timeline-entry">
+            <h4 class="font-semibold">Graduate Research Assistant — Northeastern&nbsp;University</h4>
+            <p class="text-sm italic text-base-600">May 2024&nbsp;–&nbsp;Present</p>
+          </div>
+          <div class="timeline-entry">
+            <h4 class="font-semibold">Research Assistant — BUET</h4>
+            <p class="text-sm italic text-base-600">Jun 2022&nbsp;–&nbsp;Jun 2023</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Teaching -->
+      <div>
+        <h3 class="mb-6 font-serif text-2xl font-semibold text-accent">Teaching</h3>
+        <div class="relative timeline space-y-8">
+          <div class="timeline-entry">
+            <h4 class="font-semibold">Graduate Teaching Assistant — Northeastern University</h4>
+            <ul class="mt-2 list-disc list-inside text-sm leading-relaxed text-base-800">
+              <li>CS 6240: Large‑Scale Parallel Data Processing (Spring'24)</li>
+              <li>CS 3700: Networks and Distributed Systems (Fall'23)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+
+
+    </div>
+  </div>
+</section>
+
+
+
+    <!-- PUBLICATIONS -->
+    <section id="publications" class="py-24 animate-fade">
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Selected&nbsp;Publications</h2>
+        <ul class="space-y-6 text-sm leading-relaxed">
+          <li>
+            <span class="block font-medium">Ali,&nbsp;A.; Mallick,&nbsp;T.; Sakib,&nbsp;S.; Hossain,&nbsp;M.&nbsp;S.; Lin,&nbsp;Y.-D.&nbsp;(2022).</span>
+            <a href="https://ieeexplore.ieee.org/document/9838904" class="hover:underline text-accent" target="_blank" rel="noopener">"Provisioning fog services to 3GPP subscribers: Authentication and application mobility."</a> In <em>IEEE ICC&nbsp;2022</em>, pp.&nbsp;4926‑4931.
+            <a href="https://arxiv.org/pdf/2112.02476" target="_blank" rel="noopener" class="ml-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
+              PDF
+            </a>
+          </li>
+          <li>
+            <span class="block font-medium">Ali,&nbsp;A.; Islam,&nbsp;M.; Mallick,&nbsp;T.; Islam,&nbsp;M.&nbsp;S.; Sakib,&nbsp;S.; Hossain,&nbsp;M.&nbsp;S.; Lin,&nbsp;Y.-D.&nbsp;(2024).</span>
+            <a href="https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683" class="hover:underline text-accent" target="_blank" rel="noopener">"3GPP Edge–Fog federation: Transparent 3rd‑party authentication and application mobility."</a> <em>Computer&nbsp;Communications</em>, 222, 220‑229.
+            <a href="https://speed.cs.nycu.edu.tw/~ydlin/papers/3GPP%20Edge%E2%80%93Fog%20federation%20Transparent%203rd-party%20authentication%20and%20application%20mobility.pdf" target="_blank" rel="noopener" class="ml-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
+              PDF
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- TALKS
+    <section id="talks" class="bg-base-100 py-24 animate-fade">
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Invited&nbsp;Talks</h2>
+        <ul class="space-y-4 text-sm leading-relaxed">
+          <li><strong>Black&nbsp;Hat&nbsp;Europe&nbsp;2024</strong> — "Memory‑Safe Cryptography: Myth or Reality?"</li>
+        </ul>
+      </div>
+    </section> -->
+
+    <!-- CONTACT -->
+    <section id="contact" class="py-24 animate-fade">
+      <div class="mx-auto max-w-md px-6 text-center">
+        <h2 class="mb-4 font-serif text-3xl font-semibold">Get&nbsp;in&nbsp;Touch</h2>
+    
+        <div class="mb-4 space-y-1 text-base-800">
+          <p class="text-sm font-medium tracking-wide text-base-700">
+            Office
+          </p>
+          <p class="text-base leading-relaxed">
+            5th Floor, 177 Huntington Ave<br />
+            Boston, MA 02115
+          </p>
+        </div>
+    
+        <div class="space-y-1 text-base-800">
+          <p class="text-sm font-medium tracking-wide text-base-700">
+            Email
+          </p>
+          <p class="text-base leading-relaxed">
+            <a href="mailto:mallick.tu@northeastern.edu" class="hover:underline text-accent">mallick.tu at northeastern.edu</a>
+          </p>
+        </div>
+    
+        <div class="mt-6 flex justify-center gap-8 text-xl">
+          <!-- GitHub, LinkedIn, Scholar go here -->
+        </div>
+      </div>
+    </section>
+    
+
+
+  <!-- HOBBIES AND DAILY LIFE -->
+  <section id="hobbies" class="py-24 bg-base-100 animate-fade">
+    <div class="mx-auto max-w-6xl px-6 text-center">
+      <h2 class="mb-12 font-serif text-3xl font-semibold">Beyond&nbsp;Research</h2>
+      
+      <div class="grid gap-6 sm:grid-cols-2 md:grid-cols-3">
+        <!-- Example Hobby Images -->
+        <div class="overflow-hidden rounded-2xl shadow group hover:shadow-lg transition">
+          <img src="images/niagara.jpg" alt="niagara" class="h-64 w-full object-cover group-hover:scale-105 transition" />
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow group hover:shadow-lg transition">
+          <img src="images/sunrise.jpg" alt="sunrise" class="h-64 w-full object-cover group-hover:scale-105 transition" />
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow group hover:shadow-lg transition">
+          <img src="images/acadia.jpeg" alt="acadia" class="h-64 w-full object-cover group-hover:scale-105 transition" />
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow group hover:shadow-lg transition">
+          <img src="images/kayaking.jpeg" alt="kayaking" class="h-64 w-full object-cover group-hover:scale-105 transition" />
+        </div>
+        <div class="overflow-hidden rounded-2xl shadow group hover:shadow-lg transition">
+          <img src="images/basketball.jpeg" alt="basketball" class="h-64 w-full object-cover group-hover:scale-105 transition" />
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+    <!-- FOOTER -->
+    <footer class="bg-base-900 py-6 text-center text-sm text-base-50 animate-fade">
+      © <span id="year"></span> Tushin&nbsp;Mallick. All rights reserved.
+    </footer>
+
+    <script>
+      document.getElementById('year').textContent = new Date().getFullYear();
+      document.querySelectorAll('.nav-link').forEach(a=>{
+        a.classList.add('relative','before:absolute','before:inset-x-0','before:-bottom-1','before:h-[2px]','before:scale-x-0','before:bg-accent','before:transition-transform','before:origin-left','hover:before:scale-x-100');
+      });
+    </script>
+  </body>
+</html>
