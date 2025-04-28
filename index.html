@@ -72,6 +72,7 @@
         background-image: radial-gradient(circle at 20% 20%, rgba(76, 147, 255, 0.12) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(76, 147, 255, 0.12) 0%, transparent 50%), linear-gradient(135deg, #0e1520 0%, #151e2b 100%);
         background-size: cover;
         animation: bgPulse 20s infinite alternate;
+        background-attachment: fixed;
       }
 
       @keyframes bgPulse {
@@ -94,15 +95,15 @@
         box-shadow: 0 8px 24px rgba(76, 147, 255, 0.5);
         transform: scale(1.05);
       }
-        .timeline::before {
-      content: '';
-      position: absolute;
-      left: 0.875rem;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: #cbd5e1;
-    }
+      .timeline::before {
+        content: '';
+        position: absolute;
+        left: 0.875rem;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: linear-gradient(to bottom, #4c93ff, #cbd5e1);
+      }
 
     .timeline-entry {
       position: relative;
@@ -118,6 +119,20 @@
       height: 0.75rem;
       border-radius: 9999px;
       background: #4c93ff;
+    }
+
+    #particles-js {
+      filter: blur(0.5px); /* Slight softness */
+      opacity: 0.9; /* Not too harsh */
+    }
+
+    a:hover {
+      transform: translateY(-2px);
+      transition: all 0.3s ease;
+    }
+
+    h1, h2, h3 {
+      letter-spacing: 0.03em;
     }
     </style>
 
@@ -158,11 +173,15 @@
     </nav>
     <!-- HERO -->
     <header class="hero-bg relative flex min-h-screen flex-col items-center justify-center px-6 text-center text-base-50">
-      <div id="particles-js" class="absolute inset-0"></div>
-      <img src="images/profile_2.jpeg" data-aos="fade-up" data-aos-delay="100" alt="Profile photo" class="mb-6 h-48 w-48 rounded-full border-4 border-accent/60 object-cover shadow-lg md:h-56 md:w-56 animate-fadeInUp [animation-delay:0.2s] profile-hover" />
-      <h1 class="mb-3 font-serif text-4xl font-semibold md:text-5xl lg:text-6xl animate-fade" data-aos="fade-up" data-aos-delay="200">Tushin&nbsp;Mallick</h1>
-      <p class="mx-auto mb-8 max-w-lg text-base md:text-lg animate-fade [animation-delay:0.1s]" data-aos="fade-up" data-aos-delay="300">PhD Student · Cyber&nbsp;Security · Northeastern&nbsp;University</p>
-      <a href="#publications" class="rounded-full border border-accent/70 bg-accent/10 px-8 py-2 text-xs font-semibold tracking-widest text-accent transition posh-button animate-fadeInUp [animation-delay:0.4s]" data-aos="fade-up" data-aos-delay="400">
+      <div id="particles-js" class="absolute inset-0 z-0"></div>
+      <div class="relative">
+        <div class="absolute inset-0 rounded-full bg-accent/30 blur-2xl"></div>
+        <img src="images/profile_2.jpeg" data-aos="fade-up" data-aos-delay="100" alt="Profile photo" 
+        class="relative z-10 mb-6 h-48 w-48 rounded-full border-4 border-accent/60 object-cover shadow-lg md:h-56 md:w-56 animate-fadeInUp [animation-delay:0.2s] profile-hover" />
+      </div>
+      <h1 class="mb-3 font-serif z-10 text-4xl font-semibold md:text-5xl lg:text-6xl animate-fade" data-aos="fade-up" data-aos-delay="200">Tushin&nbsp;Mallick</h1>
+      <p class="mx-auto z-10 mb-8 max-w-lg text-base md:text-lg animate-fade [animation-delay:0.1s]" data-aos="fade-up" data-aos-delay="300">PhD Student · Cyber&nbsp;Security · Northeastern&nbsp;University</p>
+      <a href="#publications" class="rounded-full z-10 border border-accent/70 bg-accent/10 px-8 py-2 text-xs font-semibold tracking-widest text-accent transition posh-button animate-fadeInUp [animation-delay:0.4s]" data-aos="fade-up" data-aos-delay="400">
         Explore&nbsp;My&nbsp;Work
       </a>    
     </header>
@@ -172,8 +191,7 @@
     <!-- QUOTE -->
     <section class="py-20 animate-fade">
       <div class="mx-auto max-w-3xl px-8">
-        <div class="relative bg-base-50/80 rounded-2xl shadow-sm p-8 text-center">
-          
+        <div class="relative backdrop-blur-md rounded-2xl p-8 text-center">          
           <!-- Top subtle line -->
           <div class="absolute top-4 left-1/2 -translate-x-1/2 h-0.5 w-12 bg-accent/30 rounded-full"></div>
           
@@ -552,10 +570,10 @@
       particlesJS('particles-js', {
         particles: {
           number: {
-            value: 80,
+            value: 100,
             density: {
               enable: true,
-              value_area: 800
+              value_area: 900
             }
           },
           color: {
@@ -566,34 +584,40 @@
             stroke: {
               width: 0,
               color: "#000"
-            },
+            }
           },
           opacity: {
-            value: 0.5,
-            random: false,
+            value: 0.45,
+            random: true, 
             anim: {
-              enable: false
+              enable: true,
+              speed: 0.8,
+              opacity_min: 0.3,
+              sync: false
             }
           },
           size: {
-            value: 4.0,
-            random: true,
+            value: 4.5,
+            random: true,  
             anim: {
-              enable: false
+              enable: true,
+              speed: 2,
+              size_min: 0.5,
+              sync: false
             }
           },
           line_linked: {
             enable: true,
-            distance: 150,
+            distance: 140,
             color: "#4c93ff",
-            opacity: 0.25,
-            width: 1
+            opacity: 0.3, 
+            width: 1.5
           },
           move: {
             enable: true,
-            speed: 0.8,
+            speed: 0.6,
             direction: "none",
-            random: false,
+            random: true,
             straight: false,
             out_mode: "out",
             bounce: false
@@ -613,9 +637,9 @@
           },
           modes: {
             grab: {
-              distance: 140,
+              distance: 160,
               line_linked: {
-                opacity: 0.5
+                opacity: 0.4
               }
             }
           }
@@ -623,6 +647,7 @@
         retina_detect: true
       });
       </script>
+  
   
 
   </body>
