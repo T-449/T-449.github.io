@@ -132,7 +132,13 @@
     }
 
     h1, h2, h3 {
-      letter-spacing: 0.03em;
+      font-variant: small-caps;
+      letter-spacing: 0.04em;
+    }
+    .nav-link {
+      text-transform: uppercase;
+      font-weight: 500;
+      letter-spacing: 0.1em;
     }
 
     @keyframes heartbeat {
@@ -251,7 +257,7 @@
       </div>
     </section>
     
-    <div class="mx-auto my-12 h-px w-24 bg-accent/30 animate-fadeInUp"></div>
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
     
 
     <!-- NEWS -->
@@ -287,7 +293,8 @@
       </div>
     </section> -->
 
-    <div class="mx-auto my-12 h-px w-24 bg-accent/30 animate-fadeInUp"></div>
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
 <!-- CV -->
 <section id="cv" class="py-24" data-aos="fade-up">
   <div class="mx-auto max-w-4xl px-6">
@@ -356,7 +363,8 @@
   </div>
 </section>
 
-<div class="mx-auto my-12 h-px w-24 bg-accent/30 animate-fadeInUp"></div>
+<div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
 
     <!-- PUBLICATIONS -->
 
@@ -418,7 +426,8 @@
       </div>
     </section> -->
 
-    <div class="mx-auto my-12 h-px w-24 bg-accent/30 animate-fadeInUp"></div>
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
     <!-- CONTACT -->
     <section id="contact" class="py-24" data-aos="fade-up">
       <div class="mx-auto max-w-md px-6 text-center">
@@ -460,7 +469,7 @@
       </div>
     </section>
     
-
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
 
   <!-- HOBBIES AND DAILY LIFE -->
   <section id="hobbies" class="py-24 bg-base-100" data-aos="fade-up">
@@ -589,11 +598,12 @@
     </script>
 
     <script>
-      AOS.init({
-        once: true,
-        duration: 800,
-        easing: 'ease-out-cubic',
-      });
+    AOS.init({
+      once: true,
+      duration: 900,
+      delay: 100,
+      easing: 'ease-out-cubic',
+    });
     </script>
 
     <script>
