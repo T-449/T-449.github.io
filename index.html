@@ -134,6 +134,25 @@
     h1, h2, h3 {
       letter-spacing: 0.03em;
     }
+
+    @keyframes heartbeat {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.3);
+      }
+    }
+
+    @keyframes coffeePulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.3); 
+      }
+    }
+
     </style>
 
   <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
@@ -512,13 +531,14 @@
         ? 'grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 transition-all duration-500'
         : 'flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4 transition-all duration-500';
     
-      images.forEach(img => {
-        const el = document.createElement('img');
-        el.src = img.src;
-        el.alt = img.alt;
-        el.className = 'h-64 w-80 flex-shrink-0 rounded-2xl object-cover shadow hover:scale-105 transition';
-        gallery.appendChild(el);
-      });
+        images.forEach(img => {
+          const el = document.createElement('img');
+          el.src = img.src;
+          el.alt = img.alt;
+          el.loading = 'lazy';
+          el.className = 'h-64 w-80 flex-shrink-0 rounded-2xl object-cover shadow hover:scale-105 transition';
+          gallery.appendChild(el);
+        });
     
       // Hide or show scroll buttons
       if (asGrid) {
@@ -548,9 +568,19 @@
 
     <!-- FOOTER -->
     <footer class="bg-gradient-to-t from-base-900 to-base-900/80 py-6 text-center text-sm text-base-50 animate-fade opacity-90">
-      © <span id="year"></span> Tushin&nbsp;Mallick. All rights reserved.
+      <div>
+        © <span id="year"></span> Tushin&nbsp;Mallick. All rights reserved.
+      </div>
+      <div class="mt-2 text-sm text-base-500">
+        Made with 
+        <span class="text-red-400 text-sm inline-block animate-[heartbeat_3s_infinite]">❤️</span> 
+        and 
+        <span class="text-yellow-300 inline-block text-lg animate-[coffeePulse_4s_infinite]">☕️</span> 
+        .
+      </div>
     </footer>
 
+  
     <script>
       document.getElementById('year').textContent = new Date().getFullYear();
       document.querySelectorAll('.nav-link').forEach(a=>{
