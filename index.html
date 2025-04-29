@@ -158,6 +158,16 @@
         transform: scale(1.3); 
       }
     }
+    
+    .cv-button {
+      transition: all 0.3s ease;
+    }
+    .cv-button:hover {
+      transform: scale(1.05);
+    }
+    .cv-button:active {
+      transform: scale(0.95);
+    }
 
     </style>
 
@@ -300,7 +310,7 @@
   <div class="mx-auto max-w-4xl px-6">
     <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Curriculum&nbsp;Vitae</h2>
     <div class="mb-12 text-center">
-      <a href="files/Tushin_CV.pdf" target="_blank" rel="noopener" class="inline-block rounded-full border border-accent/70 bg-accent/10 px-6 py-2 text-sm font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
+      <a href="files/Tushin_CV.pdf" target="_blank" rel="noopener" class="cv-button inline-block rounded-full border border-accent/70 bg-accent/10 px-6 py-2 text-sm font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
         View Full CV (PDF)
       </a>
     </div>
@@ -537,8 +547,9 @@
     function renderImages(asGrid = false) {
       gallery.innerHTML = '';
       gallery.className = asGrid 
-        ? 'grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 transition-all duration-500'
-        : 'flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4 transition-all duration-500';
+      ? 'grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 px-4 transition-all duration-500'
+      : 'flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4 transition-all duration-500';
+
     
         images.forEach(img => {
           const el = document.createElement('img');
