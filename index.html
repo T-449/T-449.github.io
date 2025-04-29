@@ -555,6 +555,7 @@
           const el = document.createElement('img');
           el.src = img.src;
           el.alt = img.alt;
+          el.loading = 'lazy';
           el.className = 'h-64 w-80 flex-shrink-0 rounded-2xl object-cover shadow hover:scale-105 transition';
           gallery.appendChild(el);
         });
@@ -676,6 +677,10 @@
         interactivity: {
           detect_on: "canvas",
           events: {
+            onhover: {
+              enable: false,
+              mode: "grab"
+            },
             onclick: {
               enable: false
             },
