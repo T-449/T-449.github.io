@@ -4,6 +4,7 @@ on:
   push:
     paths:
       - 'tex/**'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -16,14 +17,16 @@ jobs:
     - name: Install LaTeX
       run: sudo apt-get update && sudo apt-get install -y texlive-full latexmk
 
-    - name: Compile CV (Debug Mode)
+    - name: Compile CV (Verbose & Safe)
       working-directory: tex
       run: |
-        echo "Files in tex/:"
+        echo "📂 Listing files in tex/:"
         ls -l
-        echo "Compiling Tushin_CV.tex..."
+        echo "🚀 Compiling Tushin_CV.tex..."
         latexmk -pdf -interaction=nonstopmode -file-line-error -halt-on-error Tushin_CV.tex
+        echo "✅ Compilation complete. Listing output:"
         ls -lh
+        echo "📤 Copying PDF to files/"
         cp Tushin_CV.pdf ../files/Tushin_CV.pdf
 
     - name: Commit and push updated PDF
