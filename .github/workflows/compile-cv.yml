@@ -1,0 +1,32 @@
+name: Compile LaTeX CV
+
+on:
+  push:
+    paths:
+      - 'tex/**'   # only trigger when something changes inside /tex
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install LaTeX
+      run: sudo apt-get update && sudo apt-get install -y texlive-latex-extra latexmk
+
+    - name: Compile CV
+      working-directory: tex
+      run: |
+        latexmk -pdf -interaction=nonstopmode Tushin_CV.tex
+        cp Tushin_CV.pdf ../files/Tushin_CV.pdf
+
+    - name: Commit and push updated PDF
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        git add files/Tushin_CV.pdf
+        git commit -m "Auto-update CV PDF" || echo "No changes to commit"
+        git push
+
