@@ -1,0 +1,138 @@
+% ----------------------------------------------------------------------
+%  Curriculum Vitae — Tushin Mallick (classic burgundy style)
+%  NOTE: Compiles with default pdfLaTeX — no special engine needed.
+% ----------------------------------------------------------------------
+\documentclass[11pt,a4paper]{moderncv}
+
+% ----------------------------------------------------------------------
+%  STYLE & COLOR
+% ----------------------------------------------------------------------
+\moderncvstyle{classic}
+\moderncvcolor{burgundy}
+
+% ----------------------------------------------------------------------
+%  ENCODING & PAGE LAYOUT
+% ----------------------------------------------------------------------
+\usepackage[utf8]{inputenc}
+\usepackage[scale=0.85]{geometry}
+\usepackage{xcolor}
+\usepackage[unicode]{hyperref} % 
+\definecolor{linkblue}{HTML}{3366CC}
+\hypersetup{
+    colorlinks=true,
+    urlcolor=linkblue,
+    linkcolor=black,
+    citecolor=black
+}
+\setlength{\hintscolumnwidth}{3cm}
+
+% ----------------------------------------------------------------------
+%  PERSONAL DATA
+% ----------------------------------------------------------------------
+\name{Tushin}{Mallick}
+% \title{Ph.D. Candidate — Network Security & Distributed Systems}{}
+\mobile{+1 (617) 251 1710}
+\email{mallick.tu@northeastern.edu}
+\homepage{t-449.github.io}
+\social[github]{T-449}
+\social[linkedin]{tushin-mallick-0233311a0}
+% \extrainfo{Advisor: Dr. Cristina Nita‑Rotaru}
+\nopagenumbers{}
+
+% ----------------------------------------------------------------------
+\begin{document}
+\makecvtitle
+
+% ----------------------------------------------------------------------
+\section{Education}
+\cventry{Sept 2023 -- Present}{Ph.D. in Computer Science}{Northeastern University}{Boston, MA}{}{GPA 4.00/4.00\\Advisor: \textit{Dr. Cristina Nita‑Rotaru}}
+\cventry{Feb 2017 -- May 2022}{B.Sc. in Computer Science \& Engineering}{Bangladesh University of Engineering \& Technology}{Dhaka, Bangladesh}{}{GPA 3.70/4.00}
+
+% ----------------------------------------------------------------------
+\section{Research Interests}
+\cvitem{}{{Network Security, Distributed Systems, Post‑Quantum Cryptography}}
+
+% ----------------------------------------------------------------------
+\section{Experience}
+
+\cventry{May 2025 -- July 2025}{Research Intern}{Cisco Systems}{San José, CA}{}{
+\begin{itemize}
+    \item Researching security challenges related to post-quantum algorithms.
+\end{itemize}}
+
+\cventry{May 2024 -- April 2025}{Graduate Research Assistant}{NDS2 Lab, Northeastern University (Cybersecurity \& Privacy Institute)}{Boston, MA}{}{
+\begin{itemize}
+    \item Investigating \emph{fingerprinting of post‑quantum algorithms} across libraries, protocols and SNARKs.
+\end{itemize}}
+
+\cventry{June 2022 -- June 2023}{Research Assistant}{Bangladesh University of Engineering \& Technology}{Dhaka, Bangladesh}{}{
+\begin{itemize}
+    \item \textbf{\href{https://drive.google.com/file/d/1Swjc1G7wjj6VnwO3XELsknQGtT2CvRaO/view?usp=sharing}{Malware App Identification using System Call Pattern}}
+    \begin{itemize}
+        \item Detection of malware applications by training deep learning models on sequential system call attributes.
+        \item Generated a random forest model that successfully classifies malware and benign applications.
+    \end{itemize}
+    \item \textbf{\href{https://drive.google.com/file/d/1kQaQXqKSESb9hBwxKZ3Jc4aSIbAQ-N7p/view?usp=sharing}{Cloud-Fog Federation}}
+    \begin{itemize}
+        \item Researched federation between cloud and fog networks addressing authentication and application handover problems.
+    \end{itemize}
+\end{itemize}}
+
+% ----------------------------------------------------------------------
+\section{Teaching}
+\cventry{Sept 2023 -- Apr 2024}{Graduate Teaching Assistant}{Northeastern University}{Boston, MA}{}{
+\begin{itemize}
+    \item CS 6240 \emph{Large‑Scale Parallel Data Processing} (Spring 2024)
+    \item CS 3700 \emph{Networks \& Distributed Systems} (Fall 2023)
+\end{itemize}}
+
+
+\section{Service}
+\cventry{2025}{Web Chair}{ACM QRSEC 2025}{Taipei, Taiwan}{}{}
+
+% ----------------------------------------------------------------------
+\section{Publications}
+
+\cvitem{2025}{
+E.~Li, \textbf{T.~Mallick}, E.~Rose, W.~Robertson, A.~Oprea, C.~Nita-Rotaru — 
+\href{https://arxiv.org/abs/2504.20984}{“ACE: A Security Architecture for LLM-Integrated App Systems,”} 
+\emph{Preprint}.
+}
+
+
+\cvitem{2024}{
+\textbf{T.~Mallick}, C.~Nita‑Rotaru, A.~Kundu, R.~Kompella — 
+\href{https://arxiv.org/abs/2503.17830}{“Fingerprinting Implementations of Cryptographic Primitives that Use Post‑Quantum Algorithms,”} 
+\emph{Preprint}.
+}
+
+\cvitem{2022}{
+A.~Ali, \textbf{T.~Mallick}, S.~Sakib — 
+\href{https://ieeexplore.ieee.org/document/9838904/metrics}{“Provisioning Fog Services to 3GPP Subscribers,”} 
+\emph{IEEE ICC 2022}.
+}
+
+\cvitem{2022}{
+A.~Ali, \textbf{T.~Mallick}, M.~Islam, M.~S.~Islam, S.~Sakib — 
+\href{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4207601}{“3GPP Edge‑Fog Federation: Transparent Third‑Party Authentication \& Application Mobility,”} 
+\emph{Computer Communication 2022}.
+}
+
+
+
+% ----------------------------------------------------------------------
+\section{Honours}
+\cvitem{2021--2022}{Dean’s List (2 semesters), Bangladesh University of Engineering \& Technology}
+
+% ----------------------------------------------------------------------
+\section{Coursework}
+\cvitem{}{Formal Specification \& Verification · Seminar in Computer Systems · Machine Learning · Foundations of Distributed Systems · Information Visualization Theory}
+
+% ----------------------------------------------------------------------
+\section{Skills}
+\cvitem{Languages}{Python, Java, C/C++, PHP, JavaScript, SQL, HTML/CSS}
+\cvitem{Frameworks}{TensorFlow, Pandas, NumPy, Scikit‑learn}
+\cvitem{Formal Methods}{NuXmv, TLA$^{+}$, Isabelle, Spin}
+\cvitem{Tools}{Linux, Git, Bash/Zsh, \LaTeX, Microsoft Office}
+
+\end{document}
