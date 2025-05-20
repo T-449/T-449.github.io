@@ -187,6 +187,7 @@
           <!-- <li><a class="nav-link" href="#talks">Talks</a></li> -->
           
           <li><a class="nav-link" href="#contact">Contact</a></li>
+          <li><a class="nav-link" href="#hobbies">Gallery</a></li>
         </ul>
         <!-- Social Icons -->
         <div class="hidden sm:flex items-center gap-6 text-lg text-base-900">
@@ -615,9 +616,30 @@
     renderImages();
     
     // Button Logic
-    scrollLeftBtn.onclick = () => gallery.scrollBy({ left: -300, behavior: 'smooth' });
-    scrollRightBtn.onclick = () => gallery.scrollBy({ left: 300, behavior: 'smooth' });
-    
+    const updateArrowVisibility = () => {
+  const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
+  scrollLeftBtn.style.display = gallery.scrollLeft > 0 ? 'block' : 'none';
+  scrollRightBtn.style.display = gallery.scrollLeft < maxScrollLeft - 1 ? 'block' : 'none';
+};
+
+// Initial check
+updateArrowVisibility();
+
+// Update on scroll
+gallery.addEventListener('scroll', updateArrowVisibility);
+
+// Scroll buttons
+scrollLeftBtn.onclick = () => {
+  gallery.scrollBy({ left: -300, behavior: 'smooth' });
+};
+scrollRightBtn.onclick = () => {
+  gallery.scrollBy({ left: 300, behavior: 'smooth' });
+};
+
+// Also update visibility after scroll animation
+gallery.addEventListener('scrollend', updateArrowVisibility); // Fallback for smooth scroll
+setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
+
     let isGrid = false;
     toggleGridBtn.onclick = () => {
       isGrid = !isGrid;
