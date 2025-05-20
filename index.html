@@ -763,5 +763,18 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
         retina_detect: true
       });
       </script>
+
+      <button id="backToTop" class="fixed bottom-6 right-6 z-50 hidden p-3 rounded-full bg-accent text-white shadow-md hover:scale-110 transition">
+        ↑
+      </button>
+
+      <script>
+        const btn = document.getElementById('backToTop');
+        window.addEventListener('scroll', () => {
+          btn.classList.toggle('hidden', window.scrollY < 600);
+        });
+        btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+      </script>
+
   </body>
 </html>
