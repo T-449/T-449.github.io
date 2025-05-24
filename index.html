@@ -17,7 +17,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;700&display=swap" rel="stylesheet" />
-
+    
     <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -570,6 +570,8 @@
       { src: 'images/basketball.jpeg', alt: 'basketball' },
       { src: 'images/patenga.jpeg', alt: 'basketball' },
       { src: 'images/charles.jpeg', alt: 'basketball' },
+      { src: 'images/charles_eve.jpg', alt: 'charles_evening' },
+      { src: 'images/niagara_rainbow.jpg', alt: 'charles_evening' },
     ];
     
     // Shuffle images
@@ -769,12 +771,105 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
       </button>
 
       <script>
-        const btn = document.getElementById('backToTop');
-        window.addEventListener('scroll', () => {
-          btn.classList.toggle('hidden', window.scrollY < 600);
+        window.addEventListener('DOMContentLoaded', () => {
+          const btn = document.getElementById('backToTop');
+          const modal = document.getElementById('image-modal');
+          const modalImg = document.getElementById('modal-img');
+          const gallery = document.getElementById('gallery');
+          const closeBtn = document.getElementById('close-modal');
+          const prevBtn = document.getElementById('modal-prev');
+          const nextBtn = document.getElementById('modal-next');
+
+          let currentIndex = -1;
+
+          // Back to Top Button
+          window.addEventListener('scroll', () => {
+            btn.classList.toggle('hidden', window.scrollY < 600);
+          });
+
+          btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+
+          // Close modal
+          closeBtn.addEventListener('click', () => {
+            modal.classList.add('hidden');
+          });
+
+          modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+              modal.classList.add('hidden');
+            }
+          });
+
+          // Navigate to previous image
+          prevBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentIndex > -1) {
+              currentIndex = (currentIndex - 1 + images.length) % images.length;
+              modalImg.src = images[currentIndex].src;
+            }
+          });
+
+          // Navigate to next image
+          nextBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (currentIndex > -1) {
+              currentIndex = (currentIndex + 1) % images.length;
+              modalImg.src = images[currentIndex].src;
+            }
+          });
+
+          // Open modal from gallery
+          if (gallery && modal && modalImg) {
+            gallery.addEventListener('click', function (e) {
+              if (e.target.tagName === 'IMG') {
+                modalImg.src = e.target.src;
+                modal.classList.remove('hidden');
+                currentIndex = images.findIndex(img => e.target.src.includes(img.src));
+              }
+            });
+          }
+
+          // Keyboard navigation
+          document.addEventListener('keydown', (e) => {
+            if (!modal.classList.contains('hidden')) {
+              if (e.key === 'ArrowRight') {
+                currentIndex = (currentIndex + 1) % images.length;
+                modalImg.src = images[currentIndex].src;
+              } else if (e.key === 'ArrowLeft') {
+                currentIndex = (currentIndex - 1 + images.length) % images.length;
+                modalImg.src = images[currentIndex].src;
+              } else if (e.key === 'Escape') {
+                modal.classList.add('hidden');
+              }
+            }
+          });
         });
-        btn.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
       </script>
+
+
+
+      <!-- Image Modal -->
+      <div id="image-modal" class="fixed inset-0 z-50 hidden bg-black bg-opacity-80 flex items-center justify-center">
+        <!-- Left arrow -->
+        <button id="modal-prev" class="absolute left-4 text-white text-4xl font-bold hover:text-accent transition z-50">
+          &#10094;
+        </button>
+
+        <!-- Image -->
+        <img id="modal-img" src="" alt="Enlarged Image" class="max-h-[90vh] max-w-[90vw] rounded-lg shadow-xl transition-all duration-300" />
+
+        <!-- Right arrow -->
+        <button id="modal-next" class="absolute right-4 text-white text-4xl font-bold hover:text-accent transition z-50">
+          &#10095;
+        </button>
+
+        <!-- Close button -->
+        <button id="close-modal" class="absolute top-6 right-6 text-white text-3xl font-bold hover:text-accent transition z-50">
+          &times;
+        </button>
+      </div>
+
+
 
   </body>
 </html>
