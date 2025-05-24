@@ -262,7 +262,7 @@
         </p>
         
         <p class="mb-6 leading-relaxed text-base md:text-lg">
-          Outside of research, I enjoy <span class="inline-flex items-center gap-1"><span>running</span> 🏃‍♂️</span>, <span class="inline-flex items-center gap-1"><span>watching sunsets</span> 🌇</span>, and <span class="inline-flex items-center gap-1"><span>playing soccer</span> ⚽️</span>. I'm also a passionate supporter of Real Madrid 
+          Outside of research, I enjoy <span class="inline-flex items-center gap-1"><span>reading books</span> 📖</span>, </span><span class="inline-flex items-center gap-1"><span>running</span> 🏃‍♂️</span>, <span class="inline-flex items-center gap-1"><span>watching sunsets</span> 🌇</span>, and <span class="inline-flex items-center gap-1"><span>playing soccer</span> ⚽️</span>. I'm also a passionate supporter of Real Madrid 
           <img src="https://upload.wikimedia.org/wikipedia/en/5/56/Real_Madrid_CF.svg" alt="Real Madrid Logo" class="inline h-6 w-6 ml-1 align-middle" />.
         </p>
         
@@ -563,16 +563,18 @@
 
   <script>
     const images = [
-      { src: 'images/niagara.jpg', alt: 'niagara' },
-      { src: 'images/sunrise.jpg', alt: 'sunrise' },
-      { src: 'images/acadia.jpeg', alt: 'acadia' },
-      { src: 'images/kayaking.jpeg', alt: 'kayaking' },
-      { src: 'images/basketball.jpeg', alt: 'basketball' },
-      { src: 'images/patenga.jpeg', alt: 'basketball' },
-      { src: 'images/charles.jpeg', alt: 'basketball' },
-      { src: 'images/charles_eve.jpg', alt: 'charles_evening' },
-      { src: 'images/niagara_rainbow.jpg', alt: 'charles_evening' },
+      { src: 'images/acadia.jpeg', alt: 'acadia', caption: 'Calm' },
+      { src: 'images/alewife.jpg', alt: 'alewife', caption: 'Reflection' },
+      { src: 'images/basketball.jpeg', alt: 'basketball', caption: 'Excitement' },
+      { src: 'images/charles_eve.jpg', alt: 'charles_evening', caption: 'Stillness' },
+      { src: 'images/charles.jpeg', alt: 'charles', caption: 'Peace' },
+      { src: 'images/kayaking.jpeg', alt: 'kayaking', caption: 'Joy' },
+      { src: 'images/niagara_rainbow.jpg', alt: 'niagara_rainbow', caption: 'Revelation' },
+      { src: 'images/niagara.jpg', alt: 'niagara', caption: 'Awe' },
+      { src: 'images/patenga.jpeg', alt: 'patenga', caption: 'Longing' },
+      { src: 'images/sunrise.jpg', alt: 'sunrise', caption: 'Renewal' }
     ];
+
     
     // Shuffle images
     function shuffleArray(arr) {
@@ -597,14 +599,26 @@
       : 'flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4 transition-all duration-500';
 
     
-        images.forEach(img => {
-          const el = document.createElement('img');
-          el.src = img.src;
-          el.alt = img.alt;
-          el.loading = 'lazy';
-          el.className = 'h-64 w-80 flex-shrink-0 rounded-2xl object-cover shadow hover:scale-105 transition';
-          gallery.appendChild(el);
-        });
+      images.forEach(img => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'flex flex-col items-center w-80 flex-shrink-0 gap-2';
+
+        const el = document.createElement('img');
+        el.src = img.src;
+        el.alt = img.alt;
+        el.loading = 'lazy';
+        el.className = 'h-64 w-80 rounded-2xl object-cover shadow hover:scale-105 transition';
+
+        // Caption below image
+        const caption = document.createElement('p');
+        caption.className = 'text-base font-serif font-semibold text-base-800 italic tracking-wide';
+        caption.textContent = img.caption;
+
+        wrapper.appendChild(el);
+        wrapper.appendChild(caption);
+        gallery.appendChild(wrapper);
+      });
+
     
       // Hide or show scroll buttons
       if (asGrid) {
