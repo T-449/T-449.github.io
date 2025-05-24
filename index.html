@@ -178,7 +178,7 @@
       line-height: 2.5rem;
       color: #f5f5f5;
       text-align: center;
-      padding: 1.5rem 2rem 0;
+      padding: 0rem 2rem 0;
       max-width: 48rem;
     }
 
@@ -580,43 +580,43 @@
         src: 'images/acadia.jpeg',
         alt: 'acadia',
         caption: 'Calm',
-        description: 'The sky, the sea, the silence - nothing demands, nothing shouts. It simply exists, quietly.'
+        description: '"The sky, the sea, the silence - nothing demands, nothing shouts. It simply exists, quietly."'
       },
       {
         src: 'images/alewife.jpg',
         alt: 'alewife',
         caption: 'Reflection',
-        description: 'Still water becomes a mirror — of sky, of self.'
+        description: '"Still water becomes a mirror — of the sky, of the sun and of self."'
       },
       {
         src: 'images/basketball.jpeg',
         alt: 'basketball',
         caption: 'Excitement',
-        description: 'The crowd breathes in rhythm, the court pulses with energy. It’s not just a game, it’s a collective heartbeat.'
+        description: '"The crowd breathes in rhythm, the court pulses with energy. It’s not just a game, it’s a collective heartbeat."'
       },
       {
         src: 'images/charles_eve.jpg',
         alt: 'charles_evening',
         caption: 'Stillness',
-        description: 'Boston holds its breath in the blue hour — not asleep, not awake. Just quietly suspended in its own glow.'
+        description: '"Boston holds its breath in the blue hour — not asleep, not awake. Just quietly suspended in its own glow."'
       },
       {
         src: 'images/charles.jpeg',
         alt: 'charles',
         caption: 'Peace',
-        description: 'There’s no urgency here — just sunlight through leaves and the gentle curve of a path well-trodden but unrushed.'
+        description: '"Where time loosens its grip and every step feels like a quiet agreement with the world."'
       },
       {
         src: 'images/kayaking.jpeg',
         alt: 'kayaking',
         caption: 'Joy',
-        description: 'That bright, fleeting kind of happiness that doesn’t need a reason.'
+        description: '"That bright, fleeting kind of happiness that doesn’t need a reason."'
       },
       {
         src: 'images/niagara_rainbow.jpg',
         alt: 'niagara_rainbow',
         caption: 'Revelation',
-        description: 'Sometimes awe doesn’t come with thunder — it arrives gently, in light and color.'
+        description: '"The rainbow rises through mist, as if nature briefly unveils something sacred — a fleeting glimpse of the extraordinary in the ordinary."'
       },
       {
         src: 'images/niagara.jpg',
@@ -646,7 +646,7 @@
         src: 'images/pahalgum.jpg', 
         alt: 'pahalgum', 
         caption: 'Clarity',
-        description: '"The sunlight piercing through the mist over this quiet valley in Nepal gives the feeling of a breath, a perspective — emotional or spiritual — coming into focus"'
+        description: '"As the mist lifts from a quiet valley in Nepal, the outlines of the world return — steady, calm, and clear, like a mind finally at rest.'
        },
       {
           src: 'images/taj.jpg',
@@ -880,6 +880,7 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
           const closeBtn = document.getElementById('close-modal');
           const prevBtn = document.getElementById('modal-prev');
           const nextBtn = document.getElementById('modal-next');
+          const modalCaption = document.getElementById('modal-caption');
           const modalDescription = document.getElementById('modal-description');
 
           let currentIndex = -1;
@@ -909,6 +910,7 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
               currentIndex = (currentIndex - 1 + images.length) % images.length;
               modalImg.src = images[currentIndex].src;
               modalDescription.textContent = images[currentIndex].description || '';
+              modalCaption.textContent = images[currentIndex].caption || '';
             }
           });
 
@@ -918,6 +920,7 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
               currentIndex = (currentIndex + 1) % images.length;
               modalImg.src = images[currentIndex].src;
               modalDescription.textContent = images[currentIndex].description || '';
+              modalCaption.textContent = images[currentIndex].caption || '';
             }
           });
 
@@ -930,6 +933,7 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
                 if (!image) return;
 
                 modalImg.src = image.src;
+                modalCaption.textContent = image.caption || '';
                 modalDescription.textContent = image.description || '';
                 modal.classList.remove('hidden');
                 currentIndex = images.indexOf(image);
@@ -943,10 +947,12 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
               if (e.key === 'ArrowRight') {
                 currentIndex = (currentIndex + 1) % images.length;
                 modalImg.src = images[currentIndex].src;
-                modalDescription.textContent = images[currentIndex].description || '';
+                modalCaption.textContent = images[currentIndex].caption || '';
+                modalDescription.textContent = images[currentIndex].description || '';               
               } else if (e.key === 'ArrowLeft') {
                 currentIndex = (currentIndex - 1 + images.length) % images.length;
                 modalImg.src = images[currentIndex].src;
+                modalCaption.textContent = images[currentIndex].caption || '';
                 modalDescription.textContent = images[currentIndex].description || '';
               } else if (e.key === 'Escape') {
                 modal.classList.add('hidden');
@@ -968,6 +974,7 @@ setInterval(updateArrowVisibility, 300); // Edge fallback (optional)
 
         <!-- Description -->
         <div class="mt-6 bg-white/10 backdrop-blur-sm rounded-md px-6 py-4 max-w-4xl text-center">
+          <p id="modal-caption" class="text-xl font-serif italic font-semibold text-white mb-1 tracking-wide"></p>
           <p id="modal-description" class="artistic-font"></p>
         </div>
 
