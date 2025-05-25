@@ -1,0 +1,86 @@
+[
+  {
+    "src": "images/acadia.jpeg",
+    "alt": "acadia",
+    "caption": "Calm",
+    "description": "The sky, the sea, the silence - nothing demands, nothing shouts. It simply exists, quietly."
+  },
+  {
+    "src": "images/alewife.jpg",
+    "alt": "alewife",
+    "caption": "Reflection",
+    "description": "Still water becomes a mirror — of the sky, of the sun and of self."
+  },
+  {
+    "src": "images/basketball.jpeg",
+    "alt": "basketball",
+    "caption": "Excitement",
+    "description": "The crowd breathes in rhythm, the court pulses with energy. It’s not just a game, it’s a collective heartbeat."
+  },
+  {
+    "src": "images/charles_eve.jpg",
+    "alt": "charles_evening",
+    "caption": "Stillness",
+    "description": "Boston holds its breath in the blue hour — not asleep, not awake. Just quietly suspended in its own glow."
+  },
+  {
+    "src": "images/charles.jpeg",
+    "alt": "charles",
+    "caption": "Peace",
+    "description": "Where time loosens its grip and every step feels like a quiet agreement with the world."
+  },
+  {
+    "src": "images/kayaking.jpeg",
+    "alt": "kayaking",
+    "caption": "Joy",
+    "description": "That bright, fleeting kind of happiness that doesn’t need a reason."
+  },
+  {
+    "src": "images/niagara_rainbow.jpg",
+    "alt": "niagara_rainbow",
+    "caption": "Revelation",
+    "description": "The rainbow rises through mist, as if nature briefly unveils something sacred — a fleeting glimpse of the extraordinary in the ordinary."
+  },
+  {
+    "src": "images/niagara.jpg",
+    "alt": "niagara",
+    "caption": "Awe",
+    "description": "Where fear and wonder become the same thing."
+  },
+  {
+    "src": "images/patenga.jpeg",
+    "alt": "patenga",
+    "caption": "Longing",
+    "description": "Distant ships, a vanishing sun, and something in your chest that pulls — not toward what is, but what could have been."
+  },
+  {
+    "src": "images/sunrise.jpg",
+    "alt": "sunrise",
+    "caption": "Renewal",
+    "description": "The first light doesn’t just touch the land — it reclaims it. A quiet declaration that every ending yields a beginning."
+  },
+  {
+    "src": "images/cox.jpg",
+    "alt": "cox",
+    "caption": "Tenderness",
+    "description": "The soft layers of pink and orange over the still bay reflects a calm intimacy — not just serenity, but a gentle, affectionate stillness."
+  },
+  {
+    "src": "images/pahalgum.jpg",
+    "alt": "pahalgum",
+    "caption": "Clarity",
+    "description": "As the mist lifts from a quiet valley in Nepal, the outlines of the world return — steady, calm, and clear, like a mind finally at rest."
+  },
+  {
+    "src": "images/taj.jpg",
+    "alt": "taj",
+    "caption": "Reverence",
+    "description": "Even under shadow, the monument commands stillness and quiet — a timeless weight that’s more emotional than visual."
+  },
+  {
+    "src": "images/clouds.jpg",
+    "alt": "clouds",
+    "caption": "Foreboding",
+    "description": "A brooding presence just before release. It feels like the breath the world holds before the storm breaks."
+  }
+]
