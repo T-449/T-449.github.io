@@ -575,9 +575,15 @@
   </section>
 
   <script>
+  // DOM References
+  const gallery = document.getElementById('gallery');
+  const scrollLeftBtn = document.getElementById('scroll-right');
+  const scrollRightBtn = document.getElementById('scroll-left');
+  const toggleGridBtn = document.getElementById('toggle-grid');
+
   let images = [];
 
-  // Shuffle function
+  // Shuffle images
   function shuffleArray(arr) {
     for (let i = arr.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
@@ -587,24 +593,11 @@
 
   // Render images
   function renderImages(asGrid = false) {
-    const gallery = document.getElementById('gallery');
-    const scrollLeftBtn = document.getElementById('scroll-right');
-    const scrollRightBtn = document.getElementById('scroll-left');
-
     gallery.innerHTML = '';
-    gallery.classList.remove('transition-all', 'duration-500');
+    gallery.className = asGrid 
+      ? 'grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 px-4 transition-all duration-500'
+      : 'flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4 transition-all duration-500';
 
-    if (asGrid) {
-      gallery.className = 'grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 px-4';
-      gallery.style.overflow = 'visible';
-    } else {
-      gallery.className = 'flex gap-6 mt-8 scroll-smooth pb-4';
-      gallery.style.overflowX = 'auto';
-      gallery.style.overflowY = 'hidden';
-      gallery.style.scrollBehavior = 'smooth';
-    }
-
-    const fragment = document.createDocumentFragment();
     images.forEach(img => {
       const wrapper = document.createElement('div');
       wrapper.className = 'flex flex-col items-center w-80 flex-shrink-0 gap-2';
@@ -613,7 +606,7 @@
       el.src = img.src;
       el.alt = img.alt;
       el.loading = 'lazy';
-      el.className = 'h-64 w-80 rounded-2xl object-cover shadow hover:scale-105 transition-transform duration-300';
+      el.className = 'h-64 w-80 rounded-2xl object-cover shadow hover:scale-105 transition';
 
       const caption = document.createElement('p');
       caption.className = 'text-base font-serif font-semibold text-base-800 italic tracking-wide';
@@ -621,24 +614,39 @@
 
       wrapper.appendChild(el);
       wrapper.appendChild(caption);
-      fragment.appendChild(wrapper);
+      gallery.appendChild(wrapper);
     });
 
-    gallery.appendChild(fragment);
-    scrollLeftBtn.style.display = asGrid ? 'none' : 'block';
-    scrollRightBtn.style.display = asGrid ? 'none' : 'block';
+    // Toggle scroll buttons
+    if (asGrid) {
+      scrollLeftBtn.style.display = 'none';
+      scrollRightBtn.style.display = 'none';
+    } else {
+      scrollLeftBtn.style.display = 'block';
+      scrollRightBtn.style.display = 'block';
+    }
   }
 
   function updateArrowVisibility() {
-    const gallery = document.getElementById('gallery');
-    const scrollLeftBtn = document.getElementById('scroll-right');
-    const scrollRightBtn = document.getElementById('scroll-left');
     const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
     scrollLeftBtn.style.display = gallery.scrollLeft > 0 ? 'block' : 'none';
     scrollRightBtn.style.display = gallery.scrollLeft < maxScrollLeft - 1 ? 'block' : 'none';
   }
 
-  // Load JSON and initialize gallery
+  scrollLeftBtn.onclick = () => gallery.scrollBy({ left: -300, behavior: 'smooth' });
+  scrollRightBtn.onclick = () => gallery.scrollBy({ left: 300, behavior: 'smooth' });
+
+  gallery.addEventListener('scroll', updateArrowVisibility);
+  setInterval(updateArrowVisibility, 300); // Fallback support
+
+  // Grid toggle button
+  let isGrid = false;
+  toggleGridBtn.onclick = () => {
+    isGrid = !isGrid;
+    renderImages(isGrid);
+  };
+
+  // Load JSON
   fetch('files/gallery.json')
     .then(response => response.json())
     .then(data => {
@@ -646,23 +654,9 @@
       shuffleArray(images);
       renderImages();
       updateArrowVisibility();
-
-      const gallery = document.getElementById('gallery');
-      gallery.addEventListener('scroll', updateArrowVisibility);
-      gallery.addEventListener('scrollend', updateArrowVisibility);
-      setInterval(updateArrowVisibility, 300);
-
-      document.getElementById('scroll-left').onclick = () => gallery.scrollBy({ left: -300, behavior: 'smooth' });
-      document.getElementById('scroll-right').onclick = () => gallery.scrollBy({ left: 300, behavior: 'smooth' });
-
-      let isGrid = false;
-      document.getElementById('toggle-grid').onclick = () => {
-        isGrid = !isGrid;
-        renderImages(isGrid);
-      };
     })
-    .catch(error => console.error('Error loading gallery.json:', error));
-</script>
+    .catch(err => console.error('Error loading gallery:', err));
+  </script>
 
     
     
