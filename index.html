@@ -594,21 +594,30 @@
   // Render images
   function renderImages(asGrid = false) {
     gallery.innerHTML = '';
-    gallery.className = asGrid 
-      ? 'grid grid-cols-2 md:grid-cols-3 gap-6 mt-8 px-4 transition-all duration-500'
-      : 'flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4 transition-all duration-500';
+
+    if (asGrid) {
+      gallery.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8 px-4 transition-all duration-500';
+      gallery.style.overflow = 'visible';
+      gallery.style.height = 'auto';
+    } else {
+      gallery.className = 'flex overflow-x-auto gap-6 mt-8 px-4 scroll-smooth pb-4 transition-all duration-500';
+      gallery.style.overflowY = 'hidden';
+      gallery.style.height = 'auto';
+    }
 
     const fragment = document.createDocumentFragment();
 
     images.forEach(img => {
       const wrapper = document.createElement('div');
-      wrapper.className = 'flex flex-col items-center w-80 flex-shrink-0 gap-2';
+      wrapper.className = asGrid
+        ? 'flex flex-col items-center w-full gap-2'
+        : 'flex flex-col items-center w-80 flex-shrink-0 gap-2';
 
       const el = document.createElement('img');
       el.src = img.src;
       el.alt = img.alt;
       el.loading = 'lazy';
-      el.className = 'h-64 w-80 rounded-2xl object-cover shadow hover:scale-105 transition';
+      el.className = 'h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition';
 
       const caption = document.createElement('div');
       caption.className = 'text-center';
@@ -632,14 +641,10 @@
 
     gallery.appendChild(fragment);
 
-    if (asGrid) {
-      scrollLeftBtn.style.display = 'none';
-      scrollRightBtn.style.display = 'none';
-    } else {
-      scrollLeftBtn.style.display = 'block';
-      scrollRightBtn.style.display = 'block';
-    }
+    scrollLeftBtn.style.display = asGrid ? 'none' : 'block';
+    scrollRightBtn.style.display = asGrid ? 'none' : 'block';
   }
+
 
   function updateArrowVisibility() {
     const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
