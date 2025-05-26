@@ -593,199 +593,228 @@
   </section>
 
   <script>
-  // DOM References
-  const gallery = document.getElementById('gallery');
-  const scrollLeftBtn = document.getElementById('scroll-right');
-  const scrollRightBtn = document.getElementById('scroll-left');
-  const toggleGridBtn = document.getElementById('toggle-grid');
+    // DOM References
+    const gallery = document.getElementById('gallery');
+    const scrollLeftBtn = document.getElementById('scroll-right');
+    const scrollRightBtn = document.getElementById('scroll-left');
+    const toggleGridBtn = document.getElementById('toggle-grid');
 
-  let images = [];
+    let images = [];
+    let currentPage = 1;
+    const imagesPerPage = 9;
 
-  // Shuffle images
-  function shuffleArray(arr) {
-    for (let i = arr.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [arr[i], arr[j]] = [arr[j], arr[i]];
-    }
-  }
+    let isGrid = false;
+    let currentCarouselPage = 0;
 
-  // Render images
-  let currentPage = 1;
-  const imagesPerPage = 6;
-
-  function renderPagination(totalPages) {
-    const pagination = document.getElementById('pagination');
-    pagination.innerHTML = '';
-
-    const maxVisible = 5;
-    const createButton = (text, page, isActive = false, isDisabled = false) => {
-      const btn = document.createElement('button');
-      btn.textContent = text;
-      btn.className = `px-3 py-1 rounded-full transition ${
-        isActive ? 'bg-accent text-white' : 'bg-white/60 hover:bg-accent hover:text-white'
-      } ${isDisabled ? 'opacity-50 cursor-default' : ''}`;
-      if (!isDisabled) {
-        btn.onclick = () => {
-          currentPage = page;
-          renderImages(true);
-        };
+    function shuffleArray(arr) {
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
       }
-      return btn;
+    }
+
+    function renderPagination(totalPages) {
+      const pagination = document.getElementById('pagination');
+      pagination.innerHTML = '';
+
+      const maxVisible = 5;
+      const createButton = (text, page, isActive = false, isDisabled = false) => {
+        const btn = document.createElement('button');
+        btn.textContent = text;
+        btn.className = `px-3 py-1 rounded-full transition ${
+          isActive ? 'bg-accent text-white' : 'bg-white/60 hover:bg-accent hover:text-white'
+        } ${isDisabled ? 'opacity-50 cursor-default' : ''}`;
+        if (!isDisabled) {
+          btn.onclick = () => {
+            currentPage = page;
+            renderImages(true);
+          };
+        }
+        return btn;
+      };
+
+      // ◀ Prev
+      pagination.appendChild(createButton('◀', currentPage - 1, false, currentPage === 1));
+
+      // Page numbers
+      for (let i = 1; i <= totalPages; i++) {
+        const isFirst = i === 1;
+        const isLast = i === totalPages;
+        const isNearCurrent = Math.abs(i - currentPage) <= 1;
+        const isEdgeGroup = i <= 2 || i >= totalPages - 1;
+
+        if (
+          isFirst || isLast || isNearCurrent || (currentPage <= 3 && i <= maxVisible) ||
+          (currentPage >= totalPages - 2 && i >= totalPages - maxVisible + 1)
+        ) {
+          pagination.appendChild(createButton(i, i, currentPage === i));
+        } else if (
+          pagination.lastChild &&
+          pagination.lastChild.textContent !== '…'
+        ) {
+          const dots = document.createElement('span');
+          dots.textContent = '…';
+          dots.className = 'px-2 text-base-600';
+          pagination.appendChild(dots);
+        }
+      }
+
+      // ▶ Next
+      pagination.appendChild(createButton('▶', currentPage + 1, false, currentPage === totalPages));
+    }
+
+    function renderImages(asGrid = false) {
+      gallery.innerHTML = '';
+
+      if (asGrid) {
+        gallery.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8 px-4 transition-all duration-500 justify-center';
+        gallery.style.overflow = 'visible';
+
+        const start = (currentPage - 1) * imagesPerPage;
+        const paginatedImages = images.slice(start, start + imagesPerPage);
+
+        const fragment = document.createDocumentFragment();
+
+        paginatedImages.forEach(img => {
+          const wrapper = document.createElement('div');
+          wrapper.className = 'flex flex-col items-center w-80 gap-2';
+
+          const el = document.createElement('img');
+          el.src = img.src;
+          el.alt = img.alt;
+          el.loading = 'lazy';
+          el.className = 'h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition';
+
+          const caption = document.createElement('div');
+          caption.className = 'text-center';
+
+          const title = document.createElement('p');
+          title.className = 'text-base font-serif font-semibold text-base-800 italic tracking-wide';
+          title.textContent = img.caption.split(' (')[0];
+
+          const meta = document.createElement('p');
+          meta.className = 'text-sm text-gray-500 italic';
+          const locationYear = img.caption.match(/\((.*?)\)/)?.[1] || '';
+          meta.textContent = locationYear;
+
+          caption.appendChild(title);
+          caption.appendChild(meta);
+
+          wrapper.appendChild(el);
+          wrapper.appendChild(caption);
+          fragment.appendChild(wrapper);
+        });
+
+        gallery.appendChild(fragment);
+        renderPagination(Math.ceil(images.length / imagesPerPage));
+        scrollLeftBtn.style.display = 'none';
+        scrollRightBtn.style.display = 'none';
+
+      } else {
+        gallery.className = 'flex flex-nowrap gap-6 mt-8 px-4 transition-all duration-500 justify-center';
+        gallery.style.overflow = 'hidden';
+
+        const fragment = document.createDocumentFragment();
+        let pageWrapper = null;
+
+        images.forEach((img, index) => {
+          if (index % 3 === 0) {
+            pageWrapper = document.createElement('div');
+            pageWrapper.className = 'flex flex-shrink-0 gap-6 w-full justify-center';
+            fragment.appendChild(pageWrapper);
+          }
+
+          const wrapper = document.createElement('div');
+          wrapper.className = 'flex flex-col items-center w-80 gap-2';
+
+          const el = document.createElement('img');
+          el.src = img.src;
+          el.alt = img.alt;
+          el.loading = 'lazy';
+          el.className = 'h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition';
+
+          const caption = document.createElement('div');
+          caption.className = 'text-center';
+
+          const title = document.createElement('p');
+          title.className = 'text-base font-serif font-semibold text-base-800 italic tracking-wide';
+          title.textContent = img.caption.split(' (')[0];
+
+          const meta = document.createElement('p');
+          meta.className = 'text-sm text-gray-500 italic';
+          const locationYear = img.caption.match(/\((.*?)\)/)?.[1] || '';
+          meta.textContent = locationYear;
+
+          caption.appendChild(title);
+          caption.appendChild(meta);
+
+          wrapper.appendChild(el);
+          wrapper.appendChild(caption);
+          pageWrapper.appendChild(wrapper);
+        });
+
+        gallery.appendChild(fragment);
+        updateCarouselPage();
+
+          if (currentCarouselPage === 0) {
+            scrollLeftBtn.style.display = 'none';
+        }
+
+        document.getElementById('pagination').innerHTML = '';
+      }
+    }
+
+    function updateCarouselPage() {
+      const pages = Array.from(gallery.children);
+      pages.forEach((page, i) => {
+        page.style.display = i === currentCarouselPage ? 'flex' : 'none';
+      });
+
+      const totalPages = Math.ceil(images.length / 3);
+
+      // Correct visibility logic
+      scrollLeftBtn.style.display = currentCarouselPage > 0 ? 'block' : 'none';                  // ◀ only if not first
+      scrollRightBtn.style.display = currentCarouselPage < totalPages - 1 ? 'block' : 'none';    // ▶ only if not last
+    }
+
+
+
+    // ▶ RIGHT (next page)
+    scrollRightBtn.onclick = () => {
+      const totalPages = Math.ceil(images.length / 3);
+      if (currentCarouselPage < totalPages - 1) {
+        currentCarouselPage++;
+        updateCarouselPage();
+      }
     };
 
-    // ◀ Prev
-    pagination.appendChild(createButton('◀', currentPage - 1, false, currentPage === 1));
-
-    // Page numbers
-    for (let i = 1; i <= totalPages; i++) {
-      const isFirst = i === 1;
-      const isLast = i === totalPages;
-      const isNearCurrent = Math.abs(i - currentPage) <= 1;
-      const isEdgeGroup = i <= 2 || i >= totalPages - 1;
-
-      if (
-        isFirst || isLast || isNearCurrent || (currentPage <= 3 && i <= maxVisible) ||
-        (currentPage >= totalPages - 2 && i >= totalPages - maxVisible + 1)
-      ) {
-        pagination.appendChild(createButton(i, i, currentPage === i));
-      } else if (
-        pagination.lastChild &&
-        pagination.lastChild.textContent !== '…'
-      ) {
-        const dots = document.createElement('span');
-        dots.textContent = '…';
-        dots.className = 'px-2 text-base-600';
-        pagination.appendChild(dots);
+    // ◀ LEFT (previous page)
+    scrollLeftBtn.onclick = () => {
+      if (currentCarouselPage > 0) {
+        currentCarouselPage--;
+        updateCarouselPage();
       }
-    }
+    };
 
-    // ▶ Next
-    pagination.appendChild(createButton('▶', currentPage + 1, false, currentPage === totalPages));
-  }
+    toggleGridBtn.onclick = () => {
+      isGrid = !isGrid;
+      if (isGrid) currentPage = 1;
+      renderImages(isGrid);
+    };
 
-  function renderImages(asGrid = false) {
-    gallery.innerHTML = '';
-
-    if (asGrid) {
-      gallery.className = 'grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 mt-8 px-4 transition-all duration-500';
-      gallery.style.overflow = 'visible';
-
-      const start = (currentPage - 1) * imagesPerPage;
-      const paginatedImages = images.slice(start, start + imagesPerPage);
-
-      const fragment = document.createDocumentFragment();
-
-      paginatedImages.forEach(img => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'flex flex-col items-center w-full gap-2';
-
-        const el = document.createElement('img');
-        el.src = img.src;
-        el.alt = img.alt;
-        el.loading = 'lazy';
-        el.className = 'h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition';
-
-        const caption = document.createElement('div');
-        caption.className = 'text-center';
-
-        const title = document.createElement('p');
-        title.className = 'text-base font-serif font-semibold text-base-800 italic tracking-wide';
-        title.textContent = img.caption.split(' (')[0];
-
-        const meta = document.createElement('p');
-        meta.className = 'text-sm text-gray-500 italic';
-        const locationYear = img.caption.match(/\((.*?)\)/)?.[1] || '';
-        meta.textContent = locationYear;
-
-        caption.appendChild(title);
-        caption.appendChild(meta);
-
-        wrapper.appendChild(el);
-        wrapper.appendChild(caption);
-        fragment.appendChild(wrapper);
-      });
-
-      gallery.appendChild(fragment);
-
-      renderPagination(Math.ceil(images.length / imagesPerPage));
-      scrollLeftBtn.style.display = 'none';
-      scrollRightBtn.style.display = 'none';
-
-    } else {
-      gallery.className = 'flex overflow-x-auto gap-6 mt-8 px-4 scroll-smooth pb-4 transition-all duration-500';
-      gallery.style.overflowY = 'hidden';
-
-      const fragment = document.createDocumentFragment();
-
-      images.forEach(img => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'flex flex-col items-center w-80 flex-shrink-0 gap-2';
-
-        const el = document.createElement('img');
-        el.src = img.src;
-        el.alt = img.alt;
-        el.loading = 'lazy';
-        el.className = 'h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition';
-
-        const caption = document.createElement('div');
-        caption.className = 'text-center';
-
-        const title = document.createElement('p');
-        title.className = 'text-base font-serif font-semibold text-base-800 italic tracking-wide';
-        title.textContent = img.caption.split(' (')[0];
-
-        const meta = document.createElement('p');
-        meta.className = 'text-sm text-gray-500 italic';
-        const locationYear = img.caption.match(/\((.*?)\)/)?.[1] || '';
-        meta.textContent = locationYear;
-
-        caption.appendChild(title);
-        caption.appendChild(meta);
-
-        wrapper.appendChild(el);
-        wrapper.appendChild(caption);
-        fragment.appendChild(wrapper);
-      });
-
-      gallery.appendChild(fragment);
-
-      document.getElementById('pagination').innerHTML = '';
-      scrollLeftBtn.style.display = 'block';
-      scrollRightBtn.style.display = 'block';
-    }
-  }
-
-
-  function updateArrowVisibility() {
-    const maxScrollLeft = gallery.scrollWidth - gallery.clientWidth;
-    scrollLeftBtn.style.display = gallery.scrollLeft > 0 ? 'block' : 'none';
-    scrollRightBtn.style.display = gallery.scrollLeft < maxScrollLeft - 1 ? 'block' : 'none';
-  }
-
-  scrollLeftBtn.onclick = () => gallery.scrollBy({ left: -300, behavior: 'smooth' });
-  scrollRightBtn.onclick = () => gallery.scrollBy({ left: 300, behavior: 'smooth' });
-
-  gallery.addEventListener('scroll', updateArrowVisibility);
-  setInterval(updateArrowVisibility, 300); // Fallback support
-
-  // Grid toggle button
-  let isGrid = false;
-  toggleGridBtn.onclick = () => {
-    isGrid = !isGrid;
-    renderImages(isGrid);
-  };
-
-  // Load JSON
-  fetch('files/gallery.json')
-    .then(response => response.json())
-    .then(data => {
-      images = data;
-      shuffleArray(images);
-      renderImages();
-      updateArrowVisibility();
-    })
-    .catch(err => console.error('Error loading gallery:', err));
+    fetch('files/gallery.json')
+      .then(response => response.json())
+      .then(data => {
+        images = data;
+        shuffleArray(images);
+        renderImages();
+        if (!isGrid && currentCarouselPage === 0) {
+            scrollLeftBtn.style.display = 'none';
+          }
+      })
+      .catch(err => console.error('Error loading gallery:', err));
   </script>
+
 
     
     
