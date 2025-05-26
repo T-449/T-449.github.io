@@ -4,7 +4,7 @@
     "tag": "arXiv",
     "title": "ACE: A Security Architecture for LLM-Integrated App Systems",
     "link": "https://arxiv.org/abs/2504.20984",
-    "pdf": "https://arxiv.org/pdf/2504.20984",
+    "pdf": "/files/publications/ACE.pdf",
     "note": ". Preprint"
   },
   {
@@ -12,7 +12,7 @@
     "tag": "arXiv",
     "title": "Fingerprinting Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms",
     "link": "https://arxiv.org/abs/2503.17830",
-    "pdf": "https://arxiv.org/pdf/2503.17830",
+    "pdf": "/files/publications/PQ_Fingerprint.pdf",
     "note": ". Preprint"
   },
   {
@@ -20,7 +20,7 @@
     "tag": "IEEE ICC",
     "title": "Provisioning fog services to 3GPP subscribers: Authentication and application mobility.",
     "link": "https://ieeexplore.ieee.org/document/9838904",
-    "pdf": "https://arxiv.org/pdf/2112.02476",
+    "pdf": "/files/publications/3GPP.pdf",
     "note": "In IEEE ICC 2022, pp. 4926–4931."
   },
   {
@@ -28,7 +28,7 @@
     "tag": "Computer Communications",
     "title": "3GPP Edge–Fog federation: Transparent 3rd-party authentication and application mobility.",
     "link": "https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683",
-    "pdf": "https://speed.cs.nycu.edu.tw/~ydlin/papers/3GPP%20Edge%E2%80%93Fog%20federation%20Transparent%203rd-party%20authentication%20and%20application%20mobility.pdf",
+    "pdf": "/files/publications/3GPP_Journal.pdf",
     "note": "In Computer Communications, 222, 220–229."
   }
 ]
