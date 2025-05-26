@@ -955,7 +955,7 @@
         window.addEventListener('DOMContentLoaded', () => {
           const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
           const saved = localStorage.getItem('theme');
-          const useDark = saved ? saved === 'dark' : prefersDark;
+          const useDark = saved === 'dark';
           setMode(useDark);
         });
       </script>
