@@ -421,83 +421,12 @@
     <!-- PUBLICATIONS -->
 
     <section id="publications" class="py-24" data-aos="fade-up">
-  <div class="mx-auto max-w-4xl px-6">
-    <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Publications</h2>
-
-    <div class="relative timeline space-y-10">
-
-      <div class="timeline-entry">
-        <p class="font-medium">
-          E. Li, <b>T. Mallick</b>, E. Rose, W. Robertson, A. Oprea, and C. Nita‑Rotaru (2025)
-        </p>
-        <p class="mt-1 text-base leading-relaxed text-base-800">
-          <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent mr-2">arXiv</span>
-          <a href="https://arxiv.org/abs/2504.20984" target="_blank" rel="noopener" class="text-accent hover:underline">
-            "ACE: A Security Architecture for LLM-Integrated App Systems"
-          </a>
-          <span class="italic text-base-600">. Preprint</span>
-        </p>
-        <a href="https://arxiv.org/pdf/2504.20984" target="_blank" rel="noopener"
-          class="mt-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
-          PDF
-        </a>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Publications</h2>
+        <div id="publications-container" class="relative timeline space-y-10"></div>
+        <div id="publication-pagination" class="mt-8 flex justify-center gap-2 text-sm font-medium text-base-800"></div>
       </div>
-
-      <div class="timeline-entry">
-        <p class="font-medium">
-          <b>T. Mallick</b>, R. Kompella, A. Kundu, and C. Nita‑Rotaru (2025)
-        </p>
-        <p class="mt-1 text-base leading-relaxed text-base-800">
-          <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent mr-2">arXiv</span>
-          <a href="https://arxiv.org/abs/2503.17830" target="_blank" rel="noopener" class="text-accent hover:underline">
-            "Fingerprinting Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms"
-          </a>
-          <span class="italic text-base-600">. Preprint</span>
-        </p>
-        <a href="https://arxiv.org/pdf/2503.17830" target="_blank" rel="noopener"
-          class="mt-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
-          PDF
-        </a>
-      </div>
-
-      <div class="timeline-entry">
-        <p class="font-medium">
-          A. Ali, <b>T. Mallick</b>, S. Sakib, M. S. Hossain, and Y.-D. Lin (2022)
-        </p>
-        <p class="mt-1 text-base leading-relaxed text-base-800">
-          <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent mr-2">IEEE ICC</span>
-          <a href="https://ieeexplore.ieee.org/document/9838904" target="_blank" rel="noopener" class="text-accent hover:underline">
-            "Provisioning fog services to 3GPP subscribers: Authentication and application mobility."
-          </a>
-          <span class="italic text-base-600">In IEEE ICC 2022</span>, pp.&nbsp;4926–4931.
-        </p>
-        <a href="https://arxiv.org/pdf/2112.02476" target="_blank" rel="noopener"
-          class="mt-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
-          PDF
-        </a>
-      </div>
-
-      <div class="timeline-entry">
-        <p class="font-medium">
-          A. Ali, M. Islam, <b>T. Mallick</b>, M. S. Islam, S. Sakib, M. S. Hossain, and Y.-D. Lin (2024)
-        </p>
-        <p class="mt-1 text-base leading-relaxed text-base-800">
-          <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent mr-2">Computer Communications</span>
-          <a href="https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683" target="_blank" rel="noopener" class="text-accent hover:underline">
-            "3GPP Edge–Fog federation: Transparent 3rd-party authentication and application mobility."
-          </a>
-          <span class="italic text-base-600">In Computer Communications</span>, 222, 220–229.
-        </p>
-        <a href="https://speed.cs.nycu.edu.tw/~ydlin/papers/3GPP%20Edge%E2%80%93Fog%20federation%20Transparent%203rd-party%20authentication%20and%20application%20mobility.pdf" target="_blank" rel="noopener"
-          class="mt-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
-          PDF
-        </a>
-      </div>
-
-    </div>
-  </div>
-</section>
-
+    </section>
     
 
     <!-- TALKS
@@ -1084,6 +1013,85 @@
           setMode(useDark);
         });
       </script>
+
+
+      <script>
+        const itemsPerPage = 4;
+        let currentPubPage = 1;
+        let publications = [];
+
+        function renderPublications() {
+          const container = document.getElementById('publications-container');
+          const pagination = document.getElementById('publication-pagination');
+          container.innerHTML = '';
+          pagination.innerHTML = '';
+
+          const start = (currentPubPage - 1) * itemsPerPage;
+          const end = start + itemsPerPage;
+          const currentItems = publications.slice(start, end);
+
+          currentItems.forEach(pub => {
+            const div = document.createElement('div');
+            div.className = 'timeline-entry';
+            div.innerHTML = `
+              <p class="font-medium">${pub.authors}</p>
+              <p class="mt-1 text-base leading-relaxed text-base-800">
+                <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent mr-2">${pub.tag}</span>
+                <a href="${pub.link}" target="_blank" rel="noopener" class="text-accent hover:underline">${pub.title}</a>
+                <span class="italic text-base-600"> ${pub.note}</span>
+              </p>
+              <a href="${pub.pdf}" target="_blank" rel="noopener"
+                class="mt-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
+                PDF
+              </a>
+            `;
+            container.appendChild(div);
+          });
+
+          const totalPages = Math.ceil(publications.length / itemsPerPage);
+
+          // Only show pagination if more than 1 page
+          if (totalPages <= 1) return;
+
+          const createBtn = (label, page, disabled = false, active = false) => {
+            const btn = document.createElement('button');
+            btn.textContent = label;
+            btn.className = `w-9 h-9 flex items-center justify-center rounded-full transition font-medium ${
+              active
+                ? 'bg-blue-500 text-white'
+                : 'bg-white hover:bg-accent hover:text-white text-base-900'
+            } ${disabled ? 'opacity-40 cursor-not-allowed' : ''}`;
+            if (!disabled) {
+              btn.onclick = () => {
+                currentPubPage = page;
+                renderPublications();
+              };
+            }
+            return btn;
+          };
+
+          // Previous Arrow
+          pagination.appendChild(createBtn('◀', currentPubPage - 1, currentPubPage === 1));
+
+          // Page Numbers
+          for (let i = 1; i <= totalPages; i++) {
+            pagination.appendChild(createBtn(i, i, false, i === currentPubPage));
+          }
+
+          // Next Arrow
+          pagination.appendChild(createBtn('▶', currentPubPage + 1, currentPubPage === totalPages));
+        }
+
+
+        fetch('files/publications.json')
+          .then(res => res.json())
+          .then(data => {
+            publications = data;
+            renderPublications();
+          })
+          .catch(err => console.error('Failed to load publications:', err));
+      </script>
+
 
 
   </body>
