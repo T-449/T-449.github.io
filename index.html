@@ -190,27 +190,26 @@
   <body class="bg-base-50 text-base-900 antialiased selection:bg-accent selection:text-base-50 dark:bg-base-900 dark:text-base-50">
     <!-- NAV -->
     <nav class="fixed inset-x-0 top-0 z-50 bg-white/70 backdrop-blur supports-[backdrop-filter]:bg-white/50 shadow-sm animate-fade">
-      <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-1 h-[40px]">
-
+      <div class="relative mx-auto flex max-w-7xl items-center justify-between px-4 py-1 h-[40px]">
         
         <!-- Left: Dark Mode Toggle -->
         <div class="flex items-center">
           <button id="modeToggle" class="mr-6 text-base-900 hover:scale-150 transition" aria-label="Toggle Dark Mode">
-            <svg id="modeIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24">
-              <!-- <path d="M21 12.79A9 9 0 1 1 11.21 3c.09 0 .18 0 .27.01A7 7 0 0 0 21 12.79z"/> -->
-            </svg>
+            <svg id="modeIcon" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24"></svg>
           </button>
         </div>
 
-        <!-- Center: Navigation Links -->
-        <ul class="flex flex-wrap gap-8 text-xs font-medium uppercase tracking-wider">
-          <li><a class="nav-link" href="#about">About</a></li>
-          <li><a class="nav-link" href="#news">News</a></li> 
-          <li><a class="nav-link" href="#cv">CV</a></li>
-          <li><a class="nav-link" href="#publications">Papers</a></li>
-          <li><a class="nav-link" href="#contact">Contact</a></li>
-          <li><a class="nav-link" href="#hobbies">Gallery</a></li>
-        </ul>
+        <!-- Center: Navigation Links (now centered absolutely) -->
+        <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+          <ul class="flex flex-wrap gap-8 text-xs font-medium uppercase tracking-wider">
+            <li><a class="nav-link" href="#about">About</a></li>
+            <li><a class="nav-link" href="#news">News</a></li> 
+            <li><a class="nav-link" href="#cv">CV</a></li>
+            <li><a class="nav-link" href="#publications">Papers</a></li>
+            <li><a class="nav-link" href="#contact">Contact</a></li>
+            <li><a class="nav-link" href="#hobbies">Gallery</a></li>
+          </ul>
+        </div>
 
         <!-- Right: Social Icons -->
         <div class="hidden sm:flex items-center gap-6 text-lg text-base-900">
@@ -226,7 +225,6 @@
             </svg>
           </a>
 
-
           <a href="https://scholar.google.com/citations?user=r3AzDT8AAAAJ&hl=en" aria-label="Google Scholar" class="inline-block p-1 hover:scale-150 transition" target="_blank" rel="noopener">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="h-5 w-5 fill-current">
               <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/>
@@ -236,6 +234,7 @@
         
       </div>
     </nav>
+
 
     
     <!-- HERO -->
@@ -733,10 +732,11 @@
       renderImages(isGrid);
     };
 
-    fetch('files/gallery.json')
+    fetch('files/gallery.json', { cache: 'no-store' })
       .then(response => response.json())
       .then(data => {
         images = data;
+        console.log('Loaded images:', images);
         shuffleArray(images);
         renderImages();
         if (!isGrid && currentCarouselPage === 0) {
