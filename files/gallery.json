@@ -78,6 +78,18 @@
     "description": "Even under shadow, the monument commands stillness and quiet — a timeless weight that’s more emotional than visual."
   },
   {
+    "src": "images/kashmir.jpg",
+    "alt": "kashmir",
+    "caption": "Contentment (Srinagar, Kashmir, 2018)",
+    "description": "A quiet moment on the Dal lake, with distant mountains and gentle reflections — the kind of calm that asks for nothing more."
+  },
+  {
+    "src": "images/revere.jpg",
+    "alt": "revere",
+    "caption": "Glint (Revere Beach, Massachusetts, 2023)",
+    "description": "The cold splash, the salt in the air, and a grin you don’t even realize is there."
+  },
+  {
     "src": "images/clouds.jpg",
     "alt": "clouds",
     "caption": "Foreboding (Dhaka, 2023)",
