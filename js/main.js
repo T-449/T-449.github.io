@@ -397,6 +397,142 @@ function initializeUI() {
       }
     })
     .catch((err) => console.error("Error loading gallery:", err));
+  
+  // ───────── Swipe support for mobile on the carousel ─────────
+
+  // Only attach swipe handlers when we’re in “carousel” mode (i.e. not grid)
+  let touchStartX = 0;
+  let touchEndX   = 0;
+
+  // Helper to handle swipe direction
+  function handleSwipe() {
+    // threshold of ~50px to avoid accidental taps
+    const deltaX = touchEndX - touchStartX;
+    if (deltaX > 50) {
+      // swiped right → show previous page
+      if (currentCarouselPage > 0) {
+        currentCarouselPage--;
+        updateCarouselPage();
+      }
+    } else if (deltaX < -50) {
+      // swiped left → show next page
+      const totalPages = Math.ceil(images.length / 3);
+      if (currentCarouselPage < totalPages - 1) {
+        currentCarouselPage++;
+        updateCarouselPage();
+      }
+    }
+  }
+
+  // Listen for touchstart/touchend on the gallery container
+  gallery.addEventListener("touchstart", (e) => {
+    if (!isGrid) {
+      touchStartX = e.changedTouches[0].screenX;
+    }
+  });
+  gallery.addEventListener("touchend", (e) => {
+    if (!isGrid) {
+      touchEndX = e.changedTouches[0].screenX;
+      handleSwipe();
+    }
+  });
+
+
+  // ────────────── **INSERT LIGHTBOX / MODAL LOGIC HERE** ──────────────
+
+  // 1) Select all modal‐related elements now that #gallery (and #image-modal) exist:
+  const modal            = document.getElementById("image-modal");
+  const modalImg         = document.getElementById("modal-img");
+  const modalCaption     = document.getElementById("modal-caption");
+  const modalDescription = document.getElementById("modal-description");
+  const prevBtn          = document.getElementById("modal-prev");
+  const nextBtn          = document.getElementById("modal-next");
+  const closeBtn         = document.getElementById("close-modal");
+
+  // Safety check: if the modal doesn’t exist, skip wiring it up
+  if (gallery && modal && modalImg && modalCaption && modalDescription && prevBtn && nextBtn && closeBtn) {
+    let currentIndex = -1;
+
+    // 2) When the user clicks any thumbnail IMG inside #gallery, open the modal:
+    gallery.addEventListener("click", function (e) {
+      if (e.target.tagName === "IMG") {
+        // Find which image in `images[]` matches the clicked thumbnail:
+        const clickedSrc = e.target.src;
+        const image = images.find((imgObj) => clickedSrc.includes(imgObj.src));
+        if (!image) return;
+
+        // Populate modal content:
+        modalImg.src           = image.src;
+        modalCaption.textContent     = image.caption  || "";
+        modalDescription.textContent = image.description || "";
+
+        // Show the modal:
+        modal.classList.remove("hidden");
+
+        // Track the index so Prev/Next arrows work
+        currentIndex = images.indexOf(image);
+      }
+    });
+
+    // 3) Close modal when “×” is clicked:
+    closeBtn.addEventListener("click", () => {
+      modal.classList.add("hidden");
+    });
+
+    // Also close if user clicks outside the image (i.e. on the backdrop):
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) {
+        modal.classList.add("hidden");
+      }
+    });
+
+    // 4) Prev arrow:
+    prevBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // prevent the modal’s backdrop click from firing
+      if (currentIndex > -1) {
+        currentIndex = (currentIndex - 1 + images.length) % images.length;
+        const image = images[currentIndex];
+        modalImg.src           = image.src;
+        modalCaption.textContent     = image.caption  || "";
+        modalDescription.textContent = image.description || "";
+      }
+    });
+
+    // 5) Next arrow:
+    nextBtn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      if (currentIndex > -1) {
+        currentIndex = (currentIndex + 1) % images.length;
+        const image = images[currentIndex];
+        modalImg.src           = image.src;
+        modalCaption.textContent     = image.caption  || "";
+        modalDescription.textContent = image.description || "";
+      }
+    });
+
+    // 6) Keyboard navigation: Esc to close, ←/→ to navigate
+    document.addEventListener("keydown", (e) => {
+      if (!modal.classList.contains("hidden")) {
+        if (e.key === "Escape") {
+          modal.classList.add("hidden");
+        } else if (e.key === "ArrowRight") {
+          currentIndex = (currentIndex + 1) % images.length;
+          const image = images[currentIndex];
+          modalImg.src           = image.src;
+          modalCaption.textContent     = image.caption  || "";
+          modalDescription.textContent = image.description || "";
+        } else if (e.key === "ArrowLeft") {
+          currentIndex = (currentIndex - 1 + images.length) % images.length;
+          const image = images[currentIndex];
+          modalImg.src           = image.src;
+          modalCaption.textContent     = image.caption  || "";
+          modalDescription.textContent = image.description || "";
+        }
+      }
+    });
+  } else {
+    console.warn("Lightbox modal elements not found—did hobbies.html include the modal markup?");
+  }
 
   // ────────────── Publication Pagination Logic ──────────────
   const itemsPerPage = 4;

@@ -1,3 +1,4 @@
+<!-- includes/hobbies.html -->
 <section id="hobbies" class="py-24 bg-base-100" data-aos="fade-up">
   <div class="mx-auto max-w-6xl px-6 text-center relative">
     <h2 class="mb-6 font-serif text-3xl font-semibold">Beyond Research</h2>
@@ -21,7 +22,7 @@
       </button>
     </div>
 
-    <!-- Arrows (proper) -->
+    <!-- Left/Right Arrows (Carousel Controls) -->
     <button
       id="scroll-left"
       class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
@@ -58,10 +59,59 @@
       </svg>
     </button>
 
-    <!-- Gallery -->
+    <!-- Gallery Container -->
     <div id="gallery" class="flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4"></div>
 
     <!-- Pagination Controls (for grid view) -->
     <div id="pagination" class="mt-8 flex justify-center gap-2 text-sm font-medium text-base-800"></div>
   </div>
 </section>
+
+<!-- Image Modal (lightbox) -->
+<div
+  id="image-modal"
+  class="fixed inset-0 z-50 hidden bg-black bg-opacity-80 flex flex-col items-center justify-center p-4"
+>
+  <!-- Left arrow -->
+  <button
+    id="modal-prev"
+    class="absolute left-4 text-white text-4xl font-bold hover:text-accent transition z-50"
+  >
+    &#10094;
+  </button>
+
+  <!-- Enlarged Image -->
+  <img
+    id="modal-img"
+    src=""
+    alt="Enlarged Image"
+    class="max-h-[70vh] max-w-[90vw] rounded-lg shadow-xl transition-all duration-300"
+  />
+
+  <!-- Caption + Description -->
+  <div
+    class="mt-6 bg-white/10 backdrop-blur-sm rounded-md px-6 py-4 max-w-4xl text-center"
+  >
+    <p
+      id="modal-caption"
+      class="text-xl font-serif italic font-semibold text-white mb-1 tracking-wide"
+    ></p>
+    <p id="modal-description" class="artistic-font"></p>
+  </div>
+
+  <!-- Right arrow -->
+  <button
+    id="modal-next"
+    class="absolute right-4 text-white text-4xl font-bold hover:text-accent transition z-50"
+  >
+    &#10095;
+  </button>
+
+  <!-- Close button -->
+  <button
+    id="close-modal"
+    class="absolute top-6 right-6 text-white text-3xl font-bold hover:text-accent transition z-50"
+  >
+    &times;
+  </button>
+</div>
