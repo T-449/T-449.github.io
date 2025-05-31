@@ -66,6 +66,24 @@ document.addEventListener("DOMContentLoaded", () => {
 //    gallery logic, publication pagination, back-to-top button, etc.
 // --------------------------------------------------------
 function initializeUI() {
+
+  document.querySelectorAll(".nav-link").forEach((a) => {
+    a.classList.add(
+      "relative",
+      "before:absolute",
+      "before:inset-x-0",
+      "before:-bottom-1",
+      "before:h-[2px]",
+      "before:scale-x-0",
+      "before:bg-accent",
+      "before:transition-transform",
+      "before:duration-370",   
+      "before:origin-left",
+      "hover:before:scale-x-100"
+    );
+  });
+
+
   // ────────────── Dark / Light Toggle ──────────────
   const toggle = document.getElementById("modeToggle");
   const icon   = document.getElementById("modeIcon");
