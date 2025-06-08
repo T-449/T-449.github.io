@@ -1,5 +1,3 @@
-// main.js
-
 // --------------------------------------------------------
 // 1) A generic helper that returns a Promise which resolves
 //    only after ‘url’ is fetched and its contents are inserted
@@ -48,11 +46,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // When every single one is done, call initializeUI:
   Promise.all(loadPromises)
     .then(() => {
-      // At this point:
-      // - <button id="modeToggle"> and <svg id="modeIcon"> (from nav) exist
-      // - <div id="particles-js"> (from hero) exists
-      // - <div id="about">, <div id="news">, etc. exist
-      // Now we can safely wire up all interactivity without any race conditions.
       initializeUI();
     })
     .catch((err) => {
@@ -185,8 +178,7 @@ function initializeUI() {
   }
 
   // ────────────── Gallery / Hobbies Logic ──────────────
-  // (Copy your entire “gallery + pagination” code block here, verbatim,
-  //  because now #gallery, #scroll-left, #scroll-right, #toggle-grid, #pagination all exist.)
+
   const gallery = document.getElementById("gallery");
   const scrollLeftBtn = document.getElementById("scroll-right");
   const scrollRightBtn = document.getElementById("scroll-left");
@@ -456,7 +448,7 @@ function initializeUI() {
   });
 
 
-  // ────────────── **INSERT LIGHTBOX / MODAL LOGIC HERE** ──────────────
+  // ────────────── ** LIGHTBOX / MODAL LOGIC ** ──────────────
 
   // 1) Select all modal‐related elements now that #gallery (and #image-modal) exist:
   const modal            = document.getElementById("image-modal");
