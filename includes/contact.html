@@ -38,6 +38,82 @@
           mallick.tu at northeastern.edu
         </a>
       </p>
+
+      <!-- Toggle Envelope Button -->
+      <button
+        type="button"
+        class="mt-2 focus:outline-none"
+        aria-label="Compose Email"
+        onclick="
+          const form = document.getElementById('mailForm');
+          const closed = document.getElementById('iconClosed');
+          const open = document.getElementById('iconOpen');
+          const isHidden = form.classList.contains('hidden');
+          form.classList.toggle('hidden');
+          closed.classList.toggle('hidden', !isHidden);
+          open.classList.toggle('hidden', isHidden);
+        "
+      >
+        <!-- Closed Envelope Icon -->
+        <svg
+          id="iconOpen"
+          class="w-6 h-6 mx-auto text-red-500 hover:text-red-600 transition-transform duration-200"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M2 4a2 2 0 012-2h16a2 2 0 012 2v1l-10 6L2 5V4z" />
+          <path d="M22 6.5v11a2.5 2.5 0 01-2.5 2.5h-15A2.5 2.5 0 012 17.5v-11L12 13l10-6.5z" />
+        </svg>
+
+        
+        <!-- Open Envelope Icon -->
+        <svg
+          id="iconClosed"
+          class="w-6 h-6 mx-auto text-red-500 hover:text-red-600 transition-transform duration-200 hidden"
+          fill="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path d="M2 7l10 6 10-6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7z" />
+          <path d="M22 6L12 0 2 6h20z" />
+        </svg>
+
+      </button>
+
+      <!-- Hidden Form -->
+      <div id="mailForm" class="hidden mt-4 w-full flex justify-center">
+        <div class="relative w-[300px]">
+          <textarea
+            id="mailMessage"
+            class="w-full p-3 border rounded-md resize-none"
+            placeholder="Write your message here…"
+            rows="3"
+          ></textarea>
+          <div class="flex justify-end mt-2">
+            <button
+              type="button"
+              onclick="
+                const msg = document.getElementById('mailMessage').value.trim();
+                if (msg !== '') {
+                  const mailtoLink = 'mailto:mallick.tu@northeastern.edu?subject=Message from Website&body=' + encodeURIComponent(msg);
+                  window.location.href = mailtoLink;
+
+                  // Delay hiding form and toggling icons to let mail client open
+                  setTimeout(() => {
+                    document.getElementById('mailForm').classList.add('hidden');
+                    document.getElementById('iconOpen').classList.remove('hidden');
+                    document.getElementById('iconClosed').classList.add('hidden');
+                  }, 500); // 0.5 second delay
+                }
+              "
+              class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+            >
+              Send
+            </button>
+          </div>
+        </div>
+      </div>
+
+
     </div>
   </div>
 </section>

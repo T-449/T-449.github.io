@@ -76,7 +76,6 @@ function initializeUI() {
     );
   });
 
-
   // ────────────── Dark / Light Toggle ──────────────
   const toggle = document.getElementById("modeToggle");
   const icon   = document.getElementById("modeIcon");
@@ -653,4 +652,5 @@ function initializeUI() {
       });
     });
   }
+
 }
