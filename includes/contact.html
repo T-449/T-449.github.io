@@ -44,15 +44,6 @@
         type="button"
         class="mt-2 focus:outline-none"
         aria-label="Compose Email"
-        onclick="
-          const form = document.getElementById('mailForm');
-          const closed = document.getElementById('iconClosed');
-          const open = document.getElementById('iconOpen');
-          const isHidden = form.classList.contains('hidden');
-          form.classList.toggle('hidden');
-          closed.classList.toggle('hidden', !isHidden);
-          open.classList.toggle('hidden', isHidden);
-        "
       >
         <!-- Closed Envelope Icon -->
         <svg
@@ -91,29 +82,14 @@
           <div class="flex justify-end mt-2">
             <button
               type="button"
-              onclick="
-                const msg = document.getElementById('mailMessage').value.trim();
-                if (msg !== '') {
-                  const mailtoLink = 'mailto:mallick.tu@northeastern.edu?subject=Message from Website&body=' + encodeURIComponent(msg);
-                  window.location.href = mailtoLink;
-
-                  // Delay hiding form and toggling icons to let mail client open
-                  setTimeout(() => {
-                    document.getElementById('mailForm').classList.add('hidden');
-                    document.getElementById('iconOpen').classList.remove('hidden');
-                    document.getElementById('iconClosed').classList.add('hidden');
-                  }, 500); // 0.5 second delay
-                }
-              "
+              id="mailSend"
               class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Send
             </button>
           </div>
         </div>
-      </div>
-
-
+      </div>i
     </div>
   </div>
 </section>

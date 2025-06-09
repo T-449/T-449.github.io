@@ -60,6 +60,12 @@ document.addEventListener("DOMContentLoaded", () => {
 // --------------------------------------------------------
 function initializeUI() {
 
+  console.log("Running initializeUI");
+
+  const contactSection = document.getElementById("contact");
+  console.log("contact div:", contactSection);
+  console.log("contact div innerHTML:", contactSection?.innerHTML);
+
   document.querySelectorAll(".nav-link").forEach((a) => {
     a.classList.add(
       "relative",
@@ -652,5 +658,51 @@ function initializeUI() {
       });
     });
   }
+
+  // ────────────── Contact Envelope Toggle ──────────────
+  const mailToggleBtn = document.querySelector("#contact button[aria-label='Compose Email']");
+  const mailForm = document.getElementById("mailForm");
+  const iconClosed = document.getElementById("iconClosed");
+  const iconOpen = document.getElementById("iconOpen");
+
+  if (mailToggleBtn && mailForm && iconClosed && iconOpen) {
+    mailToggleBtn.addEventListener("click", () => {
+      const isHidden = mailForm.classList.contains("hidden");
+
+      mailForm.classList.toggle("hidden");
+      iconClosed.classList.toggle("hidden", !isHidden);
+      iconOpen.classList.toggle("hidden", isHidden);
+    });
+  } else {
+    console.warn("Contact envelope toggle elements not found. Check contact.html or ID mismatches.");
+  }
+
+  // ────────────── Send Mail using Default App ──────────────
+
+  const sendBtn = document.getElementById("mailSend");
+  const messageInput = document.getElementById("mailMessage");
+
+  if (sendBtn && messageInput) {
+    sendBtn.addEventListener("click", () => {
+      const msg = messageInput.value.trim();
+      if (msg !== "") {
+        const mailtoLink = `mailto:mallick.tu@northeastern.edu?subject=Message from Website&body=${encodeURIComponent(msg)}`;
+        window.location.href = mailtoLink;
+
+        // Delay hiding the form so mail client can open first
+        setTimeout(() => {
+          mailForm.classList.add("hidden");
+          iconOpen.classList.remove("hidden");
+          iconClosed.classList.add("hidden");
+          messageInput.value = ""; // Optional: clear the input
+        }, 500);
+      } else {
+        alert("Please write a message before sending.");
+      }
+    });
+  } else {
+    console.warn("Send button or message input not found.");
+  }
+
 
 }
