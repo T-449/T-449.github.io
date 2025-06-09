@@ -59,13 +59,6 @@ document.addEventListener("DOMContentLoaded", () => {
 //    gallery logic, publication pagination, back-to-top button, etc.
 // --------------------------------------------------------
 function initializeUI() {
-
-  console.log("Running initializeUI");
-
-  const contactSection = document.getElementById("contact");
-  console.log("contact div:", contactSection);
-  console.log("contact div innerHTML:", contactSection?.innerHTML);
-
   document.querySelectorAll(".nav-link").forEach((a) => {
     a.classList.add(
       "relative",
