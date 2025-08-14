@@ -1,18 +1,10 @@
 [
   {
     "authors": "E. Li, <b>T. Mallick</b>, E. Rose, W. Robertson, A. Oprea, and C. Nita‑Rotaru (2025)",
-    "tag": "arXiv",
+    "tag": "NDSS 2026",
     "title": "ACE: A Security Architecture for LLM-Integrated App Systems",
     "link": "https://arxiv.org/abs/2504.20984",
     "pdf": "/files/publications/ACE.pdf",
-    "note": ". Preprint"
-  },
-  {
-    "authors": "<b>T. Mallick</b>, R. Kompella, A. Kundu, and C. Nita‑Rotaru (2025)",
-    "tag": "arXiv",
-    "title": "Fingerprinting Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms",
-    "link": "https://arxiv.org/abs/2503.17830",
-    "pdf": "/files/publications/PQ_Fingerprint.pdf",
     "note": ". Preprint"
   },
   {
