@@ -18,12 +18,6 @@
     "description": "The crowd breathes in rhythm, the court pulses with energy. It’s not just a game, it’s a collective heartbeat."
   },
   {
-    "src": "images/charles_eve.jpg",
-    "alt": "charles_evening",
-    "caption": "Stillness (Longfellow Bridge, Boston, 2023)",
-    "description": "Boston holds its breath in the blue hour — not asleep, not awake. Just quietly suspended in its own glow."
-  },
-  {
     "src": "images/charles.jpeg",
     "alt": "charles",
     "caption": "Peace (Charles Esplanade, Boston, 2024)",
@@ -60,12 +54,6 @@
     "description": "The first light doesn’t just touch the land — it reclaims it. A quiet declaration that every ending yields a beginning."
   },
   {
-    "src": "images/cox.jpg",
-    "alt": "cox",
-    "caption": "Tenderness (Cox's Bazar, Chittagong, 2017)",
-    "description": "The soft layers of pink and orange over the still bay reflects a calm intimacy — not just serenity, but a gentle, affectionate stillness."
-  },
-  {
     "src": "images/pokhara.jpg",
     "alt": "pokhara",
     "caption": "Clarity (Pokhara, Nepal, 2017)",
@@ -94,5 +82,17 @@
     "alt": "clouds",
     "caption": "Foreboding (Dhaka, 2023)",
     "description": "A brooding presence just before release. It feels like the breath the world holds before the storm breaks."
+  },
+  {
+    "src": "images/vernal_falls.png",
+    "alt": "vernal_falls",
+    "caption": "Vitality (Vernal Falls, Yosemite, 2025)",
+    "description": "A force that doesn’t ask permission, only reminds you that renewal is never gentle, but always necessary."
+  },
+  {
+    "src": "images/yosemite.png",
+    "alt": "yosemite",
+    "caption": "Grandeur (Yosemite Valley, 2025)",
+    "description": "The vastness swallows you, not in emptiness but in presence."
   }
 ]
