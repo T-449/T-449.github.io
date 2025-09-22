@@ -121,59 +121,59 @@ function initializeUI() {
   }
 
   // ────────────── ParticlesJS (Background Animation) ──────────────
-  const pContainer = document.getElementById("particles-js");
-  if (pContainer && typeof particlesJS !== "undefined") {
-    particlesJS("particles-js", {
-      particles: {
-        number: { value: 100, density: { enable: true, value_area: 900 } },
-        color: { value: "#4c93ff" },
-        shape: {
-          type: "circle",
-          stroke: { width: 0, color: "#000" },
-        },
-        opacity: {
-          value: 0.45,
-          random: true,
-          anim: { enable: true, speed: 0.8, opacity_min: 0.3, sync: false },
-        },
-        size: {
-          value: 4.5,
-          random: true,
-          anim: { enable: true, speed: 2, size_min: 0.5, sync: false },
-        },
-        line_linked: {
-          enable: true,
-          distance: 140,
-          color: "#4c93ff",
-          opacity: 0.3,
-          width: 1.5,
-        },
-        move: {
-          enable: true,
-          speed: 0.6,
-          direction: "none",
-          random: true,
-          straight: false,
-          out_mode: "out",
-          bounce: false,
-        },
-      },
-      interactivity: {
-        detect_on: "canvas",
-        events: {
-          onhover: { enable: false, mode: "grab" },
-          onclick: { enable: false },
-          resize: true,
-        },
-        modes: {
-          grab: { distance: 160, line_linked: { opacity: 0.4 } },
-        },
-      },
-      retina_detect: true,
-    });
-  } else {
-    console.warn("particlesJS container or library missing.");
-  }
+  // const pContainer = document.getElementById("particles-js");
+  // if (pContainer && typeof particlesJS !== "undefined") {
+  //   particlesJS("particles-js", {
+  //     particles: {
+  //       number: { value: 100, density: { enable: true, value_area: 900 } },
+  //       color: { value: "#4c93ff" },
+  //       shape: {
+  //         type: "circle",
+  //         stroke: { width: 0, color: "#000" },
+  //       },
+  //       opacity: {
+  //         value: 0.45,
+  //         random: true,
+  //         anim: { enable: true, speed: 0.8, opacity_min: 0.3, sync: false },
+  //       },
+  //       size: {
+  //         value: 4.5,
+  //         random: true,
+  //         anim: { enable: true, speed: 2, size_min: 0.5, sync: false },
+  //       },
+  //       line_linked: {
+  //         enable: true,
+  //         distance: 140,
+  //         color: "#4c93ff",
+  //         opacity: 0.3,
+  //         width: 1.5,
+  //       },
+  //       move: {
+  //         enable: true,
+  //         speed: 0.6,
+  //         direction: "none",
+  //         random: true,
+  //         straight: false,
+  //         out_mode: "out",
+  //         bounce: false,
+  //       },
+  //     },
+  //     interactivity: {
+  //       detect_on: "canvas",
+  //       events: {
+  //         onhover: { enable: false, mode: "grab" },
+  //         onclick: { enable: false },
+  //         resize: true,
+  //       },
+  //       modes: {
+  //         grab: { distance: 160, line_linked: { opacity: 0.4 } },
+  //       },
+  //     },
+  //     retina_detect: true,
+  //   });
+  // } else {
+  //   console.warn("particlesJS container or library missing.");
+  // }
 
   // ────────────── Gallery / Hobbies Logic ──────────────
 
