@@ -1,3 +1,7 @@
+if (window.location.hostname === "t-449.github.io") {
+  window.location.replace("https://t-449-github-io.onrender.com/");
+}
+
 // --------------------------------------------------------
 // 1) A generic helper that returns a Promise which resolves
 //    only after ‘url’ is fetched and its contents are inserted
