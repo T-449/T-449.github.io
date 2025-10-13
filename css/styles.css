@@ -1,8 +1,15 @@
 .hero-bg {
+  /* subtle radial highlights + semi-opaque gradient overlay + yosemite image */
   background-image: radial-gradient(circle at 20% 20%, rgba(76, 147, 255, 0.12) 0%, transparent 50%),
     radial-gradient(circle at 80% 80%, rgba(76, 147, 255, 0.12) 0%, transparent 50%),
-    linear-gradient(135deg, #0e1520 0%, #151e2b 100%);
+    linear-gradient(135deg, rgba(14, 21, 32, 0.55) 0%, rgba(21, 30, 43, 0.55) 100%),
+    url('../images/yosemite.png');
+
+  /* ensure image covers and is centered */
   background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
   animation: bgPulse 20s infinite alternate;
   background-attachment: fixed;
 }
