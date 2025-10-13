@@ -1,19 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Redirecting...</title>
-  <!-- Fallback redirect (works even if JS is disabled) -->
-  <meta http-equiv="refresh" content="0; url=https://t-449-github-io.onrender.com/">
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tushin Mallick</title>
+    <link rel="icon" href="images/omega.png" type="image/png" />
+    <meta
+      name="description"
+      content="Tushin Mallick — PhD Student at Northeastern University, exploring Cyber Security and Machine Learning."
+    />
+    <meta property="og:title" content="Tushin Mallick" />
+    <meta
+      property="og:description"
+      content="PhD student in Security and Systems Research at Northeastern University."
+    />
+    <meta property="og:image" content="images/profile_2.jpeg" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://t-449.github.io/" />
 
-  <script>
-    // JavaScript redirect (instant, replaces history)
-    if (location.hostname === "t-449.github.io") {
-      location.replace("https://t-449-github-io.onrender.com/");
-    }
-  </script>
-</head>
-<body>
-  <p>Redirecting to <a href="https://t-449-github-io.onrender.com/">https://t-449-github-io.onrender.com/</a>...</p>
-</body>
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      rel="preconnect"
+      href="https://fonts.gstatic.com"
+      crossorigin
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Tailwind CDN + config script -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              base: { 50: "#fcfcfa", 900: "#0e1520" },
+              accent: "#4c93ff",
+              muted: "#94a3b8",
+            },
+            fontFamily: {
+              sans: ["Inter", "ui-sans-serif", "system-ui"],
+              serif: ["Playfair Display", "ui-serif"],
+            },
+            fontSize: {
+              base: "1.125rem", // was 1rem (text-base → 18px)
+              lg: "1.25rem",
+            },
+            letterSpacing: {
+              wider: ".08em",
+              widest: ".15em",
+              tightest: "-0.02em",
+            },
+            lineHeight: {
+              relaxed: "1.75",
+              loose: "2",
+            },
+            boxShadow: {
+              glow: "0 0 15px rgba(76, 147, 255, 0.4)",
+            },
+            keyframes: {
+              fadeInUp: {
+                "0%": { opacity: 0, transform: "translateY(30px)" },
+                "100%": { opacity: 1, transform: "translateY(0)" },
+              },
+            },
+            animation: {
+              fadeInUp: "fadeInUp 1.2s ease-out forwards",
+            },
+          },
+        },
+      };
+    </script>
+
+    <!-- AOS CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
+      rel="stylesheet"
+    />
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
+
+    <!-- EXTERNAL CSS -->
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body
+    class="bg-base-50 text-base-900 antialiased selection:bg-accent selection:text-base-50 dark:bg-base-900 dark:text-base-50"
+  >
+    <!-- NAVIGATION -->
+    <div id="nav"></div>
+
+    <!-- HERO -->
+    <div id="hero"></div>
+
+    <!-- QUOTE -->
+    <div id="quote"></div>
+
+    <!-- ABOUT -->
+    <div id="about"></div>
+
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
+    <!-- NEWS -->
+    <div id="news"></div>
+
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
+    <!-- CV -->
+    <div id="cv"></div>
+
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
+    <!-- PUBLICATIONS -->
+    <div id="publications"></div>
+
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
+    <!-- CONTACT -->
+    <div id="contact"></div>
+
+    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+
+    <!-- HOBBIES -->
+    <div id="hobbies"></div>
+
+    <!-- FOOTER -->
+    <div id="footer"></div>
+
+    <!-- Back To Top button -->
+    <button
+      id="backToTop"
+      class="fixed bottom-6 right-6 z-50 hidden p-3 rounded-full bg-accent text-white shadow-md hover:scale-110 transition"
+      aria-label="Back to top"
+    >
+      ↑
+    </button>
+
+    <!-- AOS JS -->
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <!-- EXTERNAL JS -->
+    <script src="js/main.js"></script>
+
+  </body>
 </html>
