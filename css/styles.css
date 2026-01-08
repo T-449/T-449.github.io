@@ -9,25 +9,23 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  background-attachment: fixed;
 
   animation: bgPulse 20s infinite alternate;
-  background-attachment: fixed; /* Original line */
-  -webkit-overflow-scrolling: touch; /* Enable smooth scrolling on iOS */
 }
 
-/* Fix for iOS/iPadOS: override background-attachment */
-@media (max-width: 1024px) {
+/* Fix for all iOS/iPadOS devices regardless of screen size */
+@supports (-webkit-touch-callout: none) {
   .hero-bg {
     background-attachment: scroll !important;
-    background-size: cover;
-    min-height: 100vh;
+    -webkit-overflow-scrolling: touch;
   }
 }
 
-/* Additional fix specifically for iOS devices */
-@supports (-webkit-touch-callout: none) {
+/* Fallback for touch devices that don't support the above */
+@media (hover: none) and (pointer: coarse) {
   .hero-bg {
-    background-attachment: scroll;
+    background-attachment: scroll !important;
   }
 }
 
