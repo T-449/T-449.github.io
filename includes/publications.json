@@ -7,6 +7,18 @@
     "pdf": "/files/publications/ACE.pdf",
     "note": ""
   },
+
+  {
+  "authors": "<b>T. Mallick</b>, M. Zeldin, M. Cenk, and C. Nita-Rotaru (2025)",
+  "tag": "arXiv",
+  "title": "Quantum Disruption: An SOK of How Post-Quantum Attackers Reshape Blockchain Security and Performance.",
+  "link": "https://arxiv.org/abs/2512.13333",
+  "pdf": "https://arxiv.org/pdf/2512.13333.pdf",
+  "note": "Under submission."
+  },
+
+
+
   {
     "authors": "A. Ali, <b>T. Mallick</b>, S. Sakib, M. S. Hossain, and Y.-D. Lin (2022)",
     "tag": "IEEE ICC",
@@ -15,6 +27,7 @@
     "pdf": "/files/publications/3GPP.pdf",
     "note": "In IEEE ICC 2022, pp. 4926–4931."
   },
+
   {
     "authors": "A. Ali, M. Islam, <b>T. Mallick</b>, M. S. Islam, S. Sakib, M. S. Hossain, and Y.-D. Lin (2024)",
     "tag": "Computer Communications",
