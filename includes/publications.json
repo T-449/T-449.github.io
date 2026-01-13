@@ -13,10 +13,19 @@
   "tag": "arXiv",
   "title": "Quantum Disruption: An SOK of How Post-Quantum Attackers Reshape Blockchain Security and Performance.",
   "link": "https://arxiv.org/abs/2512.13333",
-  "pdf": "https://arxiv.org/pdf/2512.13333.pdf",
+  "pdf": "/files/publications/Blockchain_sok.pdf",
   "note": "Under submission."
   },
 
+
+  {
+    "authors": "<b>T. Mallick</b>, C. Nita-Rotaru, A. Kundu, and R. Kompella (2025)",
+    "tag": "arXiv",
+    "title": "Classifying Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms",
+    "link": "https://arxiv.org/abs/2503.17830",
+    "pdf": "/files/publications/PQ_classification.pdf",
+    "note": "Under submission."
+  },
 
 
   {
