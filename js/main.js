@@ -257,6 +257,28 @@ function initializeUI() {
     );
   }
 
+  // Create Intersection Observer for lazy loading
+  const imageObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const img = entry.target;
+          const src = img.getAttribute('data-src');
+          if (src) {
+            img.src = src;
+            img.removeAttribute('data-src');
+            img.classList.remove('lazy-placeholder');
+            observer.unobserve(img);
+          }
+        }
+      });
+    },
+    {
+      rootMargin: '50px', // Start loading slightly before image enters viewport
+      threshold: 0.01
+    }
+  );
+
   function renderImages(asGrid = false) {
     gallery.innerHTML = "";
 
@@ -269,14 +291,26 @@ function initializeUI() {
       const paginatedImages = images.slice(start, start + imagesPerPage);
       const fragment = document.createDocumentFragment();
 
-      paginatedImages.forEach((img) => {
+      paginatedImages.forEach((img, index) => {
         const wrapper = document.createElement("div");
         wrapper.className = "flex flex-col items-center w-80 gap-2";
 
         const el = document.createElement("img");
-        el.src = img.src;
+        // Use data-src for lazy loading, set a placeholder
+        if (index < 3) {
+          // Load first 3 images immediately
+          el.src = img.src;
+          el.loading = "eager";
+        } else {
+          // Lazy load remaining images
+          el.setAttribute('data-src', img.src);
+          el.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23e5e7eb" width="400" height="300"/%3E%3C/svg%3E';
+          el.loading = "lazy";
+          el.classList.add('lazy-placeholder');
+          imageObserver.observe(el);
+        }
         el.alt = img.alt;
-        el.loading = "lazy";
+        el.decoding = "async"; // Async image decoding
         el.className =
           "h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition";
 
@@ -324,9 +358,19 @@ function initializeUI() {
         wrapper.className = "flex flex-col items-center w-80 gap-2";
 
         const el = document.createElement("img");
-        el.src = img.src;
+        // Load first page immediately, lazy load rest
+        if (index < 3) {
+          el.src = img.src;
+          el.loading = "eager";
+        } else {
+          el.setAttribute('data-src', img.src);
+          el.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23e5e7eb" width="400" height="300"/%3E%3C/svg%3E';
+          el.loading = "lazy";
+          el.classList.add('lazy-placeholder');
+          imageObserver.observe(el);
+        }
         el.alt = img.alt;
-        el.loading = "lazy";
+        el.decoding = "async";
         el.className =
           "h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition";
 
@@ -396,7 +440,7 @@ function initializeUI() {
   };
 
   // Fetch the gallery JSON (adjust the path if needed)
-  fetch("includes/gallery.json", { cache: "no-store" })
+  fetch("includes/gallery.json", { cache: "force-cache" })
     .then((response) => {
       if (!response.ok) throw new Error("Gallery JSON not found");
       return response.json();
@@ -404,6 +448,16 @@ function initializeUI() {
     .then((data) => {
       images = data;
       shuffleArray(images);
+      
+      // Preload first 3 images for faster initial display
+      images.slice(0, 3).forEach((img) => {
+        const preloadLink = document.createElement('link');
+        preloadLink.rel = 'preload';
+        preloadLink.as = 'image';
+        preloadLink.href = img.src;
+        document.head.appendChild(preloadLink);
+      });
+      
       renderImages();
       if (!isGrid && currentCarouselPage === 0) {
         scrollLeftBtn.style.display = "none";
