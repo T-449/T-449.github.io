@@ -36,6 +36,7 @@ document.addEventListener("DOMContentLoaded", () => {
     { id: "hero",         url: "includes/hero.html" },
     { id: "quote",        url: "includes/quote.html" },
     { id: "about",        url: "includes/about.html" },
+    { id: "research",     url: "includes/research.html" },
     { id: "news",         url: "includes/news.html" },
     { id: "cv",           url: "includes/cv.html" },
     { id: "publications", url: "includes/publications.html" },
