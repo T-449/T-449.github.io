@@ -20,11 +20,11 @@
 
   {
     "authors": "<b>T. Mallick</b>, C. Nita-Rotaru, A. Kundu, and R. Kompella (2025)",
-    "tag": "arXiv",
+    "tag": "ACM SACMAT 2026",
     "title": "Classifying Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms",
     "link": "https://arxiv.org/abs/2503.17830",
     "pdf": "/files/publications/PQ_classification.pdf",
-    "note": "Under submission."
+    "note": ""
   },
 
 
