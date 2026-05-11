@@ -375,19 +375,6 @@ footer .footer-secondary {
   box-shadow: 0 0 0 5px rgba(168, 201, 255, 0.28);
 }
 
-/* Subtle alternating section tint for visual rhythm (light mode only) */
-section#research,
-section#cv,
-section#talks,
-section#contact {
-  background-color: rgba(76, 147, 255, 0.025);
-}
-.dark section#research,
-.dark section#cv,
-.dark section#talks,
-.dark section#contact {
-  background-color: transparent;
-}
 
 /* Nav: refined bottom edge */
 nav {
