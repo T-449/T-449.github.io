@@ -92,101 +92,81 @@ function initializeUI() {
       if (dark) {
         root.classList.add("dark");
         localStorage.setItem("theme", "dark");
+        toggle.setAttribute("aria-pressed", "true");
         icon.innerHTML =
           '<path d="M12 2a1 1 0 0 1 .993.883L13 3v1a1 1 0 0 1-1.993.117L11 4V3a1 1 0 0 1 1-1Zm5.657 3.343a1 1 0 0 1 1.32-.083l.094.083.707.707a1 1 0 0 1-1.32 1.497l-.094-.083-.707-.707a1 1 0 0 1 0-1.414ZM4.343 5.343a1 1 0 0 1 1.32-.083l.094.083.707.707a1 1 0 0 1-1.32 1.497l-.094-.083-.707-.707a1 1 0 0 1 0-1.414ZM12 6a6 6 0 1 1 0 12A6 6 0 0 1 12 6Zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm8 4a1 1 0 0 1 .117 1.993L20 14h-1a1 1 0 0 1-.117-1.993L19 12h1ZM4 12a1 1 0 0 1 .117 1.993L4 14H3a1 1 0 0 1-.117-1.993L3 12h1Zm15.364 4.95a1 1 0 0 1 1.32 1.497l-.094.083-.707.707a1 1 0 0 1-1.497-1.32l.083-.094.707-.707ZM6.343 17.657a1 1 0 0 1 1.32 1.497l-.094.083-.707.707a1 1 0 0 1-1.497-1.32l.083-.094.707-.707ZM12 20a1 1 0 0 1 .993.883L13 21v1a1 1 0 0 1-1.993.117L11 22v-1a1 1 0 0 1 1-1Z"/>';
       } else {
         root.classList.remove("dark");
         localStorage.setItem("theme", "light");
+        toggle.setAttribute("aria-pressed", "false");
         icon.innerHTML =
           '<path d="M21 12.79A9 9 0 1 1 11.21 3c.09 0 .18 0 .27.01A7 7 0 0 0 21 12.79z"/>';
       }
     }
 
-    // On click: toggle between dark/light
     toggle.addEventListener("click", () => {
       const isDark = root.classList.contains("dark");
       setMode(!isDark);
     });
 
-    // On page load: restore saved mode
+    // First-load: explicit user choice wins, else fall back to system preference
     const saved = localStorage.getItem("theme");
-    setMode(saved === "dark");
+    if (saved === "dark" || saved === "light") {
+      setMode(saved === "dark");
+    } else {
+      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+      setMode(prefersDark);
+    }
   } else {
     console.warn("Dark/light toggle not found. Did nav.html load correctly?");
   }
 
   // ────────────── AOS (Animate On Scroll) ──────────────
   if (typeof AOS !== "undefined") {
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     AOS.init({
       once: true,
-      duration: 900,
-      delay:    100,
+      duration: reduceMotion ? 0 : 900,
+      delay:    reduceMotion ? 0 : 100,
+      disable:  reduceMotion,
       easing:   "ease-out-cubic",
     });
   } else {
     console.warn("AOS library not found. Did you include the CDN <script>?");
   }
 
-  // ────────────── ParticlesJS (Background Animation) ──────────────
-  // const pContainer = document.getElementById("particles-js");
-  // if (pContainer && typeof particlesJS !== "undefined") {
-  //   particlesJS("particles-js", {
-  //     particles: {
-  //       number: { value: 100, density: { enable: true, value_area: 900 } },
-  //       color: { value: "#4c93ff" },
-  //       shape: {
-  //         type: "circle",
-  //         stroke: { width: 0, color: "#000" },
-  //       },
-  //       opacity: {
-  //         value: 0.45,
-  //         random: true,
-  //         anim: { enable: true, speed: 0.8, opacity_min: 0.3, sync: false },
-  //       },
-  //       size: {
-  //         value: 4.5,
-  //         random: true,
-  //         anim: { enable: true, speed: 2, size_min: 0.5, sync: false },
-  //       },
-  //       line_linked: {
-  //         enable: true,
-  //         distance: 140,
-  //         color: "#4c93ff",
-  //         opacity: 0.3,
-  //         width: 1.5,
-  //       },
-  //       move: {
-  //         enable: true,
-  //         speed: 0.6,
-  //         direction: "none",
-  //         random: true,
-  //         straight: false,
-  //         out_mode: "out",
-  //         bounce: false,
-  //       },
-  //     },
-  //     interactivity: {
-  //       detect_on: "canvas",
-  //       events: {
-  //         onhover: { enable: false, mode: "grab" },
-  //         onclick: { enable: false },
-  //         resize: true,
-  //       },
-  //       modes: {
-  //         grab: { distance: 160, line_linked: { opacity: 0.4 } },
-  //       },
-  //     },
-  //     retina_detect: true,
-  //   });
-  // } else {
-  //   console.warn("particlesJS container or library missing.");
-  // }
+  // ────────────── Scroll-spy: highlight nav link for the section in view ──────────────
+  const spyLinks = document.querySelectorAll('nav .nav-link[href^="#"]');
+  const spyTargets = Array.from(spyLinks)
+    .map((a) => document.querySelector(a.getAttribute("href")))
+    .filter(Boolean);
+
+  if (spyTargets.length) {
+    const setActive = (id) => {
+      spyLinks.forEach((link) =>
+        link.classList.toggle("is-active", link.getAttribute("href") === "#" + id)
+      );
+    };
+
+    const spyObserver = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+        if (visible) setActive(visible.target.id);
+      },
+      { rootMargin: "-40% 0px -50% 0px", threshold: [0, 0.25, 0.5, 0.75, 1] }
+    );
+    spyTargets.forEach((t) => spyObserver.observe(t));
+  }
 
   // ────────────── Gallery / Hobbies Logic ──────────────
 
   const gallery = document.getElementById("gallery");
-  const scrollLeftBtn = document.getElementById("scroll-right");
-  const scrollRightBtn = document.getElementById("scroll-left");
+  // Button position matches id: #scroll-left is on the left and goes to the previous
+  // page; #scroll-right is on the right and advances. Keep them aligned.
+  const scrollLeftBtn = document.getElementById("scroll-left");
+  const scrollRightBtn = document.getElementById("scroll-right");
   const toggleGridBtn = document.getElementById("toggle-grid");
 
   let images = [];
@@ -209,10 +189,8 @@ function initializeUI() {
     const createButton = (text, page, isActive = false, isDisabled = false) => {
       const btn = document.createElement("button");
       btn.textContent = text;
-      btn.className = `px-3 py-1 rounded-full transition ${
-        isActive
-          ? "bg-accent text-white"
-          : "bg-white/60 hover:bg-accent hover:text-white"
+      btn.className = `pagination-btn px-3 py-1 rounded-full transition ${
+        isActive ? "is-active" : ""
       } ${isDisabled ? "opacity-50 cursor-default" : ""}`;
       if (!isDisabled) {
         btn.onclick = () => {
@@ -259,27 +237,29 @@ function initializeUI() {
     );
   }
 
-  // Create Intersection Observer for lazy loading
-  const imageObserver = new IntersectionObserver(
-    (entries, observer) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          const src = img.getAttribute('data-src');
-          if (src) {
-            img.src = src;
-            img.removeAttribute('data-src');
-            img.classList.remove('lazy-placeholder');
-            observer.unobserve(img);
-          }
-        }
-      });
-    },
-    {
-      rootMargin: '50px', // Start loading slightly before image enters viewport
-      threshold: 0.01
-    }
-  );
+  // Build a <picture> with webp source + jpg fallback.
+  function makeThumb(img, absoluteIndex, eager) {
+    const picture = document.createElement("picture");
+    const webpSrc = img.src.replace(/\.(jpe?g|png)$/i, ".webp");
+    const source = document.createElement("source");
+    source.type = "image/webp";
+    source.srcset = webpSrc;
+    picture.appendChild(source);
+
+    const el = document.createElement("img");
+    el.dataset.galleryIndex = String(absoluteIndex);
+    el.width = 320;
+    el.height = 256;
+    el.src = img.src;
+    el.alt = img.alt || "";
+    el.loading = eager ? "eager" : "lazy";
+    el.decoding = "async";
+    if (eager) el.fetchPriority = "high";
+    el.className =
+      "h-64 w-full rounded-2xl object-cover shadow hover:scale-[1.03] transition cursor-zoom-in bg-base-100/40";
+    picture.appendChild(el);
+    return picture;
+  }
 
   function renderImages(asGrid = false) {
     gallery.innerHTML = "";
@@ -297,31 +277,15 @@ function initializeUI() {
         const wrapper = document.createElement("div");
         wrapper.className = "flex flex-col items-center w-80 gap-2";
 
-        const el = document.createElement("img");
-        // Use data-src for lazy loading, set a placeholder
-        if (index < 3) {
-          // Load first 3 images immediately
-          el.src = img.src;
-          el.loading = "eager";
-        } else {
-          // Lazy load remaining images
-          el.setAttribute('data-src', img.src);
-          el.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23e5e7eb" width="400" height="300"/%3E%3C/svg%3E';
-          el.loading = "lazy";
-          el.classList.add('lazy-placeholder');
-          imageObserver.observe(el);
-        }
-        el.alt = img.alt;
-        el.decoding = "async"; // Async image decoding
-        el.className =
-          "h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition";
+        const absoluteIndex = start + index;
+        const picture = makeThumb(img, absoluteIndex, index < 3);
 
         const caption = document.createElement("div");
         caption.className = "text-center";
 
         const title = document.createElement("p");
         title.className =
-          "text-base font-serif font-semibold text-base-800 italic tracking-wide";
+          "text-base font-serif font-semibold text-base-800 dark:text-base-50 italic tracking-wide";
         title.textContent = img.caption.split(" (")[0];
 
         const meta = document.createElement("p");
@@ -331,7 +295,7 @@ function initializeUI() {
 
         caption.appendChild(title);
         caption.appendChild(meta);
-        wrapper.appendChild(el);
+        wrapper.appendChild(picture);
         wrapper.appendChild(caption);
         fragment.appendChild(wrapper);
       });
@@ -359,29 +323,14 @@ function initializeUI() {
         const wrapper = document.createElement("div");
         wrapper.className = "flex flex-col items-center w-80 gap-2";
 
-        const el = document.createElement("img");
-        // Load first page immediately, lazy load rest
-        if (index < 3) {
-          el.src = img.src;
-          el.loading = "eager";
-        } else {
-          el.setAttribute('data-src', img.src);
-          el.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300"%3E%3Crect fill="%23e5e7eb" width="400" height="300"/%3E%3C/svg%3E';
-          el.loading = "lazy";
-          el.classList.add('lazy-placeholder');
-          imageObserver.observe(el);
-        }
-        el.alt = img.alt;
-        el.decoding = "async";
-        el.className =
-          "h-64 w-full rounded-2xl object-cover shadow hover:scale-105 transition";
+        const picture = makeThumb(img, index, index < 3);
 
         const caption = document.createElement("div");
         caption.className = "text-center";
 
         const title = document.createElement("p");
         title.className =
-          "text-base font-serif font-semibold text-base-800 italic tracking-wide";
+          "text-base font-serif font-semibold text-base-800 dark:text-base-50 italic tracking-wide";
         title.textContent = img.caption.split(" (")[0];
 
         const meta = document.createElement("p");
@@ -391,7 +340,7 @@ function initializeUI() {
 
         caption.appendChild(title);
         caption.appendChild(meta);
-        wrapper.appendChild(el);
+        wrapper.appendChild(picture);
         wrapper.appendChild(caption);
         pageWrapper.appendChild(wrapper);
       });
@@ -450,16 +399,6 @@ function initializeUI() {
     .then((data) => {
       images = data;
       shuffleArray(images);
-      
-      // Preload first 3 images for faster initial display
-      images.slice(0, 3).forEach((img) => {
-        const preloadLink = document.createElement('link');
-        preloadLink.rel = 'preload';
-        preloadLink.as = 'image';
-        preloadLink.href = img.src;
-        document.head.appendChild(preloadLink);
-      });
-      
       renderImages();
       if (!isGrid && currentCarouselPage === 0) {
         scrollLeftBtn.style.display = "none";
@@ -521,82 +460,83 @@ function initializeUI() {
   // Safety check: if the modal doesn’t exist, skip wiring it up
   if (gallery && modal && modalImg && modalCaption && modalDescription && prevBtn && nextBtn && closeBtn) {
     let currentIndex = -1;
+    let lastFocused = null;
 
-    // 2) When the user clicks any thumbnail IMG inside #gallery, open the modal:
-    gallery.addEventListener("click", function (e) {
-      if (e.target.tagName === "IMG") {
-        // Find which image in `images[]` matches the clicked thumbnail:
-        const clickedSrc = e.target.src;
-        const image = images.find((imgObj) => clickedSrc.includes(imgObj.src));
-        if (!image) return;
+    const showImageAt = (idx) => {
+      currentIndex = (idx + images.length) % images.length;
+      const image = images[currentIndex];
+      // Match real src (post lazy-swap) OR data-src (pre-swap)
+      modalImg.src           = image.src;
+      modalImg.alt           = image.alt || image.caption || "";
+      modalCaption.textContent     = image.caption  || "";
+      modalDescription.textContent = image.description || "";
+    };
 
-        // Populate modal content:
-        modalImg.src           = image.src;
-        modalCaption.textContent     = image.caption  || "";
-        modalDescription.textContent = image.description || "";
+    const openModal = (image) => {
+      lastFocused = document.activeElement;
+      showImageAt(images.indexOf(image));
+      modal.classList.remove("hidden");
+      document.body.style.overflow = "hidden";
+      closeBtn.focus();
+    };
 
-        // Show the modal:
-        modal.classList.remove("hidden");
-
-        // Track the index so Prev/Next arrows work
-        currentIndex = images.indexOf(image);
-      }
-    });
-
-    // 3) Close modal when “×” is clicked:
-    closeBtn.addEventListener("click", () => {
+    const closeModal = () => {
       modal.classList.add("hidden");
+      document.body.style.overflow = "";
+      if (lastFocused && typeof lastFocused.focus === "function") {
+        lastFocused.focus();
+      }
+    };
+
+    // 2) Open via thumbnail click — resolve image via stored data-index when present,
+    //    fall back to src matching (works for lazy-loaded thumbs once swapped).
+    gallery.addEventListener("click", function (e) {
+      if (e.target.tagName !== "IMG") return;
+      const idxAttr = e.target.dataset.galleryIndex;
+      let image;
+      if (idxAttr !== undefined) {
+        image = images[Number(idxAttr)];
+      } else {
+        const clickedSrc = e.target.src;
+        image = images.find((imgObj) => clickedSrc.includes(imgObj.src));
+      }
+      if (image) openModal(image);
     });
 
-    // Also close if user clicks outside the image (i.e. on the backdrop):
+    // 3) Close on × or backdrop:
+    closeBtn.addEventListener("click", closeModal);
     modal.addEventListener("click", (e) => {
-      if (e.target === modal) {
-        modal.classList.add("hidden");
-      }
+      if (e.target === modal) closeModal();
     });
 
-    // 4) Prev arrow:
+    // 4) Prev / Next:
     prevBtn.addEventListener("click", (e) => {
-      e.stopPropagation(); // prevent the modal’s backdrop click from firing
-      if (currentIndex > -1) {
-        currentIndex = (currentIndex - 1 + images.length) % images.length;
-        const image = images[currentIndex];
-        modalImg.src           = image.src;
-        modalCaption.textContent     = image.caption  || "";
-        modalDescription.textContent = image.description || "";
-      }
+      e.stopPropagation();
+      if (currentIndex > -1) showImageAt(currentIndex - 1);
     });
-
-    // 5) Next arrow:
     nextBtn.addEventListener("click", (e) => {
       e.stopPropagation();
-      if (currentIndex > -1) {
-        currentIndex = (currentIndex + 1) % images.length;
-        const image = images[currentIndex];
-        modalImg.src           = image.src;
-        modalCaption.textContent     = image.caption  || "";
-        modalDescription.textContent = image.description || "";
-      }
+      if (currentIndex > -1) showImageAt(currentIndex + 1);
     });
 
-    // 6) Keyboard navigation: Esc to close, ←/→ to navigate
+    // 5) Keyboard nav + simple focus trap (Esc / ←/→ / Tab loops inside)
     document.addEventListener("keydown", (e) => {
-      if (!modal.classList.contains("hidden")) {
-        if (e.key === "Escape") {
-          modal.classList.add("hidden");
-        } else if (e.key === "ArrowRight") {
-          currentIndex = (currentIndex + 1) % images.length;
-          const image = images[currentIndex];
-          modalImg.src           = image.src;
-          modalCaption.textContent     = image.caption  || "";
-          modalDescription.textContent = image.description || "";
-        } else if (e.key === "ArrowLeft") {
-          currentIndex = (currentIndex - 1 + images.length) % images.length;
-          const image = images[currentIndex];
-          modalImg.src           = image.src;
-          modalCaption.textContent     = image.caption  || "";
-          modalDescription.textContent = image.description || "";
-        }
+      if (modal.classList.contains("hidden")) return;
+      if (e.key === "Escape") {
+        e.preventDefault();
+        closeModal();
+      } else if (e.key === "ArrowRight") {
+        showImageAt(currentIndex + 1);
+      } else if (e.key === "ArrowLeft") {
+        showImageAt(currentIndex - 1);
+      } else if (e.key === "Tab") {
+        const focusables = [prevBtn, nextBtn, closeBtn];
+        const idx = focusables.indexOf(document.activeElement);
+        e.preventDefault();
+        const next = e.shiftKey
+          ? focusables[(idx - 1 + focusables.length) % focusables.length]
+          : focusables[(idx + 1) % focusables.length];
+        next.focus();
       }
     });
   } else {
@@ -618,18 +558,31 @@ function initializeUI() {
     const end = start + itemsPerPage;
     const currentItems = publications.slice(start, end);
 
+    const tagClass = (tag) => {
+      const t = (tag || "").toLowerCase();
+      if (t.includes("ndss"))   return "tag--ndss";
+      if (t.includes("sacmat")) return "tag--sacmat";
+      if (t.includes("arxiv"))  return "tag--arxiv";
+      if (t.includes("icc"))    return "tag--icc";
+      if (t.includes("communications") || t.includes("journal")) return "tag--journal";
+      return "tag--default";
+    };
+
     currentItems.forEach((pub) => {
       const div = document.createElement("div");
-      div.className = "timeline-entry";
+      div.className = "entry-card";
       div.innerHTML = `
-        <p class="font-medium">${pub.authors}</p>
-        <p class="mt-1 text-base leading-relaxed text-base-800">
-          <span class="inline-block rounded-full bg-accent/10 px-2 py-0.5 text-xs text-accent mr-2">${pub.tag}</span>
+        <div class="mb-2"><span class="tag ${tagClass(pub.tag)}">${pub.tag}</span></div>
+        <h4 class="font-semibold leading-snug">
           <a href="${pub.link}" target="_blank" rel="noopener" class="text-accent hover:underline">${pub.title}</a>
-          <span class="italic text-base-600"> ${pub.note}</span>
-        </p>
-        <a href="${pub.pdf}" download target="_blank" rel="noopener"
-           class="mt-2 inline-block rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
+        </h4>
+        <p class="mt-1.5 text-sm text-base-700 leading-relaxed">${pub.authors}</p>
+        ${pub.note ? `<p class="mt-1 text-xs italic text-base-600">${pub.note}</p>` : ""}
+        <a href="${pub.pdf}" target="_blank" rel="noopener"
+           class="mt-3 inline-flex items-center gap-1 rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
+          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 3a1 1 0 0 1 1 1v8.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4L11 12.6V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 2 0v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-1Z"/>
+          </svg>
           PDF
         </a>`;
       container.appendChild(div);
@@ -641,10 +594,8 @@ function initializeUI() {
     const createBtn = (label, page, disabled = false, active = false) => {
       const btn = document.createElement("button");
       btn.textContent = label;
-      btn.className = `w-9 h-9 flex items-center justify-center rounded-full transition font-medium ${
-        active
-          ? "bg-blue-500 text-white"
-          : "bg-white hover:bg-accent hover:text-white text-base-900"
+      btn.className = `pagination-btn w-9 h-9 flex items-center justify-center rounded-full transition font-medium ${
+        active ? "is-active" : ""
       } ${disabled ? "opacity-40 cursor-not-allowed" : ""}`;
       if (!disabled) {
         btn.onclick = () => {
@@ -681,6 +632,10 @@ function initializeUI() {
     })
     .catch((err) => console.error("Failed to load publications:", err));
 
+  // ────────────── Footer year ──────────────
+  const yearEl = document.getElementById("year");
+  if (yearEl) yearEl.textContent = new Date().getFullYear();
+
   // ────────────── “Back to Top” Button Logic ──────────────
   const backBtn = document.getElementById("backToTop");
   if (backBtn) {
@@ -695,22 +650,30 @@ function initializeUI() {
   const menuToggle = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
   if (menuToggle && mobileMenu) {
+    const syncAria = () => {
+      const open = !mobileMenu.classList.contains("hidden");
+      menuToggle.setAttribute("aria-expanded", String(open));
+    };
     menuToggle.addEventListener("click", (e) => {
       e.stopPropagation();
       mobileMenu.classList.toggle("hidden");
+      syncAria();
     });
     document.addEventListener("click", (event) => {
       const isClickInsideMenu = mobileMenu.contains(event.target);
       const isClickOnToggle = menuToggle.contains(event.target);
       if (!isClickInsideMenu && !isClickOnToggle) {
         mobileMenu.classList.add("hidden");
+        syncAria();
       }
     });
     document.querySelectorAll("#mobile-menu a").forEach((link) => {
       link.addEventListener("click", () => {
         mobileMenu.classList.add("hidden");
+        syncAria();
       });
     });
+    syncAria();
   }
 
   // ────────────── Contact Envelope Toggle ──────────────

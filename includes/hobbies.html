@@ -22,16 +22,18 @@
       </button>
     </div>
 
-    <!-- Left/Right Arrows (Carousel Controls) -->
+    <!-- Carousel controls: button position matches its id. -->
     <button
       id="scroll-left"
-      class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
+      aria-label="Previous images"
+      class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="h-6 w-6"
+        class="h-6 w-6 rotate-180"
+        aria-hidden="true"
       >
         <path
           fill-rule="evenodd"
@@ -43,13 +45,15 @@
 
     <button
       id="scroll-right"
-      class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
+      aria-label="Next images"
+      class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
         fill="currentColor"
-        class="h-6 w-6 rotate-180"
+        class="h-6 w-6"
+        aria-hidden="true"
       >
         <path
           fill-rule="evenodd"
@@ -71,11 +75,16 @@
 <div
   id="image-modal"
   class="fixed inset-0 z-50 hidden bg-black bg-opacity-80 flex flex-col items-center justify-center p-4"
+  role="dialog"
+  aria-modal="true"
+  aria-labelledby="modal-caption"
+  tabindex="-1"
 >
   <!-- Left arrow -->
   <button
     id="modal-prev"
     class="absolute left-4 text-white text-4xl font-bold hover:text-accent transition z-50"
+    aria-label="Previous image"
   >
     &#10094;
   </button>
@@ -103,6 +112,7 @@
   <button
     id="modal-next"
     class="absolute right-4 text-white text-4xl font-bold hover:text-accent transition z-50"
+    aria-label="Next image"
   >
     &#10095;
   </button>
@@ -111,6 +121,7 @@
   <button
     id="close-modal"
     class="absolute top-6 right-6 text-white text-3xl font-bold hover:text-accent transition z-50"
+    aria-label="Close"
   >
     &times;
   </button>

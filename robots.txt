@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://t-449.github.io/sitemap.xml

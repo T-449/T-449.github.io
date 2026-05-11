@@ -58,4 +58,10 @@ yarn-error.log*
 # -------------------------
 drafts/
 tex/*.pdf  # compiled PDFs inside tex folder (since workflow auto-exports to files/)
+images/originals/
+
+# -------------------------
+# Build artifacts
+# -------------------------
+package-lock.json
 

@@ -3,92 +3,73 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tushin Mallick</title>
+    <meta name="theme-color" content="#0e1520" />
+    <title>Tushin Mallick — PhD, Security &amp; ML · Northeastern</title>
     <link rel="icon" href="images/omega.png" type="image/png" />
+    <link rel="canonical" href="https://t-449.github.io/" />
     <meta
       name="description"
-      content="Tushin Mallick — PhD Student at Northeastern University, exploring Cyber Security and Machine Learning."
+      content="Tushin Mallick — PhD Candidate at Northeastern University researching agentic-AI security and post-quantum cryptography."
     />
-    <meta property="og:title" content="Tushin Mallick" />
+    <meta name="author" content="Tushin Mallick" />
+    <meta name="keywords" content="Tushin Mallick, Northeastern University, PhD, cybersecurity, agentic AI security, LLM security, post-quantum cryptography, Cristina Nita-Rotaru" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Tushin Mallick — PhD, Security &amp; ML" />
     <meta
       property="og:description"
-      content="PhD student in Security and Systems Research at Northeastern University."
+      content="PhD Candidate at Northeastern researching agentic-AI security and post-quantum cryptography."
     />
-    <meta property="og:image" content="images/profile_2.jpeg" />
+    <meta property="og:image" content="https://t-449.github.io/images/profile_2.jpeg" />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://t-449.github.io/" />
 
-    <!-- Fonts -->
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Tushin Mallick — PhD, Security &amp; ML" />
+    <meta name="twitter:description" content="PhD Candidate at Northeastern researching agentic-AI security and post-quantum cryptography." />
+    <meta name="twitter:image" content="https://t-449.github.io/images/profile_2.jpeg" />
+
+    <!-- JSON-LD Person schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Tushin Mallick",
+      "jobTitle": "PhD Candidate",
+      "affiliation": {
+        "@type": "CollegeOrUniversity",
+        "name": "Northeastern University",
+        "url": "https://www.northeastern.edu/"
+      },
+      "url": "https://t-449.github.io/",
+      "image": "https://t-449.github.io/images/profile_2.jpeg",
+      "sameAs": [
+        "https://github.com/T-449",
+        "https://www.linkedin.com/in/tushin-mallick-0233311a0/",
+        "https://scholar.google.com/citations?user=r3AzDT8AAAAJ&hl=en"
+      ]
+    }
+    </script>
+
+    <!-- Fonts: combined into one request -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link
-      rel="preconnect"
-      href="https://fonts.gstatic.com"
-      crossorigin
-    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <!-- Preload critical hero background image -->
     <link rel="preload" as="image" href="images/bg_image.jpg" fetchpriority="high" />
     <link
-      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=Inter:wght@300;400;500;700&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,500&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,500&family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;600&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Tailwind CDN + config script -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              base: { 50: "#fcfcfa", 900: "#0e1520" },
-              accent: "#4c93ff",
-              muted: "#94a3b8",
-            },
-            fontFamily: {
-              sans: ["Inter", "ui-sans-serif", "system-ui"],
-              serif: ["Playfair Display", "ui-serif"],
-            },
-            fontSize: {
-              base: "1.125rem", // was 1rem (text-base → 18px)
-              lg: "1.25rem",
-            },
-            letterSpacing: {
-              wider: ".08em",
-              widest: ".15em",
-              tightest: "-0.02em",
-            },
-            lineHeight: {
-              relaxed: "1.75",
-              loose: "2",
-            },
-            boxShadow: {
-              glow: "0 0 15px rgba(76, 147, 255, 0.4)",
-            },
-            keyframes: {
-              fadeInUp: {
-                "0%": { opacity: 0, transform: "translateY(30px)" },
-                "100%": { opacity: 1, transform: "translateY(0)" },
-              },
-            },
-            animation: {
-              fadeInUp: "fadeInUp 1.2s ease-out forwards",
-            },
-          },
-        },
-      };
-    </script>
+    <!-- Compiled Tailwind (built locally via `npm run build:css`) -->
+    <link rel="stylesheet" href="css/tailwind.css" />
 
     <!-- AOS CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
       rel="stylesheet"
     />
-    <!-- Particles.js -->
-    <script src="https://cdn.jsdelivr.net/npm/particles.js"></script>
 
     <!-- EXTERNAL CSS -->
     <link rel="stylesheet" href="css/styles.css" />
@@ -109,42 +90,32 @@
     <!-- ABOUT -->
     <div id="about"></div>
 
-    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+    <hr class="section-divider" />
 
     <!-- RESEARCH -->
     <div id="research"></div>
 
-    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
-
     <!-- NEWS -->
     <div id="news"></div>
-
-    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
 
     <!-- CV -->
     <div id="cv"></div>
 
-    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+    <hr class="section-divider" />
 
     <!-- PUBLICATIONS -->
     <div id="publications"></div>
 
-    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
-
     <!-- TALKS -->
     <div id="talks"></div>
 
-    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+    <!-- EXPOSURE -->
+    <div id="exposure"></div>
 
-  <!-- EXPOSURE -->
-  <div id="exposure"></div>
+    <hr class="section-divider" />
 
-  <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
-
-  <!-- CONTACT -->
-  <div id="contact"></div>
-
-    <div class="mx-auto my-12 w-24 h-0.5 bg-gradient-to-r from-accent to-accent-light rounded-full animate-fadeInUp"></div>
+    <!-- CONTACT -->
+    <div id="contact"></div>
 
     <!-- HOBBIES -->
     <div id="hobbies"></div>

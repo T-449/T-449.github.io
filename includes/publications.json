@@ -1,5 +1,14 @@
 [
   {
+    "authors": "S. Avizeh, <b>T. Mallick</b>, A. Oprea, C. Nita-Rotaru, and R. Safavi-Naini (2026)",
+    "tag": "arXiv",
+    "title": "MAGIQ: A Post-Quantum Multi-Agentic AI Governance System with Provable Security",
+    "link": "https://arxiv.org/abs/2605.06933",
+    "pdf": "",
+    "note": "Under submission."
+  },
+
+  {
     "authors": "E. Li, <b>T. Mallick</b>, E. Rose, W. Robertson, A. Oprea, and C. Nita‑Rotaru (2025)",
     "tag": "NDSS 2026",
     "title": "ACE: A Security Architecture for LLM-Integrated App Systems",
@@ -11,7 +20,7 @@
   {
   "authors": "<b>T. Mallick</b>, M. Zeldin, M. Cenk, and C. Nita-Rotaru (2025)",
   "tag": "arXiv",
-  "title": "Quantum Disruption: An SOK of How Post-Quantum Attackers Reshape Blockchain Security and Performance.",
+  "title": "Quantum Disruption: An SOK of How Post-Quantum Attackers Reshape Blockchain Security and Performance",
   "link": "https://arxiv.org/abs/2512.13333",
   "pdf": "/files/publications/Blockchain_sok.pdf",
   "note": "Under submission."
@@ -31,7 +40,7 @@
   {
     "authors": "A. Ali, <b>T. Mallick</b>, S. Sakib, M. S. Hossain, and Y.-D. Lin (2022)",
     "tag": "IEEE ICC",
-    "title": "Provisioning fog services to 3GPP subscribers: Authentication and application mobility.",
+    "title": "Provisioning fog services to 3GPP subscribers: Authentication and application mobility",
     "link": "https://ieeexplore.ieee.org/document/9838904",
     "pdf": "/files/publications/3GPP.pdf",
     "note": "In IEEE ICC 2022, pp. 4926–4931."
@@ -40,7 +49,7 @@
   {
     "authors": "A. Ali, M. Islam, <b>T. Mallick</b>, M. S. Islam, S. Sakib, M. S. Hossain, and Y.-D. Lin (2024)",
     "tag": "Computer Communications",
-    "title": "3GPP Edge–Fog federation: Transparent 3rd-party authentication and application mobility.",
+    "title": "3GPP Edge–Fog federation: Transparent 3rd-party authentication and application mobility",
     "link": "https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683",
     "pdf": "/files/publications/3GPP_Journal.pdf",
     "note": "In Computer Communications, 222, 220–229."
