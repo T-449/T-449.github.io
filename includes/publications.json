@@ -1,5 +1,14 @@
 [
   {
+    "authors": "E. Rose, <b>T. Mallick</b>, M. Laws C. Nita-Rotaru, and A. Oprea (2026)",
+    "tag": "arXiv",
+    "title": "APWA: A Distributed Architecture for Parallelizable Agentic Workflows",
+    "link": "https://arxiv.org/abs/2605.15132",
+    "pdf": "/files/publications/apwa.pdf",
+    "note": "Under submission."
+  },
+  
+  {
     "authors": "S. Avizeh, <b>T. Mallick</b>, A. Oprea, C. Nita-Rotaru, and R. Safavi-Naini (2026)",
     "tag": "arXiv",
     "title": "MAGIQ: A Post-Quantum Multi-Agentic AI Governance System with Provable Security",
@@ -36,6 +45,14 @@
     "note": ""
   },
 
+  {
+    "authors": "A. Ali, M. Islam, <b>T. Mallick</b>, M. S. Islam, S. Sakib, M. S. Hossain, and Y.-D. Lin (2024)",
+    "tag": "Computer Communications",
+    "title": "3GPP Edge–Fog federation: Transparent 3rd-party authentication and application mobility",
+    "link": "https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683",
+    "pdf": "/files/publications/3GPP_Journal.pdf",
+    "note": "In Computer Communications, 222, 220–229."
+  },
 
   {
     "authors": "A. Ali, <b>T. Mallick</b>, S. Sakib, M. S. Hossain, and Y.-D. Lin (2022)",
@@ -44,14 +61,5 @@
     "link": "https://ieeexplore.ieee.org/document/9838904",
     "pdf": "/files/publications/3GPP.pdf",
     "note": "In IEEE ICC 2022, pp. 4926–4931."
-  },
-
-  {
-    "authors": "A. Ali, M. Islam, <b>T. Mallick</b>, M. S. Islam, S. Sakib, M. S. Hossain, and Y.-D. Lin (2024)",
-    "tag": "Computer Communications",
-    "title": "3GPP Edge–Fog federation: Transparent 3rd-party authentication and application mobility",
-    "link": "https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683",
-    "pdf": "/files/publications/3GPP_Journal.pdf",
-    "note": "In Computer Communications, 222, 220–229."
   }
 ]
