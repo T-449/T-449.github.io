@@ -51,7 +51,7 @@
     "title": "3GPP Edge–Fog federation: Transparent 3rd-party authentication and application mobility",
     "link": "https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683",
     "pdf": "/files/publications/3GPP_Journal.pdf",
-    "note": "In Computer Communications, 222, 220–229."
+    "note": ""
   },
 
   {
@@ -60,6 +60,6 @@
     "title": "Provisioning fog services to 3GPP subscribers: Authentication and application mobility",
     "link": "https://ieeexplore.ieee.org/document/9838904",
     "pdf": "/files/publications/3GPP.pdf",
-    "note": "In IEEE ICC 2022, pp. 4926–4931."
+    "note": ""
   }
 ]
