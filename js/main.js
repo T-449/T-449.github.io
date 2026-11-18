@@ -1,7 +1,3 @@
-if (window.location.hostname === "t-449.github.io") {
-  window.location.replace("https://t-449-github-io.onrender.com/");
-}
-
 const root = document.documentElement;
 
 // ────────────── Dark / Light Toggle ──────────────

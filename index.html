@@ -6,7 +6,7 @@
     <meta name="theme-color" content="#0e1520" />
     <title>Tushin Mallick</title>
     <link rel="icon" href="images/omega.png" type="image/png" />
-    <link rel="canonical" href="https://t-449.github.io/" />
+    <link rel="canonical" href="https://tushin.net/" />
     <meta
       name="description"
       content="Tushin Mallick — PhD Candidate at Northeastern University researching agentic-AI security and post-quantum cryptography."
@@ -20,15 +20,15 @@
       property="og:description"
       content="PhD Candidate at Northeastern researching agentic-AI security and post-quantum cryptography."
     />
-    <meta property="og:image" content="https://t-449.github.io/images/profile_2.jpeg" />
+    <meta property="og:image" content="https://tushin.net/images/profile_2.jpeg" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://t-449.github.io/" />
+    <meta property="og:url" content="https://tushin.net/" />
 
     <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="Tushin Mallick — PhD, Security &amp; ML" />
     <meta name="twitter:description" content="PhD Candidate at Northeastern researching agentic-AI security and post-quantum cryptography." />
-    <meta name="twitter:image" content="https://t-449.github.io/images/profile_2.jpeg" />
+    <meta name="twitter:image" content="https://tushin.net/images/profile_2.jpeg" />
 
     <!-- JSON-LD Person schema -->
     <script type="application/ld+json">
@@ -42,8 +42,8 @@
         "name": "Northeastern University",
         "url": "https://www.northeastern.edu/"
       },
-      "url": "https://t-449.github.io/",
-      "image": "https://t-449.github.io/images/profile_2.jpeg",
+      "url": "https://tushin.net/",
+      "image": "https://tushin.net/images/profile_2.jpeg",
       "sameAs": [
         "https://github.com/T-449",
         "https://www.linkedin.com/in/tushin-mallick-0233311a0/",
@@ -52,8 +52,12 @@
     }
     </script>
 
-    <!-- Runs before first paint so dark-mode visitors don't see a light flash. -->
+    <!-- Runs before first paint: sends the old github.io address to the real domain,
+         and applies the theme so dark-mode visitors don't see a light flash. -->
     <script>
+      if (location.hostname === "t-449.github.io") {
+        location.replace("https://tushin.net" + location.pathname + location.search + location.hash);
+      }
       try {
         const saved = localStorage.getItem("theme");
         const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
