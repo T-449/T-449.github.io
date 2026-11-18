@@ -1,132 +1,182 @@
 % ----------------------------------------------------------------------
-%  Curriculum Vitae — Tushin Mallick (classic burgundy style)
-%  NOTE: Compiles with default pdfLaTeX — no special engine needed.
+%  Curriculum Vitae — Tushin Mallick
+%  Build: cd tex && ./compile.sh Tushin_CV.tex   (pdfLaTeX via latexmk)
+%  Keep in sync with the website (index.html, includes/publications.json).
 % ----------------------------------------------------------------------
 \documentclass[11pt,a4paper]{moderncv}
 
-% ----------------------------------------------------------------------
-%  STYLE & COLOR
-% ----------------------------------------------------------------------
-\moderncvstyle{classic}
+\moderncvstyle{banking}
 \moderncvcolor{burgundy}
 
-% ----------------------------------------------------------------------
-%  ENCODING & PAGE LAYOUT
-% ----------------------------------------------------------------------
+% Banking defaults are Pagella + bold black dates; keep the lighter Latin Modern look.
+\usepackage{lmodern}
+\renewcommand*{\namefont}{\LARGE\bfseries}
+\renewcommand*{\sectionfont}{\large\bfseries}
+\renewcommand*{\hintstyle}[1]{{\textcolor{gray}{#1}}}
+\renewcommand*{\labelitemi}{\strut\textcolor{color1}{\small\textbullet}}
+\renewcommand*{\labelitemii}{\strut\textcolor{color1}{\textendash}}
+
 \usepackage[utf8]{inputenc}
 \usepackage[scale=0.85]{geometry}
 \usepackage{xcolor}
-\usepackage[unicode]{hyperref} % 
+\usepackage[unicode]{hyperref}
 \definecolor{linkblue}{HTML}{3366CC}
-\hypersetup{
-    colorlinks=true,
-    urlcolor=linkblue,
-    linkcolor=black,
-    citecolor=black
-}
-\setlength{\hintscolumnwidth}{3cm}
+\hypersetup{colorlinks=true, urlcolor=linkblue, linkcolor=black, citecolor=black}
 
-% ----------------------------------------------------------------------
-%  PERSONAL DATA
-% ----------------------------------------------------------------------
+% \role{dates}{title}{organisation}{location}
+% Bold title — italic organisation, location, with dates right-aligned in grey.
+\newlength{\roledatewidth}
+\newcommand*{\role}[4]{%
+  \settowidth{\roledatewidth}{\hspace*{2\separatorcolumnwidth}\hintstyle{#1}}%
+  \cvitem{}{%
+    \parbox[t]{\dimexpr\maincolumnwidth-\roledatewidth\relax}{%
+      \strut\textbf{#2}\ifx&#3&\else{} --- \textit{#3}\fi\ifx&#4&\else, #4\fi\strut}%
+    \hfill\hintstyle{#1}}}
+
+% \dated{right-hand note}{text}: plain line with a grey note on the right.
+\newcommand*{\dated}[2]{\cvitem{}{#2\hfill\hintstyle{#1}}}
+
 \name{Tushin}{Mallick}
-% \title{Ph.D. Candidate — Network Security & Distributed Systems}{}
 \mobile{+1 (617) 251 1710}
 \email{mallick.tu@northeastern.edu}
 \homepage{tushin.net}
 \social[github]{T-449}
 \social[linkedin]{tushin-mallick-0233311a0}
-% \extrainfo{Advisor: Dr. Cristina Nita‑Rotaru}
 \nopagenumbers{}
 
-% ----------------------------------------------------------------------
+\newcommand{\sep}{\hfill\textperiodcentered\hfill}
+
 \begin{document}
 \makecvtitle
 
 % ----------------------------------------------------------------------
 \section{Education}
-\cventry{Sept 2023 -- Present}{Ph.D. in Computer Science}{Northeastern University}{Boston, MA}{}{GPA 4.00/4.00\\Advisor: \textit{Dr. Cristina Nita‑Rotaru}}
-\cventry{Feb 2017 -- May 2022}{B.Sc. in Computer Science \& Engineering}{Bangladesh University of Engineering \& Technology}{Dhaka, Bangladesh}{}{GPA 3.70/4.00}
+\role{Sept 2023 -- Present}{Ph.D. in Computer Science}{Northeastern University}{Boston, MA}
+\cvitem{}{GPA 4.00/4.00 \quad|\quad Advisor: \textit{Dr. Cristina Nita-Rotaru}}
+
+\role{Sept 2023 -- April 2026}{M.Sc. in Computer Science}{Northeastern University}{Boston, MA}
+\cvitem{}{GPA 4.00/4.00}
+
+\role{Feb 2017 -- May 2022}{B.Sc. in Computer Science \& Engineering}{Bangladesh University of Engineering \& Technology}{Dhaka, Bangladesh}
+\cvitem{}{GPA 3.70/4.00}
 
 % ----------------------------------------------------------------------
 \section{Research Interests}
-\cvitem{}{{Network Security, Distributed Systems, Post‑Quantum Cryptography}}
+\cvitem{}{Agentic AI Security \sep Trustworthy AI \sep Post-Quantum Cryptography \sep Network Security}
 
 % ----------------------------------------------------------------------
 \section{Experience}
-
-\cventry{May 2025 -- July 2025}{Research Intern}{Cisco Systems}{San José, CA}{}{}
-
-\cventry{May 2024 -- April 2025}{Graduate Research Assistant}{NDS2 Lab, Northeastern University (Cybersecurity \& Privacy Institute)}{Boston, MA}{}{}
-
-\cventry{June 2022 -- June 2023}{Research Assistant}{Bangladesh University of Engineering \& Technology}{Dhaka, Bangladesh}{}{
+\role{Jan 2026 -- Apr 2026 \textperiodcentered{} May 2024 -- Apr 2025}{Graduate Research Assistant}{NDS2 Lab, Northeastern University (Cybersecurity \& Privacy Institute)}{Boston, MA}
+\cvitem{}{%
 \begin{itemize}
-    \item \textbf{\href{https://drive.google.com/file/d/1Swjc1G7wjj6VnwO3XELsknQGtT2CvRaO/view?usp=sharing}{Malware App Identification using System Call Pattern}}
-    \begin{itemize}
-        \item Detection of malware applications by training deep learning models on sequential system call attributes.
-        \item Generated a random forest model that successfully classifies malware and benign applications.
-    \end{itemize}
-    \item \textbf{\href{https://drive.google.com/file/d/1kQaQXqKSESb9hBwxKZ3Jc4aSIbAQ-N7p/view?usp=sharing}{Cloud-Fog Federation}}
-    \begin{itemize}
-        \item Researched federation between cloud and fog networks addressing authentication and application handover problems.
-    \end{itemize}
+  \item \textbf{Multi-Agent Security}
+  \begin{itemize}
+    \item Investigating architectures for multi-agent systems capable of decomposing and executing highly parallelizable workflows.
+    \item Developing information flow control mechanisms to enforce security properties in agentic systems.
+    \item Investigating the use of post-quantum protocols to secure agent-to-agent communication channels.
+    \item Framework: Autogen
+  \end{itemize}
+  \item \textbf{ACE: A Security Architecture for LLM-Integrated App Systems}
+  \begin{itemize}
+    \item Formulated attack strategies against systems utilising an interleaving planning execution architecture (e.g.\ IsolateGPT).
+    \item Contributed to the design and development of the Abstract Planner and Concrete Planner components.
+    \item Designed and constructed the Executor component, a key enforcement layer of the defense framework.
+    \item Developed and implemented a risk-scoring mechanism for tool evaluation.
+    \item Framework: Langchain
+  \end{itemize}
+  \item \textbf{Quantum Disruption: An SoK of How Post-Quantum Attackers Reshape Blockchain Security}
+  \begin{itemize}
+    \item Surveyed and systematized the cryptographic primitives of seven major blockchain platforms to identify components vulnerable to quantum adversaries.
+    \item Derived theoretical throughput models to quantify the performance impact of replacing classical signatures with ML-DSA-44 across all seven platforms.
+    \item Analyzed the systemic impact of PQ signature adoption across storage, consensus convergence, and miner economics.
+  \end{itemize}
+  \item \textbf{Classifying Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms}
+  \begin{itemize}
+    \item Developed ML classification models to distinguish classical vs.\ PQ and cross-library implementations of key exchange and digital signature algorithms.
+    \item Developed a packet-level classification approach for identifying PQ key exchanges in TLS, SSH, QUIC, OpenVPN, and OIDC.
+    \item Designed and integrated classification features into Cisco's open-source QUARTZ tool via dedicated API endpoints.
+    \item Applied the classification pipeline to 1\,M Tranco domains to identify IPs supporting PQ key exchange for TLS.
+  \end{itemize}
+\end{itemize}}
+
+\role{May 2025 -- Aug 2025}{Research Intern}{Cisco}{San José, CA}
+\cvitem{}{%
+\begin{itemize}
+  \item Investigated the feasibility of achieving the security guarantees of PQ protocols using classical schemes.
+  \item \textbf{Study of Post-Quantum Status of Widely Used Protocols}
+  \begin{itemize}
+    \item Surveyed and analyzed the cryptographic foundations and quantum vulnerabilities of nine widely deployed protocols --- TLS, IPsec, BGP, DNSSEC, SSH, QUIC, OpenID Connect, OpenVPN, and Signal.
+    \item Analyzed and catalogued PQC migration efforts, standardization progress, and experimental deployments.
+    \item Identified and compared structural barriers to PQC adoption, distinguishing protocol-level constraints from algorithmic performance bottlenecks.
+    \item Developed cross-protocol insights on the asymmetry between key exchange and authentication migration.
+  \end{itemize}
+\end{itemize}}
+
+\role{June 2022 -- June 2023}{Research Assistant}{Bangladesh University of Engineering \& Technology}{Dhaka, Bangladesh}
+\cvitem{}{%
+\begin{itemize}
+  \item \textbf{\href{https://drive.google.com/file/d/1Swjc1G7wjj6VnwO3XELsknQGtT2CvRaO/view?usp=sharing}{Malware App Identification using System Call Pattern}} --- Detection of malware applications by training deep learning models on sequential system call attributes; generated a random forest classifier.
+  \item \textbf{\href{https://drive.google.com/file/d/1kQaQXqKSESb9hBwxKZ3Jc4aSIbAQ-N7p/view?usp=sharing}{Cloud-Fog Federation}} --- Researched federation between cloud and fog networks addressing authentication and application handover problems.
 \end{itemize}}
 
 % ----------------------------------------------------------------------
 \section{Teaching}
-\cventry{Sept 2023 -- Apr 2024}{Graduate Teaching Assistant}{Northeastern University}{Boston, MA}{}{
+\role{}{Graduate Teaching Assistant}{Northeastern University}{Boston, MA}
+\cvitem{}{%
 \begin{itemize}
-    \item CS 6240 \emph{Large‑Scale Parallel Data Processing} (Spring 2024)
-    \item CS 3700 \emph{Networks \& Distributed Systems} (Fall 2023)
+  \item CS 3650: \emph{Computer Systems} (Fall 2025)
+  \item CS 6240: \emph{Large-Scale Parallel Data Processing} (Spring 2024)
+  \item CS 3700: \emph{Networks \& Distributed Systems} (Fall 2023)
 \end{itemize}}
-
-
-\section{Service}
-\cventry{2025}{Web Chair}{ACM QRSEC 2025}{Taipei, Taiwan}{}{}
 
 % ----------------------------------------------------------------------
 \section{Publications}
+\cvitem{}{E.~Rose, \textbf{T.~Mallick}, M.~Laws, C.~Nita-Rotaru, A.~Oprea,
+  \href{https://arxiv.org/abs/2605.15132}{``APWA: A Distributed Architecture for Parallelizable Agentic Workflows''} \emph{Preprint, 2026.}}
 
-\cvitem{2025}{
-E.~Li, \textbf{T.~Mallick}, E.~Rose, W.~Robertson, A.~Oprea, C.~Nita-Rotaru — 
-\href{https://arxiv.org/abs/2504.20984}{“ACE: A Security Architecture for LLM-Integrated App Systems,”} 
-\emph{Preprint}.
-}
+\cvitem{}{S.~Avizeh, \textbf{T.~Mallick}, A.~Oprea, C.~Nita-Rotaru, R.~Safavi-Naini,
+  \href{https://arxiv.org/abs/2605.06933}{``MAGIQ: A Post-Quantum Multi-Agentic AI Governance System with Provable Security''} \emph{Preprint, 2026.}}
 
+\cvitem{}{E.~Li, \textbf{T.~Mallick}, E.~Rose, W.~Robertson, A.~Oprea, C.~Nita-Rotaru,
+  \href{https://www.ndss-symposium.org/ndss-paper/ace-a-security-architecture-for-llm-integrated-app-systems/}{``ACE: A Security Architecture for LLM-Integrated App Systems''} \emph{NDSS 2026.}}
 
-\cvitem{2024}{
-\textbf{T.~Mallick}, C.~Nita‑Rotaru, A.~Kundu, R.~Kompella — 
-\href{https://arxiv.org/abs/2503.17830}{“Fingerprinting Implementations of Cryptographic Primitives that Use Post‑Quantum Algorithms,”} 
-\emph{Preprint}.
-}
+\cvitem{}{\textbf{T.~Mallick}, M.~Zeldin, M.~Cenk, C.~Nita-Rotaru,
+  \href{https://arxiv.org/abs/2512.13333}{``Quantum Disruption: An SoK of How Post-Quantum Attackers Reshape Blockchain Security and Performance''} \emph{Preprint, 2025.}}
 
-\cvitem{2022}{
-A.~Ali, \textbf{T.~Mallick}, S.~Sakib — 
-\href{https://ieeexplore.ieee.org/document/9838904/metrics}{“Provisioning Fog Services to 3GPP Subscribers,”} 
-\emph{IEEE ICC 2022}.
-}
+\cvitem{}{\textbf{T.~Mallick}, C.~Nita-Rotaru, A.~Kundu, R.~Kompella,
+  \href{https://arxiv.org/abs/2503.17830}{``Classifying Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms''} \emph{ACM SACMAT 2026.}}
 
-\cvitem{2022}{
-A.~Ali, \textbf{T.~Mallick}, M.~Islam, M.~S.~Islam, S.~Sakib — 
-\href{https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4207601}{“3GPP Edge‑Fog Federation: Transparent Third‑Party Authentication \& Application Mobility,”} 
-\emph{Computer Communication 2022}.
-}
+\cvitem{}{A.~Ali, M.~Islam, \textbf{T.~Mallick}, M.~S.~Islam, S.~Sakib, M.~S.~Hossain, Y.-D.~Lin,
+  \href{https://www.sciencedirect.com/science/article/abs/pii/S0140366424001683}{``3GPP Edge--Fog Federation: Transparent 3rd-Party Authentication and Application Mobility''} \emph{Computer Communications, 2024.}}
 
+\cvitem{}{A.~Ali, \textbf{T.~Mallick}, S.~Sakib, M.~S.~Hossain, Y.-D.~Lin,
+  \href{https://ieeexplore.ieee.org/document/9838904}{``Provisioning Fog Services to 3GPP Subscribers: Authentication and Application Mobility''} \emph{IEEE ICC 2022.}}
 
+% ----------------------------------------------------------------------
+\section{Talks}
+\dated{NESD 2026, UMass Amherst}{Planning as Policy: Securing Agents against Untrusted Tools}
+\dated{NDSS 2026, San Diego, CA}{ACE: A Security Architecture for LLM-Integrated App Systems}
+
+% ----------------------------------------------------------------------
+\section{Service}
+\dated{2025}{Web Chair, ACM QRSEC 2025, Taipei, Taiwan}
 
 % ----------------------------------------------------------------------
 \section{Honours}
-\cvitem{2021--2022}{Dean’s List (2 semesters), Bangladesh University of Engineering \& Technology}
+\dated{2021--2022}{Dean's List (2 semesters), Bangladesh University of Engineering \& Technology}
 
 % ----------------------------------------------------------------------
 \section{Coursework}
-\cvitem{}{Formal Specification \& Verification · Seminar in Computer Systems · Machine Learning · Foundations of Distributed Systems · Information Visualization Theory}
+\cvitem{}{Formal Specification \& Verification \textperiodcentered{} Seminar in Computer Systems \textperiodcentered{} Machine Learning \textperiodcentered{} Foundations of Distributed Systems \textperiodcentered{} Information Visualization Theory \textperiodcentered{} Seminar in Agentic Systems}
 
 % ----------------------------------------------------------------------
 \section{Skills}
-\cvitem{Languages}{Python, Java, C/C++, PHP, JavaScript, SQL, HTML/CSS}
-\cvitem{Frameworks}{TensorFlow, Pandas, NumPy, Scikit‑learn}
-\cvitem{Formal Methods}{NuXmv, TLA$^{+}$, Isabelle, Spin}
-\cvitem{Tools}{Linux, Git, Bash/Zsh, \LaTeX, Microsoft Office}
+\cvitem{}{%
+\begin{tabular}{@{}l@{\hspace{1em}}l@{}}
+  \textbf{Languages}      & Python, Java, C/C++, PHP, JavaScript, SQL, HTML/CSS \\
+  \textbf{Frameworks}     & TensorFlow, Pandas, NumPy, Scikit-learn \\
+  \textbf{Formal Methods} & NuXmv, TLA$^{+}$, Isabelle, Spin \\
+  \textbf{Tools}          & Linux, Git, Bash/Zsh, \LaTeX, Microsoft Office
+\end{tabular}}
 
 \end{document}
