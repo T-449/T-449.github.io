@@ -52,11 +52,20 @@
     }
     </script>
 
-    <!-- Fonts: combined into one request -->
+    <!-- Runs before first paint so dark-mode visitors don't see a light flash. -->
+    <script>
+      try {
+        const saved = localStorage.getItem("theme");
+        const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+        document.documentElement.classList.toggle("dark", dark);
+      } catch (e) {}
+      document.documentElement.classList.add("js");
+    </script>
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <!-- Preload critical hero background image -->
-    <link rel="preload" as="image" href="images/bg_image.jpg" fetchpriority="high" />
+    <!-- The hero background is a CSS image, so the browser would otherwise find it late. -->
+    <link rel="preload" as="image" href="images/bg_image.webp" type="image/webp" fetchpriority="high" />
     <link
       href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;1,500&family=Inter:wght@300;400;500;700&family=Playfair+Display:wght@400;600&display=swap"
       rel="stylesheet"
@@ -64,64 +73,705 @@
 
     <!-- Compiled Tailwind (built locally via `npm run build:css`) -->
     <link rel="stylesheet" href="css/tailwind.css" />
-
-    <!-- AOS CSS -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css"
-      rel="stylesheet"
-    />
-
-    <!-- EXTERNAL CSS -->
     <link rel="stylesheet" href="css/styles.css" />
   </head>
 
   <body
     class="bg-base-50 text-base-900 antialiased selection:bg-accent selection:text-base-50 dark:bg-base-900 dark:text-base-50"
   >
-    <!-- NAVIGATION -->
-    <div id="nav"></div>
+    <nav class="fixed inset-x-0 top-0 z-50 bg-white/70 dark:bg-base-900/70 dark:text-base-50 backdrop-blur supports-[backdrop-filter]:bg-white/50 supports-[backdrop-filter]:dark:bg-base-900/50 shadow-sm animate-fade">
+        <div class="mx-auto max-w-7xl flex items-center justify-between px-4 py-2">
 
-    <!-- HERO -->
-    <div id="hero"></div>
+            <!-- Left: Dark Mode Toggle -->
+            <div class="flex items-center">
+                <button id="modeToggle" class="mr-4 text-base-900 dark:text-base-50 hover:scale-150 transition" aria-label="Toggle Dark Mode" aria-pressed="false">
+                <svg id="modeIcon" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"></svg>
+                </button>
+            </div>
 
-    <!-- QUOTE -->
-    <div id="quote"></div>
+            <!-- Mobile menu button -->
+            <div class="md:hidden">
+              <button id="menu-toggle" class="text-base-900 dark:text-base-50 focus:outline-none" aria-label="Toggle menu" aria-expanded="false" aria-controls="mobile-menu">
+                <svg class="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+              </button>
+            </div>
 
-    <!-- ABOUT -->
-    <div id="about"></div>
+            <!-- Center: Desktop Menu -->
+            <div class="hidden md:block absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <ul class="flex gap-6 text-xs font-medium uppercase tracking-wider">
+                <li><a class="nav-link" href="#about">About</a></li>
+                <li><a class="nav-link" href="#research">Research</a></li>
+                <li><a class="nav-link" href="#news">News</a></li>
+                <li><a class="nav-link" href="#cv">CV</a></li>
+                <li><a class="nav-link" href="#publications">Papers</a></li>
+                <li><a class="nav-link" href="#talks">Talks</a></li>
+                <li><a class="nav-link" href="#exposure">Spotlight</a></li>
+                <li><a class="nav-link" href="#contact">Contact</a></li>
+                <li><a class="nav-link" href="#hobbies">Gallery</a></li>
+              </ul>
+            </div>
+
+
+            <!-- Right: Social Icons -->
+            <div class="hidden md:flex items-center gap-4 text-base-900 dark:text-base-50">
+              <a href="https://github.com/T-449" target="_blank" aria-label="GitHub" class="hover:scale-125 transition">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.94.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.74 1.27 3.4.98.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.68 0-1.25.45-2.27 1.2-3.07-.12-.3-.52-1.51.11-3.15 0 0 .97-.31 3.19 1.17a11.1 11.1 0 0 1 2.91-.39c1 0 2 .13 2.92.39 2.22-1.48 3.18-1.17 3.18-1.17.63 1.64.23 2.85.11 3.15.75.8 1.19 1.82 1.19 3.07 0 4.41-2.71 5.38-5.29 5.66.42.36.79 1.07.79 2.16 0 1.56-.01 2.82-.01 3.2 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z"/>
+                </svg>
+              </a>
+
+              <a href="https://www.linkedin.com/in/tushin-mallick-0233311a0/" target="_blank" aria-label="LinkedIn" class="hover:scale-125 transition">
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 34 34" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M8.11 8.11a2.38 2.38 0 1 1 0 4.76 2.38 2.38 0 0 1 0-4.76ZM6 13h4v12H6V13Zm7 0h3.79v1.69h.05c.53-.97 1.83-2.06 3.76-2.06 4 0 4.75 2.63 4.75 6.06V25h-4v-5.3c0-1.26-.03-2.89-1.76-2.89-1.76 0-2.03 1.38-2.03 2.8V25h-4V13Z"/>
+                </svg>
+              </a>
+
+              <a href="https://scholar.google.com/citations?user=r3AzDT8AAAAJ&hl=en" target="_blank" aria-label="Google Scholar" class="hover:scale-125 transition">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z"/>
+                </svg>
+              </a>
+            </div>
+        </div>
+
+          <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden px-6 pb-4">
+            <ul class="flex flex-col gap-4 text-sm font-medium uppercase tracking-wider">
+              <li><a class="nav-link" href="#about">About</a></li>
+              <li><a class="nav-link" href="#research">Research</a></li>
+              <li><a class="nav-link" href="#news">News</a></li>
+              <li><a class="nav-link" href="#cv">CV</a></li>
+              <li><a class="nav-link" href="#publications">Papers</a></li>
+              <li><a class="nav-link" href="#talks">Talks</a></li>
+              <li><a class="nav-link" href="#exposure">Spotlight</a></li>
+              <li><a class="nav-link" href="#contact">Contact</a></li>
+              <li><a class="nav-link" href="#hobbies">Gallery</a></li>
+            </ul>
+
+            <!-- Social Icons on Mobile -->
+            <div class="mt-6 flex justify-center gap-6 text-base-900 dark:text-base-50">
+              <!-- same icons as above -->
+              <a href="https://github.com/T-449" target="_blank" aria-label="GitHub" class="hover:scale-125 transition">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.09 3.29 9.4 7.86 10.94.58.11.79-.25.79-.56 0-.28-.01-1.02-.02-2-3.2.69-3.88-1.54-3.88-1.54-.53-1.34-1.3-1.7-1.3-1.7-1.06-.72.08-.71.08-.71 1.17.08 1.79 1.2 1.79 1.2 1.04 1.78 2.74 1.27 3.4.98.11-.75.41-1.27.74-1.56-2.56-.29-5.26-1.28-5.26-5.68 0-1.25.45-2.27 1.2-3.07-.12-.3-.52-1.51.11-3.15 0 0 .97-.31 3.19 1.17a11.1 11.1 0 0 1 2.91-.39c1 0 2 .13 2.92.39 2.22-1.48 3.18-1.17 3.18-1.17.63 1.64.23 2.85.11 3.15.75.8 1.19 1.82 1.19 3.07 0 4.41-2.71 5.38-5.29 5.66.42.36.79 1.07.79 2.16 0 1.56-.01 2.82-.01 3.2 0 .31.21.68.8.56A10.52 10.52 0 0 0 23.5 12C23.5 5.65 18.35.5 12 .5Z" />
+                </svg>
+              </a>
+              <a href="https://www.linkedin.com/in/tushin-mallick-0233311a0/" target="_blank" aria-label="LinkedIn" class="hover:scale-125 transition">
+                <svg class="w-6 h-6 fill-current" viewBox="0 0 34 34">
+                  <path d="M8.11 8.11a2.38 2.38 0 1 1 0 4.76 2.38 2.38 0 0 1 0-4.76ZM6 13h4v12H6V13Zm7 0h3.79v1.69h.05c.53-.97 1.83-2.06 3.76-2.06 4 0 4.75 2.63 4.75 6.06V25h-4v-5.3c0-1.26-.03-2.89-1.76-2.89-1.76 0-2.03 1.38-2.03 2.8V25h-4V13Z" />
+                </svg>
+              </a>
+              <a href="https://scholar.google.com/citations?user=r3AzDT8AAAAJ&hl=en" target="_blank" aria-label="Google Scholar" class="hover:scale-125 transition">
+                <svg class="h-5 w-5 fill-current" viewBox="0 0 24 24">
+                  <path d="M12 24a7 7 0 1 1 0-14 7 7 0 0 1 0 14zm0-24L0 9.5l4.838 3.94A8 8 0 0 1 12 9a8 8 0 0 1 7.162 4.44L24 9.5z" />
+                </svg>
+              </a>
+            </div>
+
+        </div>
+    </nav>
+
+    <header class="hero-bg relative flex min-h-screen flex-col items-center justify-center px-6 text-center text-base-50">
+      <div class="relative">
+        <div class="absolute inset-0 rounded-full bg-accent/30 blur-2xl"></div>
+        <picture>
+          <source srcset="images/profile_2.webp" type="image/webp" />
+          <img
+            src="images/profile_2.jpeg"
+            width="224"
+            height="224"
+            alt="Portrait of Tushin Mallick"
+            fetchpriority="high"
+            decoding="async"
+            class="relative z-10 mb-6 h-48 w-48 rounded-full border-4 border-accent/60 object-cover shadow-lg md:h-56 md:w-56 profile-hover"
+          />
+        </picture>
+      </div>
+
+      <h1
+        class="mb-3 font-serif z-10 text-4xl font-semibold md:text-5xl lg:text-6xl animate-fade"
+      >
+        Tushin Mallick
+      </h1>
+
+      <p class="z-10 mb-8 text-base md:text-lg animate-fade tracking-wide">
+        PhD Candidate · Cyber Security · Northeastern University
+      </p>
+
+      <div class="z-10 flex flex-wrap items-center justify-center gap-3 animate-fade">
+        <a
+          href="#publications"
+          class="rounded-full border border-accent/70 bg-accent/10 px-7 py-2 text-xs font-semibold tracking-widest text-accent-light transition posh-button"
+        >
+          EXPLORE MY WORK
+        </a>
+      </div>
+    </header>
+
+    <section class="pt-20 pb-8 animate-fade">
+      <div class="mx-auto max-w-3xl px-8">
+        <div class="quote-card relative rounded-2xl">
+          <blockquote class="italic text-xl md:text-2xl text-base-700 dark:text-base-50/85 leading-relaxed text-center font-serif">
+            As is a tale, so is life: not how long it is, but how good it is, is what matters.
+          </blockquote>
+          <cite class="mt-5 block text-center text-sm tracking-wide text-base-600 dark:text-base-50/65 not-italic">— Seneca</cite>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-8 text-center font-serif text-3xl font-semibold">About Me</h2>
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          I’m a Computer Science PhD Candidate at Northeastern University,
+          Boston, working at the intersection of security and machine learning.
+          My research explores how ML fits into the broader pipeline of secure
+          systems — from reasoning about behavior to enabling stronger defenses.
+        </p>
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          I conduct my research at the
+          <a
+            href="https://cyber.northeastern.edu/"
+            target="_blank"
+            rel="noopener"
+            class="text-accent hover:underline"
+            >Cybersecurity and Privacy Institute</a
+          >
+          under the advisement of
+          <a
+            href="https://cnitarot.github.io/"
+            target="_blank"
+            rel="noopener"
+            class="text-accent hover:underline"
+            >Dr. Cristina Nita-Rotaru</a
+          >. Before this, I completed my undergraduate studies at
+          Bangladesh University of Engineering and Technology (BUET) in Dhaka,
+          where I was supervised by
+          <a
+            href="https://mshohrabhossain.buet.ac.bd/"
+            target="_blank"
+            rel="noopener"
+            class="text-accent hover:underline"
+            >Dr. Shohrab Hossain</a
+          >
+          and cultivated my early interest in systems and security research.
+        </p>
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          Outside of research, I enjoy reading books&nbsp;📖, running&nbsp;🏃‍♂️, watching
+          sunsets&nbsp;🌇, and playing soccer&nbsp;⚽️. I&rsquo;m also a passionate supporter
+          of Real Madrid<img
+            src="images/real_madrid.svg"
+            alt=""
+            width="22"
+            height="22"
+            loading="lazy"
+            decoding="async"
+            class="inline h-5 w-5 mx-1 -mt-1 align-middle"
+          />.
+        </p>
+      </div>
+    </section>
 
     <hr class="section-divider" />
 
-    <!-- RESEARCH -->
-    <div id="research"></div>
+    <section id="research" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-8 text-center font-serif text-3xl font-semibold">Research Interests</h2>
 
-    <!-- NEWS -->
-    <div id="news"></div>
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          As AI systems grow more autonomous, the security assumptions we’ve long
+          relied on are quietly becoming inadequate.
+        </p>
 
-    <!-- CV -->
-    <div id="cv"></div>
+        <p class="mb-6 leading-relaxed text-base md:text-lg">
+          Most of my work lives at the frontier of
+          <strong class="text-accent">agentic AI security</strong>. As LLM-powered
+          agents gain the ability to browse, plan, and act, they inherit a new
+          class of vulnerabilities that traditional security thinking wasn’t built
+          for. I work on both sides of this: finding novel ways these systems can
+          be exploited, and designing architectures that enforce trust and integrity
+          at the points where agents reason, coordinate, and take action.
+        </p>
+
+        <p class="leading-relaxed text-base md:text-lg">
+          A separate thread is
+          <strong class="text-accent">post-quantum cryptography</strong>. On one
+          end, I look at how PQ protocols can secure the communication channels
+          between agents themselves. On the other, I study how the broader
+          transition away from classical cryptography will reshape the protocols and
+          systems the internet has long been relying on.
+        </p>
+      </div>
+    </section>
+
+    <section id="news" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">News &amp; Updates</h2>
+
+        <ul class="space-y-5">
+          <li class="entry-card">
+            <p class="text-xs font-medium tracking-wider uppercase text-base-600">April 2026</p>
+            <p class="mt-1.5 text-base leading-relaxed">
+              Our paper
+              <em>“Classifying Implementations of Cryptographic Primitives and Protocols that Use Post-Quantum Algorithms”</em>
+              has been accepted to
+              <strong class="text-accent">ACM SACMAT 2026</strong>.
+            </p>
+          </li>
+
+          <li class="entry-card">
+            <p class="text-xs font-medium tracking-wider uppercase text-base-600">August 2025</p>
+            <p class="mt-1.5 text-base leading-relaxed">
+              Our paper
+              <em>“ACE: A Security Architecture for LLM-Integrated App Systems”</em>
+              has been accepted to
+              <strong class="text-accent">NDSS 2026</strong>.
+            </p>
+          </li>
+
+          <li class="entry-card">
+            <p class="text-xs font-medium tracking-wider uppercase text-base-600">April 2025</p>
+            <p class="mt-1.5 text-base leading-relaxed">
+              I&rsquo;ll be joining
+              <strong class="text-accent">Cisco</strong> this summer as a
+              <em>Research Intern</em>.
+            </p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="cv" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Curriculum Vitae</h2>
+        <div class="mb-12 text-center">
+          <a
+            href="files/Tushin_CV.pdf"
+            target="_blank"
+            rel="noopener"
+            class="cv-button inline-block rounded-full border border-accent/70 bg-accent/10 px-6 py-2 text-sm font-semibold text-accent hover:bg-accent hover:text-base-50 transition"
+            >View Full CV (PDF)</a
+          >
+        </div>
+
+        <div class="grid gap-14 md:grid-cols-2">
+          <!-- Education -->
+          <div>
+            <h3 class="mb-6 font-serif text-2xl font-semibold text-accent">
+              Education
+            </h3>
+            <div class="relative timeline space-y-8">
+              <div class="timeline-entry">
+                <h4 class="font-semibold">
+                  Ph.D. in Computer Science
+                  <span class="text-base-600">— Northeastern University</span>
+                </h4>
+                <p class="text-sm italic text-base-600">
+                  Boston, MA 
+                </p>
+                <p class="text-sm italic text-base-600">
+                  Sept 2023 – Present
+                </p>
+                <p class="mt-1 text-sm leading-relaxed">
+                  Advisor: Dr. Cristina Nita-Rotaru
+                </p>
+              </div>
+
+              <div class="timeline-entry">
+                <h4 class="font-semibold">
+                  M.Sc. in Computer Science
+                  <span class="text-base-600">— Northeastern University</span>
+                </h4>
+                <p class="text-sm italic text-base-600">
+                  Boston, MA
+                </p>
+                <p class="text-sm italic text-base-600">
+                  Sept 2023 – April 2026
+                </p>
+              </div>
+
+              <div class="timeline-entry">
+                <h4 class="font-semibold">
+                  B.Sc. in Computer Science & Engineering
+                  <span class="text-base-600">— BUET</span>
+                </h4>
+                <p class="text-sm italic text-base-600">
+                  Dhaka, Bangladesh
+                </p>
+                <p class="text-sm italic text-base-600">
+                  Feb 2017 – May 2022
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experience -->
+          <div class="pl-6 md:pl-10">
+            <h3 class="mb-6 font-serif text-2xl font-semibold text-accent">
+              Experience
+            </h3>
+            <div class="relative timeline space-y-8">
+              <div class="timeline-entry">
+                <h4 class="font-semibold">Research Intern — Cisco</h4>
+                <p class="text-sm italic text-base-600">May 2025 – August 2025</p>
+              </div>
+              <div class="timeline-entry">
+                <h4 class="font-semibold">
+                  Graduate Research Assistant — Northeastern University
+                </h4>
+                <ul class="text-sm italic text-base-600">
+                  <li>January 2026 – April 2026</li>
+                  <li>May 2024 – April 2025</li>
+                </ul>
+              </div>
+              <div class="timeline-entry">
+                <h4 class="font-semibold">Research Assistant — BUET</h4>
+                <p class="text-sm italic text-base-600">June 2022 – June 2023</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Teaching -->
+          <div>
+            <h3 class="mb-6 font-serif text-2xl font-semibold text-accent">
+              Teaching
+            </h3>
+            <div class="relative timeline space-y-8">
+              <div class="timeline-entry">
+                <h4 class="font-semibold">
+                  Graduate Teaching Assistant — Northeastern University
+                </h4>
+                <ul class="mt-2 list-disc pl-4 text-sm leading-relaxed text-base-800">
+                  <li>CS 3650: Computer Systems (Fall ’25)</li>
+                  <li>CS 6240: Large-Scale Parallel Data Processing (Spring ’24)</li>
+                  <li>CS 3700: Networks and Distributed Systems (Fall ’23)</li>
+
+                </ul>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Service -->
+          <div class="pl-6 md:pl-10">
+            <h3 class="mb-6 font-serif text-2xl font-semibold text-accent">
+              Service
+            </h3>
+            <div class="relative timeline space-y-8">
+              <div class="timeline-entry">
+                <h4 class="font-semibold">Web Chair — ACM QRSEC 2025</h4>
+                <p class="text-sm italic text-base-600">Taipei, Taiwan</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <hr class="section-divider" />
 
-    <!-- PUBLICATIONS -->
-    <div id="publications"></div>
+    <section id="publications" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">
+          Publications
+        </h2>
+        <!-- Container where JS will inject each publication entry -->
+        <div id="publications-container" class="space-y-6"></div>
+        <!-- Pagination buttons will go here -->
+        <div id="publication-pagination" class="mt-8 flex justify-center gap-2 text-sm font-medium text-base-800"></div>
+      </div>
+    </section>
 
-    <!-- TALKS -->
-    <div id="talks"></div>
+    <section id="talks" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Talks</h2>
 
-    <!-- EXPOSURE -->
-    <div id="exposure"></div>
+        <ul class="space-y-5">
+          <li class="entry-card">
+            <h4 class="font-semibold leading-snug">
+              <a href="https://www.youtube.com/watch?v=RhLf_C6pvNI" target="_blank" rel="noopener" class="text-accent hover:underline">
+                ACE: A Security Architecture for LLM Integrated App Systems
+              </a>
+            </h4>
+            <p class="mt-1 text-sm italic text-base-600">NDSS 2026 — San Diego, CA</p>
+          </li>
+
+          <li class="entry-card">
+            <h4 class="font-semibold leading-snug text-base-900 dark:text-base-50">
+              Planning as Policy: Securing Agents against Untrusted Tools
+            </h4>
+            <p class="mt-1 text-sm italic text-base-600">New England Security Day — UMass Amherst</p>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="exposure" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-4xl px-6">
+        <h2 class="mb-12 text-center font-serif text-3xl font-semibold">Spotlight</h2>
+
+        <ul class="space-y-5">
+          <li class="entry-card">
+            <h4 class="font-semibold leading-snug">
+              <a href="https://www.khoury.northeastern.edu/research_projects/security-of-llm-agents/" target="_blank" rel="noopener" class="text-accent hover:underline">
+                Security of LLM Agents
+              </a>
+            </h4>
+            <p class="mt-1 text-sm italic text-base-600">Northeastern Khoury College — Sep 2025</p>
+          </li>
+
+          <li class="entry-card">
+            <h4 class="font-semibold leading-snug">
+              <a href="https://outshift.cisco.com/blog/cisco-research-quantum-resistant-security-summit" target="_blank" rel="noopener" class="text-accent hover:underline">
+                Quantum-Resistant Security Summit (Outshift)
+              </a>
+            </h4>
+            <p class="mt-1 text-sm italic text-base-600">Cisco Research / Outshift — Aug 2025</p>
+          </li>
+        </ul>
+      </div>
+    </section>
 
     <hr class="section-divider" />
 
-    <!-- CONTACT -->
-    <div id="contact"></div>
+    <section id="contact" class="py-16 md:py-20" data-reveal>
+      <div class="mx-auto max-w-md px-6 text-center">
+        <h2 class="mb-4 font-serif text-3xl font-semibold">Get&nbsp;in&nbsp;Touch</h2>
 
-    <!-- HOBBIES -->
-    <div id="hobbies"></div>
+        <!-- Office block -->
+        <div class="mb-4 space-y-1 text-base-800 text-center">
+          <p class="text-sm font-medium tracking-wide text-base-700">Office</p>
+          <p class="text-base leading-relaxed">
+            2nd Floor, 216 Massachusetts Ave<br />
+            Boston, MA 02115
+          </p>
+          <div class="mt-1">
+            <a
+              href="https://maps.app.goo.gl/2gnjNSEAeeuGvERx6"
+              target="_blank"
+              aria-label="Open in Maps"
+              class="inline-block"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 384 512"
+                class="h-4 w-4 mx-auto fill-red-500 hover:fill-red-600 transition"
+              >
+                <path
+                  d="M192 0C86 0 0 86 0 192c0 87 55 159 138 185l54 131c2 5 7 8 12 8s10-3 12-8l54-131c83-26 138-98 138-185C384 86 298 0 192 0zm0 256c-35 0-64-29-64-64s29-64 64-64 64 29 64 64-29 64-64 64z"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
 
-    <!-- FOOTER -->
-    <div id="footer"></div>
+        <!-- Email block -->
+        <div class="space-y-1 text-base-800 text-center">
+          <p class="text-sm font-medium tracking-wide text-base-700">Email</p>
+          <p class="text-base leading-relaxed">
+            <a href="mailto:mallick.tu@northeastern.edu" class="hover:underline text-accent">
+              mallick.tu at northeastern.edu
+            </a>
+          </p>
+
+          <!-- Toggle Envelope Button -->
+          <button
+            type="button"
+            class="mt-2 focus:outline-none"
+            aria-label="Compose Email"
+          >
+            <!-- Closed Envelope Icon -->
+            <svg
+              id="iconOpen"
+              class="w-6 h-6 mx-auto text-red-500 hover:text-red-600 transition-transform duration-200"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M2 4a2 2 0 012-2h16a2 2 0 012 2v1l-10 6L2 5V4z" />
+              <path d="M22 6.5v11a2.5 2.5 0 01-2.5 2.5h-15A2.5 2.5 0 012 17.5v-11L12 13l10-6.5z" />
+            </svg>
+
+
+            <!-- Open Envelope Icon -->
+            <svg
+              id="iconClosed"
+              class="w-6 h-6 mx-auto text-red-500 hover:text-red-600 transition-transform duration-200 hidden"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M2 7l10 6 10-6v10a2 2 0 01-2 2H4a2 2 0 01-2-2V7z" />
+              <path d="M22 6L12 0 2 6h20z" />
+            </svg>
+
+          </button>
+
+          <!-- Hidden Form -->
+          <div id="mailForm" class="hidden mt-4 w-full flex justify-center">
+            <div class="relative w-[300px]">
+              <textarea
+                id="mailMessage"
+                class="w-full p-3 border rounded-md resize-none"
+                placeholder="Write your message here…"
+                rows="3"
+              ></textarea>
+              <div class="flex justify-end mt-2">
+                <button
+                  type="button"
+                  id="mailSend"
+                  class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                >
+                  Send
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="hobbies" class="py-16 md:py-20 bg-base-100" data-reveal>
+      <div class="mx-auto max-w-6xl px-6 text-center relative">
+        <h2 class="mb-6 font-serif text-3xl font-semibold">Beyond Research</h2>
+
+        <!-- Grid View Button under Heading -->
+        <div class="mb-6 flex justify-center">
+          <button
+            id="toggle-grid"
+            class="bg-white/80 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+              class="h-6 w-6"
+            >
+              <path
+                d="M3 3h7v7H3V3zm0 11h7v7H3v-7zm11-11h7v7h-7V3zm0 11h7v7h-7v-7z"
+              />
+            </svg>
+          </button>
+        </div>
+
+        <!-- Carousel controls: button position matches its id. -->
+        <button
+          id="scroll-left"
+          aria-label="Previous images"
+          class="absolute left-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="h-6 w-6 rotate-180"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12.293 16.293a1 1 0 010-1.414L16.586 10 12.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+
+        <button
+          id="scroll-right"
+          aria-label="Next images"
+          class="absolute right-0 top-1/2 -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow hover:bg-accent hover:text-white transition"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+            class="h-6 w-6"
+            aria-hidden="true"
+          >
+            <path
+              fill-rule="evenodd"
+              d="M12.293 16.293a1 1 0 010-1.414L16.586 10 12.293 5.707a1 1 0 011.414-1.414l5 5a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0z"
+              clip-rule="evenodd"
+            />
+          </svg>
+        </button>
+
+        <!-- Gallery Container -->
+        <div id="gallery" class="flex overflow-x-scroll gap-6 mt-8 scroll-smooth pb-4"></div>
+
+        <!-- Pagination Controls (for grid view) -->
+        <div id="pagination" class="mt-8 flex justify-center gap-2 text-sm font-medium text-base-800"></div>
+      </div>
+    </section>
+
+    <!-- Image Modal (lightbox) -->
+    <div
+      id="image-modal"
+      class="fixed inset-0 z-50 hidden bg-black bg-opacity-80 flex flex-col items-center justify-center p-4"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-caption"
+      tabindex="-1"
+    >
+      <!-- Left arrow -->
+      <button
+        id="modal-prev"
+        class="absolute left-4 text-white text-4xl font-bold hover:text-accent transition z-50"
+        aria-label="Previous image"
+      >
+        &#10094;
+      </button>
+
+      <!-- Enlarged Image -->
+      <img
+        id="modal-img"
+        src=""
+        alt="Enlarged Image"
+        class="max-h-[70vh] max-w-[90vw] rounded-lg shadow-xl transition-all duration-300"
+      />
+
+      <!-- Caption + Description -->
+      <div
+        class="mt-6 bg-white/10 backdrop-blur-sm rounded-md px-6 py-4 max-w-4xl text-center"
+      >
+        <p
+          id="modal-caption"
+          class="text-xl font-serif italic font-semibold text-white mb-1 tracking-wide"
+        ></p>
+        <p id="modal-description" class="artistic-font"></p>
+      </div>
+
+      <!-- Right arrow -->
+      <button
+        id="modal-next"
+        class="absolute right-4 text-white text-4xl font-bold hover:text-accent transition z-50"
+        aria-label="Next image"
+      >
+        &#10095;
+      </button>
+
+      <!-- Close button -->
+      <button
+        id="close-modal"
+        class="absolute top-6 right-6 text-white text-3xl font-bold hover:text-accent transition z-50"
+        aria-label="Close"
+      >
+        &times;
+      </button>
+    </div>
+
+    <footer class="bg-gradient-to-t from-base-900 to-base-900/85 py-5 text-center text-base text-base-50 animate-fade">
+      <div class="mx-auto max-w-4xl px-6">
+        <div>© <span id="year"></span> Tushin Mallick.</div>
+        <div class="mt-1 footer-secondary text-sm">
+          Made with
+          <span class="text-red-400 inline-block text-lg align-middle animate-[heartbeat_3s_infinite]" aria-hidden="true">❤️</span>
+          and
+          <span class="text-yellow-300 inline-block text-lg align-middle animate-[coffeePulse_4s_infinite]" aria-hidden="true">☕️</span>
+          in Boston.
+        </div>
+      </div>
+    </footer>
 
     <!-- Back To Top button -->
     <button
@@ -132,10 +782,6 @@
       ↑
     </button>
 
-    <!-- AOS JS -->
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
-    <!-- EXTERNAL JS -->
     <script src="js/main.js"></script>
-
   </body>
 </html>

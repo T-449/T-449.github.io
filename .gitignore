@@ -52,6 +52,7 @@ yarn-error.log*
 *~
 .project
 .DS_Store
+.claude
 
 # -------------------------
 # GitHub Pages (keep files/, ignore drafts)

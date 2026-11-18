@@ -3,7 +3,6 @@ module.exports = {
   content: [
     "./index.html",
     "./404.html",
-    "./includes/**/*.html",
     "./js/**/*.js",
   ],
   darkMode: "class",
