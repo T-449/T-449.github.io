@@ -1,5 +1,14 @@
 [
   {
+    "authors": "<b>T. Mallick</b>, E. Rose, M. Laws, A. Oprea, and C. Nita-Rotaru (2026)",
+    "tag": "arXiv",
+    "title": "Kaer: Security-Aware Replanning for Multi-Agent Systems",
+    "link": "https://arxiv.org/abs/2611.24839",
+    "pdf": "/files/publications/kaer.pdf",
+    "note": "Under submission."
+  },
+
+  {
     "authors": "E. Rose, <b>T. Mallick</b>, M. Laws, C. Nita-Rotaru, and A. Oprea (2026)",
     "tag": "arXiv",
     "title": "APWA: A Distributed Architecture for Parallelizable Agentic Workflows",
