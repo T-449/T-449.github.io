@@ -23,8 +23,8 @@ module.exports = {
         muted: "#94a3b8",
       },
       fontFamily: {
-        sans: ["Inter", "ui-sans-serif", "system-ui"],
-        serif: ["Playfair Display", "ui-serif"],
+        sans: ["Inter", "ui-sans-serif", "system-ui", "sans-serif"],
+        serif: ["Newsreader", "ui-serif", "Georgia", "serif"],
       },
       fontSize: {
         base: "1.125rem",

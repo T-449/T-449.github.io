@@ -197,10 +197,9 @@ main a, section a {
 }
 
 /* ─── Typography ─── */
-.small-caps,
-section > div > h2 {
-  font-variant: small-caps;
-  letter-spacing: 0.04em;
+body {
+  font-feature-settings: "cv11", "ss03"; /* Inter: single-storey a, rounded quotes */
+  text-rendering: optimizeLegibility;
 }
 
 /* Section-title ornament: small accent line above the h2 */
@@ -249,17 +248,12 @@ section > div > h2::before {
   color: #a8c9ff;
 }
 
-/* ─── Misc animations referenced inline ─── */
-@keyframes heartbeat   { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
-@keyframes coffeePulse { 0%,100% { transform: scale(1); } 50% { transform: scale(1.3); } }
-
 .artistic-font {
-  font-family: "Cormorant Garamond", serif;
+  font-family: "Newsreader", Georgia, serif;
   font-style: italic;
-  font-weight: 500;
-  font-size: 1.75rem;
-  line-height: 2.5rem;
-  color: #f5f5f5;
+  font-size: 1.375rem;
+  line-height: 1.6;
+  color: #e2e8f0;
   text-align: center;
   padding: 0 2rem;
   max-width: 48rem;
@@ -275,7 +269,7 @@ section > div > h2::before {
   position: absolute;
   top: -0.5rem;
   left: 0.5rem;
-  font-family: "Playfair Display", serif;
+  font-family: "Newsreader", Georgia, serif;
   font-size: 5rem;
   line-height: 1;
   color: rgba(76, 147, 255, 0.18);
@@ -286,7 +280,7 @@ section > div > h2::before {
   position: absolute;
   bottom: -2rem;
   right: 0.75rem;
-  font-family: "Playfair Display", serif;
+  font-family: "Newsreader", Georgia, serif;
   font-size: 5rem;
   line-height: 1;
   color: rgba(76, 147, 255, 0.18);
@@ -324,22 +318,6 @@ section > div > h2::before {
   background-color: #0e1520;
 }
 
-/* Gallery / carousel buttons in dark mode */
-.dark #scroll-left,
-.dark #scroll-right,
-.dark #toggle-grid {
-  background-color: rgba(14, 21, 32, 0.75);
-  color: #e2e8f0;
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-.dark #scroll-left:hover,
-.dark #scroll-right:hover,
-.dark #toggle-grid:hover {
-  background-color: #4c93ff;
-  color: #fcfcfa;
-  border-color: #4c93ff;
-}
-
 /* Modal caption box stays high-contrast */
 .dark #modal-caption,
 .dark #modal-description {
@@ -355,11 +333,10 @@ footer .footer-secondary {
 .section-divider {
   position: relative;
   margin: 2rem auto;
-  width: 16rem;
-  height: 3px;
-  background: linear-gradient(to right, transparent, #4c93ff 18%, #4c93ff 82%, transparent);
+  width: 12rem;
+  height: 1px;
+  background: linear-gradient(to right, transparent, rgba(76, 147, 255, 0.5), transparent);
   border: 0;
-  border-radius: 9999px;
   overflow: visible;
 }
 .section-divider::after {
@@ -367,19 +344,16 @@ footer .footer-secondary {
   position: absolute;
   left: 50%;
   top: 50%;
-  width: 0.75rem;
-  height: 0.75rem;
+  width: 0.4rem;
+  height: 0.4rem;
   background: #4c93ff;
-  border-radius: 9999px;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 5px rgba(76, 147, 255, 0.22);
+  transform: translate(-50%, -50%) rotate(45deg);
 }
 .dark .section-divider {
-  background: linear-gradient(to right, transparent, #a8c9ff 18%, #a8c9ff 82%, transparent);
+  background: linear-gradient(to right, transparent, rgba(168, 201, 255, 0.5), transparent);
 }
 .dark .section-divider::after {
   background: #a8c9ff;
-  box-shadow: 0 0 0 5px rgba(168, 201, 255, 0.28);
 }
 
 
@@ -390,6 +364,90 @@ nav {
 .dark nav {
   border-bottom-color: rgba(255, 255, 255, 0.06);
 }
+
+/* ─── Icons: one line-icon style across the site ─── */
+.icon {
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.75;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  flex-shrink: 0;
+}
+
+/* Nav theme toggle and brand links */
+.icon-btn,
+.social-link {
+  color: inherit;
+  opacity: 0.75;
+  transition: opacity 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+.icon-btn:hover,
+.social-link:hover {
+  opacity: 1;
+  color: #4c93ff;
+  transform: translateY(-1px);
+}
+.dark .icon-btn:hover,
+.dark .social-link:hover { color: #a8c9ff; }
+
+/* Round icon buttons: gallery controls and back-to-top */
+.round-btn {
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.9);
+  color: #1f2937;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 4px 14px -6px rgba(15, 23, 42, 0.25);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+.round-btn:hover,
+.round-btn--accent {
+  background: #4c93ff;
+  color: #fcfcfa;
+  border-color: #4c93ff;
+}
+.round-btn--accent:hover { transform: translateY(-2px); }
+.dark .round-btn:not(.round-btn--accent) {
+  background: rgba(20, 30, 46, 0.9);
+  color: #e2e8f0;
+  border-color: rgba(255, 255, 255, 0.08);
+}
+.dark .round-btn:not(.round-btn--accent):hover {
+  background: #4c93ff;
+  color: #fcfcfa;
+  border-color: #4c93ff;
+}
+
+/* Lightbox controls sit on a dark backdrop */
+.modal-btn {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 9999px;
+  color: #fcfcfa;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  transition: background 0.2s ease;
+}
+.modal-btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Contact: map pin */
+.contact-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 9999px;
+  color: #4c93ff;
+  background: rgba(76, 147, 255, 0.1);
+  border: 1px solid rgba(76, 147, 255, 0.25);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.contact-icon:hover {
+  background: #4c93ff;
+  color: #fcfcfa;
+}
+.dark .contact-icon { color: #a8c9ff; }
+.dark .contact-icon:hover { color: #0e1520; background: #a8c9ff; }
 
 /* ─── Scroll reveal: main.js adds .is-visible as each [data-reveal] enters the viewport.
    Gated on .js so content stays visible if scripts don't run. ─── */

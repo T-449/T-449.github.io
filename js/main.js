@@ -5,8 +5,8 @@ const root = document.documentElement;
 const modeToggle = document.getElementById("modeToggle");
 const modeIcon = document.getElementById("modeIcon");
 const SUN_ICON =
-  '<path d="M12 2a1 1 0 0 1 .993.883L13 3v1a1 1 0 0 1-1.993.117L11 4V3a1 1 0 0 1 1-1Zm5.657 3.343a1 1 0 0 1 1.32-.083l.094.083.707.707a1 1 0 0 1-1.32 1.497l-.094-.083-.707-.707a1 1 0 0 1 0-1.414ZM4.343 5.343a1 1 0 0 1 1.32-.083l.094.083.707.707a1 1 0 0 1-1.32 1.497l-.094-.083-.707-.707a1 1 0 0 1 0-1.414ZM12 6a6 6 0 1 1 0 12A6 6 0 0 1 12 6Zm0 2a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm8 4a1 1 0 0 1 .117 1.993L20 14h-1a1 1 0 0 1-.117-1.993L19 12h1ZM4 12a1 1 0 0 1 .117 1.993L4 14H3a1 1 0 0 1-.117-1.993L3 12h1Zm15.364 4.95a1 1 0 0 1 1.32 1.497l-.094.083-.707.707a1 1 0 0 1-1.497-1.32l.083-.094.707-.707ZM6.343 17.657a1 1 0 0 1 1.32 1.497l-.094.083-.707.707a1 1 0 0 1-1.497-1.32l.083-.094.707-.707ZM12 20a1 1 0 0 1 .993.883L13 21v1a1 1 0 0 1-1.993.117L11 22v-1a1 1 0 0 1 1-1Z"/>';
-const MOON_ICON = '<path d="M21 12.79A9 9 0 1 1 11.21 3c.09 0 .18 0 .27.01A7 7 0 0 0 21 12.79z"/>';
+  '<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>';
+const MOON_ICON = '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>';
 
 function renderModeIcon() {
   const dark = root.classList.contains("dark");
@@ -90,7 +90,10 @@ let images = [];
 let isGrid = false;
 let galleryPage = 0;
 
-const perPage = () => (isGrid ? 9 : 3);
+// Carousel shows 1 card on phones, 2 on tablets, 3 on wide screens.
+const wideMq = matchMedia("(min-width: 1100px)");
+const tabletMq = matchMedia("(min-width: 640px)");
+const perPage = () => (isGrid ? 9 : wideMq.matches ? 3 : tabletMq.matches ? 2 : 1);
 const pageCount = () => Math.ceil(images.length / perPage());
 // Thumbnails are 640px-wide copies of each image (see images/thumbs/).
 const thumbOf = (src) => src.replace("images/", "images/thumbs/");
@@ -99,12 +102,12 @@ function galleryCard(img, index) {
   const title = img.caption.split(" (")[0];
   const meta = img.caption.match(/\((.*?)\)/)?.[1] || "";
   return `
-    <div class="flex flex-col items-center w-80 gap-2">
+    <div class="flex flex-col items-center w-64 sm:w-80 gap-2">
       <img src="${thumbOf(img.src)}" alt="${img.alt}" data-index="${index}"
            width="320" height="256" loading="lazy" decoding="async"
-           class="h-64 w-full rounded-2xl object-cover shadow hover:scale-[1.03] transition cursor-zoom-in bg-base-100/40" />
+           class="h-52 sm:h-64 w-full rounded-2xl object-cover shadow hover:scale-[1.03] transition cursor-zoom-in bg-base-100/40" />
       <div class="text-center">
-        <p class="text-base font-serif font-semibold text-base-800 dark:text-base-50 italic tracking-wide">${title}</p>
+        <p class="text-lg font-serif italic text-base-800 dark:text-base-50">${title}</p>
         <p class="text-sm text-gray-500 italic">${meta}</p>
       </div>
     </div>`;
@@ -118,8 +121,8 @@ function renderGallery() {
     .map((img, i) => galleryCard(img, start + i))
     .join("");
 
-  scrollLeftBtn.hidden = isGrid || galleryPage === 0;
-  scrollRightBtn.hidden = isGrid || galleryPage >= pageCount() - 1;
+  scrollLeftBtn.classList.toggle("hidden", isGrid || galleryPage === 0);
+  scrollRightBtn.classList.toggle("hidden", isGrid || galleryPage >= pageCount() - 1);
 
   if (isGrid) {
     renderPager(galleryPager, galleryPage, pageCount(), (page) => {
@@ -136,6 +139,13 @@ function moveCarousel(step) {
   if (isGrid || next < 0 || next >= pageCount()) return;
   galleryPage = next;
   renderGallery();
+}
+
+for (const mq of [wideMq, tabletMq]) {
+  mq.addEventListener("change", () => {
+    galleryPage = 0;
+    renderGallery();
+  });
 }
 
 scrollLeftBtn.addEventListener("click", () => moveCarousel(-1));
@@ -262,9 +272,7 @@ function renderPublications(page) {
         ${pub.note ? `<p class="mt-1 text-xs italic text-base-600">${pub.note}</p>` : ""}
         <a href="${pub.pdf}" target="_blank" rel="noopener"
            class="mt-3 inline-flex items-center gap-1 rounded-full border border-accent/70 bg-accent/10 px-3 py-0.5 text-xs font-semibold text-accent hover:bg-accent hover:text-base-50 transition">
-          <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12 3a1 1 0 0 1 1 1v8.6l2.3-2.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 1.4-1.4L11 12.6V4a1 1 0 0 1 1-1Zm-7 14a1 1 0 0 1 2 0v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a1 1 0 1 1 2 0v1a3 3 0 0 1-3 3H8a3 3 0 0 1-3-3v-1Z"/>
-          </svg>
+          <svg class="icon h-3.5 w-3.5" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15V3M7 10l5 5 5-5M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg>
           PDF
         </a>
       </div>`
@@ -310,33 +318,4 @@ menuToggle.addEventListener("click", (e) => {
 // Close on any click outside the menu, or on a link inside it.
 document.addEventListener("click", (e) => {
   if (!mobileMenu.contains(e.target) || e.target.closest("a")) setMenuOpen(false);
-});
-
-// ────────────── Contact: compose box behind the envelope icon ──────────────
-const mailToggleBtn = document.querySelector("#contact button[aria-label='Compose Email']");
-const mailForm = document.getElementById("mailForm");
-const iconClosed = document.getElementById("iconClosed");
-const iconOpen = document.getElementById("iconOpen");
-const mailMessage = document.getElementById("mailMessage");
-
-function setMailFormOpen(open) {
-  mailForm.classList.toggle("hidden", !open);
-  iconClosed.classList.toggle("hidden", !open);
-  iconOpen.classList.toggle("hidden", open);
-}
-
-mailToggleBtn.addEventListener("click", () => setMailFormOpen(mailForm.classList.contains("hidden")));
-
-document.getElementById("mailSend").addEventListener("click", () => {
-  const msg = mailMessage.value.trim();
-  if (!msg) {
-    alert("Please write a message before sending.");
-    return;
-  }
-  window.location.href = `mailto:mallick.tu@northeastern.edu?subject=Message from Website&body=${encodeURIComponent(msg)}`;
-  // Give the mail client a moment to open before resetting the form.
-  setTimeout(() => {
-    setMailFormOpen(false);
-    mailMessage.value = "";
-  }, 500);
 });
